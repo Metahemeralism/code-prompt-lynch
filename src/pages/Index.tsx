@@ -151,13 +151,13 @@ const Index = () => {
 
       case 'about':
         output = [
-          "I'm Evan Lynch, a software engineer specializing in AI-powered applications",
-          "and full-stack development. With a background spanning data science and",
-          "modern web technologies, I bridge the gap between cutting-edge research",
-          "and production systems. I'm passionate about creating intelligent",
-          "applications that solve real-world problems, leveraging everything from",
-          "machine learning models to scalable cloud architectures. Currently focused",
-          "on building the next generation of AI-first applications."
+          "I'm Evan Lynch, a masters student at University College London (UCL)",
+          "studying Engineering with Finance. With a background in chemical",
+          "engineering at Bath and a brief spell in Electric mobility, my journey",
+          "has led me to data science and machine learning. After completing my",
+          "undergrad, I've been passionate about bridging the gap between",
+          "engineering principles and financial markets through data-driven",
+          "solutions and intelligent applications."
         ];
         break;
 
