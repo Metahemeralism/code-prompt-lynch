@@ -20,6 +20,7 @@ const Index = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [cursorVisible, setCursorVisible] = useState(true);
+  const [helpShown, setHelpShown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
 
@@ -119,6 +120,7 @@ const Index = () => {
 
     switch (command) {
       case 'help':
+        setHelpShown(true);
         output = [
           'Available commands:',
           '',
@@ -240,7 +242,15 @@ const Index = () => {
         break;
 
       case 'clear':
-        setHistory([]);
+        if (helpShown) {
+          // Only clear commands after help was shown
+          const helpIndex = history.findIndex(cmd => cmd.input.toLowerCase() === 'help');
+          if (helpIndex !== -1) {
+            setHistory(prev => prev.slice(0, helpIndex + 1));
+          }
+        } else {
+          setHistory([]);
+        }
         return;
 
       case 'ascii':
