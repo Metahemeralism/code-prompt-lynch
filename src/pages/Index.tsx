@@ -214,14 +214,15 @@ const Index = () => {
         break;
 
       case 'clear':
-        // Only clear if user has typed 'help' before
-        const hasTypedHelp = history.some(cmd => cmd.input.toLowerCase().trim() === 'help');
-        if (hasTypedHelp) {
-          setHistory([]);
+        // Find the last occurrence of 'help' command
+        const lastHelpIndex = history.map(cmd => cmd.input.toLowerCase().trim()).lastIndexOf('help');
+        if (lastHelpIndex !== -1) {
+          // Keep everything up to and including the 'help' command
+          setHistory(prev => prev.slice(0, lastHelpIndex + 1));
         } else {
           output = ['Please type "help" first to see available commands.'];
         }
-        if (hasTypedHelp) return;
+        if (lastHelpIndex !== -1) return;
         break;
 
       case 'ascii':
