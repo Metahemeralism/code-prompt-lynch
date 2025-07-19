@@ -405,12 +405,12 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-black text-gray-300 p-4 font-mono overflow-hidden relative">
       {/* Visitor Counter */}
-      <div className="absolute top-4 right-4 text-green-400 text-sm font-mono">
+      <div className="absolute top-4 right-4 text-green-400 text-sm font-mono z-10">
         Visitor #{visitorNumber.toLocaleString()}
       </div>
       <div 
         ref={terminalRef}
-        className="h-screen overflow-y-auto terminal-container"
+        className="h-screen overflow-y-auto terminal-container pt-12"
         onClick={() => inputRef.current?.focus()}
       >
         {/* ASCII Logo */}
