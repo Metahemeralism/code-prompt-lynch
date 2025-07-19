@@ -410,7 +410,7 @@ const Index = () => {
       </div>
       <div 
         ref={terminalRef}
-        className="h-screen overflow-y-auto terminal-container pt-12 px-4"
+        className="h-screen overflow-y-auto terminal-container pt-12 px-4 pb-8"
         onClick={() => inputRef.current?.focus()}
       >
         {/* ASCII Logo */}
