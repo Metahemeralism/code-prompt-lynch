@@ -415,6 +415,15 @@ const Index = () => {
   };
 
   const renderOutput = (output: string[], commandInput: string) => {
+    // Special handling for ASCII art to preserve formatting
+    if (commandInput.toLowerCase().trim() === 'ascii') {
+      return (
+        <div className="text-green-400 whitespace-pre font-mono text-center">
+          {output.join('\n')}
+        </div>
+      );
+    }
+
     return output.map((line, index) => {
       // Check if this is a blog post line
       const isBlogPost = commandInput.toLowerCase() === 'blog' && 
