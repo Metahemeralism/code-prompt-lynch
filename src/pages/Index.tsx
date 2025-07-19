@@ -71,7 +71,7 @@ const Index = () => {
       let displayLine = '';
       for (const char of line) {
         displayLine += char;
-        await new Promise(resolve => setTimeout(resolve, 70));
+        await new Promise(resolve => setTimeout(resolve, 25));
         
         setHistory(prev => {
           const newHistory = [...prev];
