@@ -225,10 +225,9 @@ const Index = () => {
         output = [
           'Connect with me:',
           '',
-          '💼 LinkedIn → https://www.linkedin.com/in/-evanlynch/',
-          '📧 Email   → mailto:eplynch398@gmail.com', 
-          '🐙 GitHub  → https://github.com/Metahemeralism',
-          '📷 Instagram → https://instagram.com/evanlynch.dev',
+          '[in] LinkedIn → https://www.linkedin.com/in/-evanlynch/',
+          '[mail] Email → mailto:eplynch398@gmail.com', 
+          '[git] GitHub → https://github.com/Metahemeralism',
           '',
           'Feel free to reach out for collaborations or just to chat!'
         ];
