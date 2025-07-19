@@ -64,43 +64,17 @@ const Index = () => {
     }
   }, [history]);
 
-  const typewriterEffect = async (text: string[]): Promise<void> => {
-    setIsTyping(true);
-    
-    for (const line of text) {
-      let displayLine = '';
-      for (const char of line) {
-        displayLine += char;
-        await new Promise(resolve => setTimeout(resolve, 70));
-        
-        setHistory(prev => {
-          const newHistory = [...prev];
-          if (newHistory.length > 0) {
-            newHistory[newHistory.length - 1] = {
-              ...newHistory[newHistory.length - 1],
-              output: [...newHistory[newHistory.length - 1].output.slice(0, -1), displayLine]
-            };
-          }
-          return newHistory;
-        });
+  const displayOutput = (text: string[]): void => {
+    setHistory(prev => {
+      const newHistory = [...prev];
+      if (newHistory.length > 0) {
+        newHistory[newHistory.length - 1] = {
+          ...newHistory[newHistory.length - 1],
+          output: text
+        };
       }
-      
-      // Add new line for next iteration
-      if (text.indexOf(line) < text.length - 1) {
-        setHistory(prev => {
-          const newHistory = [...prev];
-          if (newHistory.length > 0) {
-            newHistory[newHistory.length - 1] = {
-              ...newHistory[newHistory.length - 1],
-              output: [...newHistory[newHistory.length - 1].output, '']
-            };
-          }
-          return newHistory;
-        });
-      }
-    }
-    
-    setIsTyping(false);
+      return newHistory;
+    });
   };
 
   const executeCommand = async (cmd: string) => {
@@ -240,8 +214,15 @@ const Index = () => {
         break;
 
       case 'clear':
-        setHistory([]);
-        return;
+        // Only clear if user has typed 'help' before
+        const hasTypedHelp = history.some(cmd => cmd.input.toLowerCase().trim() === 'help');
+        if (hasTypedHelp) {
+          setHistory([]);
+        } else {
+          output = ['Please type "help" first to see available commands.'];
+        }
+        if (hasTypedHelp) return;
+        break;
 
       case 'ascii':
         output = [
@@ -271,7 +252,7 @@ const Index = () => {
         break;
     }
 
-    await typewriterEffect(output);
+    displayOutput(output);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
