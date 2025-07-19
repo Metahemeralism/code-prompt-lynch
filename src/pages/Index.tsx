@@ -164,13 +164,15 @@ const Index = () => {
 
       case 'about':
         output = [
-          "I'm Evan Lynch, a masters student at University College London (UCL)",
-          "studying Engineering with Finance. With a background in chemical",
-          "engineering at Bath and a brief spell in Electric mobility, my journey",
-          "has led me to data science and machine learning. After completing my",
-          "undergrad, I've been passionate about bridging the gap between",
-          "engineering principles and financial markets through data-driven",
-          "solutions and intelligent applications."
+          "I'm Evan Lynch, an aspiring quant researcher/trader skilled in Python",
+          "data engineering, statistical modelling, and risk analysis. Currently",
+          "pursuing a predicted First-class MSc Engineering with Finance at UCL,",
+          "with a background in Chemical Engineering from Bath. I'm seeking to",
+          "apply systematic strategies in quantitative investing and data analysis,",
+          "combining technical expertise with financial markets knowledge.",
+          "",
+          "Languages: Fluent English, Beginner German & Danish",
+          "Interests: Chess (Top 6% Chess.com), Competitive Tennis & Coaching"
         ];
         break;
 
@@ -178,38 +180,41 @@ const Index = () => {
         output = [
           'Professional Experience:',
           '',
-          '2023-Present | Full-Stack Engineer | Acme AI',
-          '  • Architected and deployed React/Node.js applications on AWS',
-          '  • Integrated OpenAI APIs for intelligent user experiences', 
-          '  • Built scalable microservices handling 100k+ daily requests',
-          '  • Led frontend development using React, TypeScript, and Tailwind',
+          'March 2025 – Present | Data Science Intern | Datactics, Belfast UK',
+          '  • Engineered Python analytics pipeline for 100GB+ client datasets',
+          '  • Developed NLP rule-matching engine (TF-IDF + cosine similarity)',
+          '  • Cut manual review by 50% for EMIR, MiFID II, FATCA compliance',
+          '  • Conducted comprehensive regulatory analysis for GovTech solutions',
           '',
-          '2021-2023 | Data Scientist | InsightX',
-          '  • Developed machine learning models using Python and TensorFlow',
-          '  • Created data pipelines processing TB-scale datasets',
-          '  • Built interactive dashboards and visualization tools',
-          '  • Collaborated with product teams to deploy ML solutions'
+          'Aug 2022 – Aug 2023 | Electric Mobility Technology Analyst | Shell, London',
+          '  • Built TCO models for offshore wind electrification vessels',
+          '  • Presented to Shell executives, informing £1M+ investment decisions',
+          '  • Benchmarked power-electronics R&D from 3+ university labs',
+          '  • Led risk assessment of 100+ factors across multiple domains',
+          '',
+          'Oct 2024 – Dec 2024 | Venturer | Raleigh International, South Africa',
+          '  • Led 17-person, 19-day trek with navigation and logistics planning',
+          '  • Implemented wildlife conservation and sustainable farming initiatives',
+          '  • Delivered after-school programs to 60+ children'
         ];
         break;
 
       case 'projects':
         output = [
-          'Featured Projects:',
+          'Quantitative Projects:',
           '',
-          '🌱 SmartGarden',
-          '   IoT plant monitoring system with automated watering',
-          '   Tech: ESP32, Flask, React, PostgreSQL',
-          '   → https://github.com/evanlynch/smartgarden',
+          '📈 Stock Market Price Prediction with LSTM Neural Network',
+          '   Tech: Python, TensorFlow, Pandas, Scikit-Learn',
+          '   • Retrieved 20+ years of equity data via Alpha Vantage API',
+          '   • Designed LSTM neural network for time-series forecasting',
+          '   • Achieved superior performance vs moving-average baseline',
+          '   • Automated preprocessing with MinMaxScaler normalization',
           '',
-          '✍️ Quill-AI', 
-          '   AI-assisted writing application with real-time suggestions',
-          '   Tech: Next.js, OpenAI API, Prisma, Vercel',
-          '   → https://github.com/evanlynch/quill-ai',
-          '',
-          '📊 DataViz Studio',
-          '   Interactive data visualization platform',
-          '   Tech: D3.js, Python, FastAPI, Docker',
-          '   → https://github.com/evanlynch/dataviz-studio'
+          '📚 Technical Skills & Certifications:',
+          '   Languages: Python (Proficient), Matlab, SQL (Familiar)',
+          '   Frameworks: Pandas, NumPy, Scikit-Learn, Git, Seaborn, Matplotlib',
+          '   Certifications: Stanford ML, Codecademy Data Science,',
+          '   Alan Turing Data Viz, Akuna Capital Options 101'
         ];
         break;
 
@@ -217,20 +222,20 @@ const Index = () => {
         output = [
           'Personal Interests & Hobbies:',
           '',
-          '🏃‍♂️ Trail Running',
-          '   Exploring mountain trails and training for ultramarathons',
+          '♞ Chess',
+          '   Currently ranked in top 6% on Chess.com',
           '',
-          '📸 Analog Photography', 
-          '   Shooting film with vintage cameras, developing in darkroom',
+          '🎾 Competitive Tennis', 
+          '   Active player and coach in spare time',
           '',
-          '🎮 Indie Game Development',
-          '   Creating pixel art games in Unity during weekends',
+          '💪 Health & Fitness',
+          '   Regular training and wellness focus',
           '',
-          '☕ Coffee Brewing',
-          '   Perfecting pour-over techniques and roasting beans',
+          '🌍 Languages',
+          '   Learning German and Danish (Beginner level)',
           '',
-          '📚 Sci-Fi Literature',
-          '   Reading everything from Asimov to contemporary cyberpunk'
+          '📚 Quantitative Finance',
+          '   Exploring systematic trading strategies and risk models'
         ];
         break;
 
@@ -260,7 +265,10 @@ const Index = () => {
 
       case 'tldr':
         output = [
-          'TL;DR: Full-stack engineer & AI enthusiast building the future, one line of code at a time. 🚀'
+          'TL;DR: Aspiring quant researcher with Python expertise, MSc Engineering',
+          'with Finance (UCL), and experience in data pipelines, ML models, and',
+          'financial analysis. Ready to apply systematic strategies in quantitative',
+          'investing and risk management. 📊'
         ];
         break;
 
