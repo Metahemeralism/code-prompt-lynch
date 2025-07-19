@@ -24,6 +24,8 @@ const Index = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [showVisitorBookModal, setShowVisitorBookModal] = useState(false);
+  const [visitorComment, setVisitorComment] = useState('');
   const [cursorVisible, setCursorVisible] = useState(true);
   const [typingText, setTypingText] = useState('');
   const [currentlyTypingIndex, setCurrentlyTypingIndex] = useState(-1);
@@ -301,8 +303,8 @@ const Index = () => {
           });
         }
         
-        output.push('', '💬 Leave a comment (max 200 chars):');
-        setAwaitingVisitorComment(true);
+        // Show the visitor book modal
+        setShowVisitorBookModal(true);
         break;
 
       case 'tldr':
@@ -362,38 +364,36 @@ const Index = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim() && !isTyping) {
-      if (awaitingVisitorComment) {
-        // Handle visitor comment submission
-        const comment = input.trim();
-        if (comment.length > 200) {
-          setHistory(prev => [...prev, {
-            input: comment,
-            output: ['❌ Comment too long! Maximum 200 characters allowed.'],
-            timestamp: new Date()
-          }]);
-        } else {
-          const newComment: VisitorComment = {
-            id: Date.now().toString(),
-            message: comment,
-            timestamp: new Date()
-          };
-          
-          const updatedComments = [...visitorComments, newComment];
-          setVisitorComments(updatedComments);
-          localStorage.setItem('evanLynchVisitorComments', JSON.stringify(updatedComments));
-          
-          setHistory(prev => [...prev, {
-            input: comment,
-            output: ['✅ Thank you for your comment! It has been added to the visitor book.'],
-            timestamp: new Date()
-          }]);
-        }
-        setAwaitingVisitorComment(false);
-      } else {
-        executeCommand(input.trim());
-      }
+      executeCommand(input.trim());
       setInput('');
     }
+  };
+
+  const handleVisitorCommentSubmit = () => {
+    const comment = visitorComment.trim();
+    if (comment.length > 200) {
+      return; // Let the UI show the error
+    }
+    
+    const newComment: VisitorComment = {
+      id: Date.now().toString(),
+      message: comment,
+      timestamp: new Date()
+    };
+    
+    const updatedComments = [...visitorComments, newComment];
+    setVisitorComments(updatedComments);
+    localStorage.setItem('evanLynchVisitorComments', JSON.stringify(updatedComments));
+    
+    // Add success message to terminal
+    setHistory(prev => [...prev, {
+      input: 'visitor comment',
+      output: ['✅ Thank you for your comment! It has been added to the visitor book.'],
+      timestamp: new Date()
+    }]);
+    
+    setVisitorComment('');
+    setShowVisitorBookModal(false);
   };
 
   const handleBlogClick = (postTitle: string) => {
@@ -550,6 +550,62 @@ const Index = () => {
             </div>
             <div className="text-gray-300 leading-relaxed">
               {selectedPost.content}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Visitor Book Modal */}
+      {showVisitorBookModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-md w-full">
+            <div className="flex justify-between items-start mb-4">
+              <h2 className="text-xl font-bold text-white">💬 Leave a Comment</h2>
+              <button
+                onClick={() => {
+                  setShowVisitorBookModal(false);
+                  setVisitorComment('');
+                }}
+                className="text-gray-400 hover:text-white text-xl"
+              >
+                ×
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <textarea
+                value={visitorComment}
+                onChange={(e) => setVisitorComment(e.target.value)}
+                placeholder="leave something nice"
+                className="w-full h-24 bg-gray-800 border border-gray-600 rounded p-3 text-white placeholder-gray-400 resize-none font-mono text-sm focus:outline-none focus:border-green-400"
+                maxLength={200}
+                autoFocus
+              />
+              
+              <div className="flex justify-between items-center">
+                <span className={`text-sm ${visitorComment.length > 200 ? 'text-red-400' : 'text-gray-400'}`}>
+                  {visitorComment.length}/200 characters
+                </span>
+                
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      setShowVisitorBookModal(false);
+                      setVisitorComment('');
+                    }}
+                    className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleVisitorCommentSubmit}
+                    disabled={!visitorComment.trim() || visitorComment.length > 200}
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
