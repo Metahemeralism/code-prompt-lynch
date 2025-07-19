@@ -20,7 +20,6 @@ const Index = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [cursorVisible, setCursorVisible] = useState(true);
-  const [helpShown, setHelpShown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
 
@@ -72,7 +71,7 @@ const Index = () => {
       let displayLine = '';
       for (const char of line) {
         displayLine += char;
-        await new Promise(resolve => setTimeout(resolve, 1));
+        await new Promise(resolve => setTimeout(resolve, 70));
         
         setHistory(prev => {
           const newHistory = [...prev];
@@ -120,7 +119,6 @@ const Index = () => {
 
     switch (command) {
       case 'help':
-        setHelpShown(true);
         output = [
           'Available commands:',
           '',
@@ -242,37 +240,25 @@ const Index = () => {
         break;
 
       case 'clear':
-        if (helpShown) {
-          // Only clear commands after help was shown
-          const helpIndex = history.findIndex(cmd => cmd.input.toLowerCase() === 'help');
-          if (helpIndex !== -1) {
-            setHistory(prev => prev.slice(0, helpIndex + 1));
-          }
-        } else {
-          setHistory([]);
-        }
+        setHistory([]);
         return;
 
       case 'ascii':
         output = [
           '',
-          '  ┌─── def evan_lynch(): ───┐',
-          '  │                       │',
-          '  │  ███████ ██   █ ███████ ██   █  │',
-          '  │  ██      ██   █ ██   ██ ███  █  │',
-          '  │  █████   ██   █ ███████ ██ █ █  │',
-          '  │  ██       ██ ██  ██   ██ ██  ██  │',
-          '  │  ███████   ███   ██   ██ ██   █  │',
-          '  │                       │',
-          '  │  ██      ██   █ ██   █  ███████ ██   █  │',
-          '  │  ██      ██   █ ███  █  ██      ██   █  │',
-          '  │  ██      ██   █ ██ █ █  ██      ███████  │',
-          '  │  ██      ██   █ ██  ██  ██      ██   ██  │',
-          '  │  ███████  ███ █  ██   █ ███████ ██   ██  │',
-          '  │                       │',
-          '  │    return "Software Engineer & AI Enthusiast"  │',
-          '  └─── class: Developer ───┘',
-          '        # Built with Python syntax',
+          '  ███████╗██╗   ██╗ █████╗ ███╗   ██╗',
+          '  ██╔════╝██║   ██║██╔══██╗████╗  ██║', 
+          '  █████╗  ██║   ██║███████║██╔██╗ ██║',
+          '  ██╔══╝  ╚██╗ ██╔╝██╔══██║██║╚██╗██║',
+          '  ███████╗ ╚████╔╝ ██║  ██║██║ ╚████║',
+          '  ╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝',
+          '',
+          '  ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗',
+          '  ██║     ██║   ██║████╗  ██║██╔════╝██║  ██║',
+          '  ██║     ██║   ██║██╔██╗ ██║██║     ███████║',
+          '  ██║     ██║   ██║██║╚██╗██║██║     ██╔══██║', 
+          '  ███████╗╚██████╔╝██║ ╚████║╚██████╗██║  ██║',
+          '  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝',
           ''
         ];
         break;
@@ -306,7 +292,6 @@ const Index = () => {
 
   const renderOutput = (output: string[], commandInput: string) => {
     return output.map((line, index) => {
-
       // Check if this is a blog post line
       const isBlogPost = commandInput.toLowerCase() === 'blog' && 
                         line.includes('[click to read]') && 

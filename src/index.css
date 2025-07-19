@@ -99,31 +99,3 @@ All colors MUST be HSL.
     font-family: 'JetBrains Mono', 'Courier New', monospace;
   }
 }
-
-/* Python 3D Text Animations */
-@keyframes float-0 {
-  0%, 100% { 
-    transform: translateY(0px) rotate(0deg); 
-  }
-  50% { 
-    transform: translateY(-10px) rotate(5deg); 
-  }
-}
-
-@keyframes float-1 {
-  0%, 100% { 
-    transform: translateY(0px) rotate(0deg); 
-  }
-  50% { 
-    transform: translateY(-15px) rotate(-3deg); 
-  }
-}
-
-@keyframes float-2 {
-  0%, 100% { 
-    transform: translateY(0px) rotate(0deg); 
-  }
-  50% { 
-    transform: translateY(-8px) rotate(2deg); 
-  }
-}
