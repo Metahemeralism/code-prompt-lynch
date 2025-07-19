@@ -26,13 +26,6 @@ const Index = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
 
-// Constants
-  const TYPING_SPEED = 20;
-  const SCROLL_THRESHOLD = 100;
-  const CURSOR_BLINK_INTERVAL = 1000;
-  const AUTO_SCROLL_DELAY = 50;
-  const VISITOR_RANGE = { min: 100, max: 1099 };
-
   // Sample blog posts
   const blogPosts: BlogPost[] = [
     {
@@ -58,7 +51,7 @@ const Index = () => {
     if (storedCount) {
       setVisitorNumber(parseInt(storedCount));
     } else {
-      const newVisitorNumber = Math.floor(Math.random() * (VISITOR_RANGE.max - VISITOR_RANGE.min)) + VISITOR_RANGE.min;
+      const newVisitorNumber = Math.floor(Math.random() * 1000) + 100; // Start from a random number between 100-1099
       localStorage.setItem('evanLynchVisitorCount', newVisitorNumber.toString());
       setVisitorNumber(newVisitorNumber);
     }
@@ -68,7 +61,7 @@ const Index = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCursorVisible(prev => !prev);
-    }, CURSOR_BLINK_INTERVAL);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -83,31 +76,19 @@ const Index = () => {
   useEffect(() => {
     if (terminalRef.current) {
       const terminal = terminalRef.current;
-      const isNearBottom = terminal.scrollTop + terminal.clientHeight >= terminal.scrollHeight - SCROLL_THRESHOLD;
+      const isNearBottom = terminal.scrollTop + terminal.clientHeight >= terminal.scrollHeight - 100;
       
+      // Only auto-scroll if user is already near the bottom
       if (isNearBottom) {
         setTimeout(() => {
           terminal.scrollTo({
             top: terminal.scrollHeight,
             behavior: 'smooth'
           });
-        }, AUTO_SCROLL_DELAY);
+        }, 50);
       }
     }
   }, [history, typingText]);
-
-  const updateLastCommand = (output: string[]) => {
-    setHistory(prev => {
-      const newHistory = [...prev];
-      if (newHistory.length > 0) {
-        newHistory[newHistory.length - 1] = {
-          ...newHistory[newHistory.length - 1],
-          output
-        };
-      }
-      return newHistory;
-    });
-  };
 
   const displayOutput = (text: string[], isAscii: boolean = false): void => {
     if (isAscii) {
@@ -123,28 +104,51 @@ const Index = () => {
         } else {
           clearInterval(typeInterval);
           setIsTyping(false);
-          updateLastCommand(text);
+          // Update history with final text
+          setHistory(prev => {
+            const newHistory = [...prev];
+            if (newHistory.length > 0) {
+              newHistory[newHistory.length - 1] = {
+                ...newHistory[newHistory.length - 1],
+                output: text
+              };
+            }
+            return newHistory;
+          });
           setTypingText('');
         }
-      }, TYPING_SPEED);
+      }, 20);
     } else {
-      updateLastCommand(text);
+      setHistory(prev => {
+        const newHistory = [...prev];
+        if (newHistory.length > 0) {
+          newHistory[newHistory.length - 1] = {
+            ...newHistory[newHistory.length - 1],
+            output: text
+          };
+        }
+        return newHistory;
+      });
     }
   };
 
-  const addCommandToHistory = (cmd: string) => {
+  const executeCommand = async (cmd: string) => {
+    const command = cmd.toLowerCase().trim();
+    
+    // Add command to history immediately
     const newCommand: Command = {
       input: cmd,
       output: [''],
       timestamp: new Date()
     };
+    
     setHistory(prev => [...prev, newCommand]);
-  };
 
-  const getCommandOutput = (command: string): string[] => {
+    let output: string[] = [];
+
     switch (command) {
       case 'help':
-        return [
+        output = [
           'Available commands:',
           '',
           '  about .............. Overview of Evan Lynch',
@@ -159,9 +163,10 @@ const Index = () => {
           '',
           'Type any command to get started!'
         ];
+        break;
 
       case 'about':
-        return [
+        output = [
           "I'm Evan Lynch, an aspiring quant researcher/trader skilled in Python",
           "data engineering, statistical modelling, and risk analysis. Currently",
           "pursuing a predicted First-class MSc Engineering with Finance at UCL,",
@@ -172,9 +177,10 @@ const Index = () => {
           "Languages: Fluent English, Beginner German & Danish",
           "Interests: Chess (Top 6% Chess.com), Competitive Tennis & Coaching"
         ];
+        break;
 
       case 'experience':
-        return [
+        output = [
           'Professional Experience:',
           '',
           'March 2025 – Present | Data Science Intern | Datactics, Belfast UK',
@@ -194,9 +200,10 @@ const Index = () => {
           '  • Implemented wildlife conservation and sustainable farming initiatives',
           '  • Delivered after-school programs to 60+ children'
         ];
+        break;
 
       case 'projects':
-        return [
+        output = [
           'Quantitative Projects:',
           '',
           '📈 Stock Market Price Prediction with LSTM Neural Network',
@@ -212,9 +219,10 @@ const Index = () => {
           '   Certifications: Stanford ML, Codecademy Data Science,',
           '   Alan Turing Data Viz, Akuna Capital Options 101'
         ];
+        break;
 
       case 'interests':
-        return [
+        output = [
           'Personal Interests & Hobbies:',
           '',
           '♞ Chess',
@@ -232,9 +240,10 @@ const Index = () => {
           '📚 Quantitative Finance',
           '   Exploring systematic trading strategies and risk models'
         ];
+        break;
 
       case 'socials':
-        return [
+        output = [
           'Connect with me:',
           '',
           '[in] LinkedIn → https://www.linkedin.com/in/-evanlynch/',
@@ -243,9 +252,10 @@ const Index = () => {
           '',
           'Feel free to reach out for collaborations or just to chat!'
         ];
+        break;
 
       case 'blog':
-        return [
+        output = [
           'Recent Blog Posts:',
           '',
           ...blogPosts.map((post, index) => 
@@ -254,62 +264,60 @@ const Index = () => {
           '',
           'Click on any post title to read the full article.'
         ];
+        break;
 
       case 'tldr':
-        return [
+        output = [
           'TL;DR: Aspiring quant researcher with Python expertise, MSc Engineering',
           'with Finance (UCL), and experience in data pipelines, ML models, and',
           'financial analysis. Ready to apply systematic strategies in quantitative',
           'investing and risk management. 📊'
         ];
+        break;
 
       case 'clear':
-        return [];
+        // Find the last occurrence of 'help' command
+        const lastHelpIndex = history.map(cmd => cmd.input.toLowerCase().trim()).lastIndexOf('help');
+        if (lastHelpIndex !== -1) {
+          // Keep everything up to and including the 'help' command
+          setHistory(prev => prev.slice(0, lastHelpIndex + 1));
+        } else {
+          output = ['Please type "help" first to see available commands.'];
+        }
+        if (lastHelpIndex !== -1) return;
+        break;
 
       case 'ascii':
-        return [
+        output = [
           '',
-          '  ███████╗██╗   ██╗ █████╗ ███╗   ██╗',
+          '  ███████╗██╗   ██╗ █████╗  ███╗    ██╗',
           '  ██╔════╝██║   ██║██╔══██╗████╗  ██║',
-          '  █████╗  ██║   ██║███████║██╔██╗ ██║',
+          '  █████╗   ██║   ██║███████║██╔██╗ ██║',
           '  ██╔══╝  ╚██╗ ██╔╝██╔══██║██║╚██╗██║',
           '  ███████╗ ╚████╔╝ ██║  ██║██║ ╚████║',
           '  ╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝',
           '',
-          '  ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗',
-          '  ██║     ██║   ██║████╗  ██║██╔════╝██║  ██║',
-          '  ██║     ██║   ██║██╔██╗ ██║██║     ███████║',
-          '  ██║     ██║   ██║██║╚██╗██║██║     ██╔══██║',
+          '  ██╗       ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗',
+          '  ██║       ██║   ██║████╗  ██║██╔════╝██║  ██║',
+          '  ██║       ██║   ██║██╔██╗ ██║██║     ███████║',
+          '  ██║       ██║   ██║██║╚██╗██║██║     ██╔══██║',
           '  ███████╗╚██████╔╝██║ ╚████║╚██████╗██║  ██║',
           '  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝',
           ''
         ];
+        displayOutput(output, true);
+        return;
+        break;
 
       default:
-        return [
-          `Command not found: ${command}`,
+        output = [
+          `Command not found: ${cmd}`,
           `Type 'help' to see available commands.`
         ];
-    }
-  };
-
-  const executeCommand = async (cmd: string) => {
-    const command = cmd.toLowerCase().trim();
-    addCommandToHistory(cmd);
-
-    if (command === 'clear') {
-      const lastHelpIndex = history.map(cmd => cmd.input.toLowerCase().trim()).lastIndexOf('help');
-      if (lastHelpIndex !== -1) {
-        setHistory(prev => prev.slice(0, lastHelpIndex + 1));
-        return;
-      } else {
-        displayOutput(['Please type "help" first to see available commands.']);
-        return;
-      }
+        break;
     }
 
-    const output = getCommandOutput(command);
-    displayOutput(output, command === 'ascii');
+    displayOutput(output);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
