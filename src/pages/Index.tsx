@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 
 interface BlogPost {
@@ -22,6 +21,7 @@ const Index = () => {
   const [cursorVisible, setCursorVisible] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
+  const currentCommandRef = useRef<HTMLDivElement>(null);
 
   // Sample blog posts
   const blogPosts: BlogPost[] = [
@@ -57,10 +57,28 @@ const Index = () => {
     }
   }, [showModal]);
 
-  // Scroll to bottom when history updates
+  // Scroll to show the current command when history updates
   useEffect(() => {
-    if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    if (terminalRef.current && currentCommandRef.current) {
+      const terminal = terminalRef.current;
+      const currentCommand = currentCommandRef.current;
+      
+      // Get the position of the current command relative to the terminal
+      const commandRect = currentCommand.getBoundingClientRect();
+      const terminalRect = terminal.getBoundingClientRect();
+      
+      // Calculate the scroll position to center the current command
+      const commandTop = currentCommand.offsetTop;
+      const terminalHeight = terminal.clientHeight;
+      const commandHeight = currentCommand.offsetHeight;
+      
+      // Center the command in the viewport
+      const targetScroll = commandTop - (terminalHeight / 2) + (commandHeight / 2);
+      
+      terminal.scrollTo({
+        top: Math.max(0, targetScroll),
+        behavior: 'smooth'
+      });
     }
   }, [history]);
 
@@ -359,7 +377,11 @@ const Index = () => {
 
         {/* Command History */}
         {history.map((cmd, index) => (
-          <div key={index} className="mb-2">
+          <div 
+            key={index} 
+            className="mb-2"
+            ref={index === history.length - 1 ? currentCommandRef : null}
+          >
             <div className="flex items-center mb-1">
               <span className="text-green-400 mr-2">λ</span>
               <span className="text-white">{cmd.input}</span>
