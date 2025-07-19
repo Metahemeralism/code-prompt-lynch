@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { MazeGame } from '@/components/MazeGame';
+import { MazeLeaderboard } from '@/components/MazeLeaderboard';
 
 interface BlogPost {
   title: string;
@@ -32,6 +34,7 @@ const Index = () => {
   const [visitorNumber, setVisitorNumber] = useState(0);
   const [visitorComments, setVisitorComments] = useState<VisitorComment[]>([]);
   const [awaitingVisitorComment, setAwaitingVisitorComment] = useState(false);
+  const [mazeCompletionTime, setMazeCompletionTime] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
@@ -180,7 +183,7 @@ const Index = () => {
           '  visitor book ....... Leave a comment (200 chars max)',
           '  tldr ............... Quick summary',
           '  clear .............. Clear terminal',
-          '  ascii .............. Display ASCII art',
+          '  ascii .............. Interactive maze game',
           '',
           'Type any command to get started!'
         ];
@@ -331,33 +334,7 @@ const Index = () => {
         break;
 
       case 'ascii':
-        output = [
-          '',
-          '                                .=========.                                ',
-          '                            .===| |   |   |===.                            ',
-          "                        .=====+=' | .=' | '===+===.                        ",
-          '                    .===|     |     |   |     |   |===.                    ',
-          "                .=====+=' ====' .====== |===. '=. '=======.                ",
-          '            .===|     |     |   |       |   |   |         |===.            ',
-          '        .===+======== | ==. | ==+== .====== |=. |== | .=======+===.        ',
-          '    .===|   |         |   | |   |   |       | | |   | |       |   |===.    ',
-          ".=====+=' | | .========== | '=. | .=| ==. | | | | .===' | .=. | | '===+===.",
-          '|     |   |   |     |     |   |   | |   | |   | | |     | | | | |     |   |',
-          "| ====' | |===' .== | ======. '===' | .=' |===' | | ====' | | '=' .== '== |",
-          '|       | |     |   |       |         |   |     |     |   | |     |       |',
-          "'=======| | ====| | '=. .===| .=======' | | ========= | ==| '==== |======='",
-          "    '===|       | |   | |   | |         | |       |   |   |       |==='    ",
-          "        '=======| '===' | | '=' .=======+=======. '====== |======='        ",
-          "            '===|       | |     |       |       |         |==='            ",
-          "                '=======| '=====' ===== | ==. ==' .======='                ",
-          "                    '===|           |   |   |     |==='                    ",
-          "                        '========== | ==' .=+====='                        ",
-          "                            '===|   |     |==='                            ",
-          "                                '========='                                ",
-          ''
-        ];
-        displayOutput(output, true);
-        return;
+        output = ['Loading interactive maze game...'];
         break;
 
       default:
@@ -414,12 +391,17 @@ const Index = () => {
     }
   };
 
+  const handleMazeCompletion = (time: number) => {
+    setMazeCompletionTime(time);
+  };
+
   const renderOutput = (output: string[], commandInput: string) => {
-    // Special handling for ASCII art to preserve formatting
+    // Special handling for ASCII maze game
     if (commandInput.toLowerCase().trim() === 'ascii') {
       return (
-        <div className="text-green-400 whitespace-pre font-mono text-center">
-          {output.join('\n')}
+        <div>
+          <MazeGame onComplete={handleMazeCompletion} />
+          <MazeLeaderboard latestTime={mazeCompletionTime} />
         </div>
       );
     }
