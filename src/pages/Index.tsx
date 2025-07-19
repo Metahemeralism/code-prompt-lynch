@@ -403,7 +403,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 p-4 font-mono overflow-hidden relative">
+    <div className="min-h-screen bg-black text-gray-300 p-4 font-mono relative">
       {/* Visitor Counter */}
       <div className="absolute top-4 right-4 text-green-400 text-sm font-mono z-10">
         Visitor #{visitorNumber.toLocaleString()}
