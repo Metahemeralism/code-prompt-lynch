@@ -12,6 +12,12 @@ interface Command {
   timestamp: Date;
 }
 
+interface VisitorComment {
+  message: string;
+  timestamp: Date;
+  id: string;
+}
+
 const Index = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<Command[]>([]);
@@ -22,6 +28,8 @@ const Index = () => {
   const [typingText, setTypingText] = useState('');
   const [currentlyTypingIndex, setCurrentlyTypingIndex] = useState(-1);
   const [visitorNumber, setVisitorNumber] = useState(0);
+  const [visitorComments, setVisitorComments] = useState<VisitorComment[]>([]);
+  const [awaitingVisitorComment, setAwaitingVisitorComment] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
@@ -54,6 +62,14 @@ const Index = () => {
       const newVisitorNumber = Math.floor(Math.random() * 1000) + 100; // Start from a random number between 100-1099
       localStorage.setItem('evanLynchVisitorCount', newVisitorNumber.toString());
       setVisitorNumber(newVisitorNumber);
+    }
+  }, []);
+
+  // Load visitor comments from localStorage
+  useEffect(() => {
+    const storedComments = localStorage.getItem('evanLynchVisitorComments');
+    if (storedComments) {
+      setVisitorComments(JSON.parse(storedComments));
     }
   }, []);
 
@@ -157,6 +173,7 @@ const Index = () => {
           '  interests .......... Hobbies & passions',
           '  socials ............ Social media links',
           '  blog ............... Recent blog posts',
+          '  visitor book ....... Leave a comment (200 chars max)',
           '  tldr ............... Quick summary',
           '  clear .............. Clear terminal',
           '  ascii .............. Display ASCII art',
@@ -266,6 +283,28 @@ const Index = () => {
         ];
         break;
 
+      case 'visitor book':
+        output = [
+          '📝 Visitor Book',
+          '',
+          '✨ Recent Comments:',
+          ''
+        ];
+        
+        if (visitorComments.length === 0) {
+          output.push('  No comments yet. Be the first to leave one!');
+        } else {
+          visitorComments.slice(-5).reverse().forEach((comment, index) => {
+            const date = new Date(comment.timestamp).toLocaleDateString();
+            output.push(`  "${comment.message}" - ${date}`);
+            if (index < Math.min(4, visitorComments.length - 1)) output.push('');
+          });
+        }
+        
+        output.push('', '💬 Leave a comment (max 200 chars):');
+        setAwaitingVisitorComment(true);
+        break;
+
       case 'tldr':
         output = [
           'TL;DR: Aspiring quant researcher with Python expertise, MSc Engineering',
@@ -323,7 +362,36 @@ const Index = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim() && !isTyping) {
-      executeCommand(input.trim());
+      if (awaitingVisitorComment) {
+        // Handle visitor comment submission
+        const comment = input.trim();
+        if (comment.length > 200) {
+          setHistory(prev => [...prev, {
+            input: comment,
+            output: ['❌ Comment too long! Maximum 200 characters allowed.'],
+            timestamp: new Date()
+          }]);
+        } else {
+          const newComment: VisitorComment = {
+            id: Date.now().toString(),
+            message: comment,
+            timestamp: new Date()
+          };
+          
+          const updatedComments = [...visitorComments, newComment];
+          setVisitorComments(updatedComments);
+          localStorage.setItem('evanLynchVisitorComments', JSON.stringify(updatedComments));
+          
+          setHistory(prev => [...prev, {
+            input: comment,
+            output: ['✅ Thank you for your comment! It has been added to the visitor book.'],
+            timestamp: new Date()
+          }]);
+        }
+        setAwaitingVisitorComment(false);
+      } else {
+        executeCommand(input.trim());
+      }
       setInput('');
     }
   };
