@@ -26,6 +26,13 @@ const Index = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
 
+// Constants
+  const TYPING_SPEED = 20;
+  const SCROLL_THRESHOLD = 100;
+  const CURSOR_BLINK_INTERVAL = 1000;
+  const AUTO_SCROLL_DELAY = 50;
+  const VISITOR_RANGE = { min: 100, max: 1099 };
+
   // Sample blog posts
   const blogPosts: BlogPost[] = [
     {
@@ -51,7 +58,7 @@ const Index = () => {
     if (storedCount) {
       setVisitorNumber(parseInt(storedCount));
     } else {
-      const newVisitorNumber = Math.floor(Math.random() * 1000) + 100; // Start from a random number between 100-1099
+      const newVisitorNumber = Math.floor(Math.random() * (VISITOR_RANGE.max - VISITOR_RANGE.min)) + VISITOR_RANGE.min;
       localStorage.setItem('evanLynchVisitorCount', newVisitorNumber.toString());
       setVisitorNumber(newVisitorNumber);
     }
@@ -61,7 +68,7 @@ const Index = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCursorVisible(prev => !prev);
-    }, 1000);
+    }, CURSOR_BLINK_INTERVAL);
     return () => clearInterval(interval);
   }, []);
 
@@ -76,19 +83,31 @@ const Index = () => {
   useEffect(() => {
     if (terminalRef.current) {
       const terminal = terminalRef.current;
-      const isNearBottom = terminal.scrollTop + terminal.clientHeight >= terminal.scrollHeight - 100;
+      const isNearBottom = terminal.scrollTop + terminal.clientHeight >= terminal.scrollHeight - SCROLL_THRESHOLD;
       
-      // Only auto-scroll if user is already near the bottom
       if (isNearBottom) {
         setTimeout(() => {
           terminal.scrollTo({
             top: terminal.scrollHeight,
             behavior: 'smooth'
           });
-        }, 50);
+        }, AUTO_SCROLL_DELAY);
       }
     }
   }, [history, typingText]);
+
+  const updateLastCommand = (output: string[]) => {
+    setHistory(prev => {
+      const newHistory = [...prev];
+      if (newHistory.length > 0) {
+        newHistory[newHistory.length - 1] = {
+          ...newHistory[newHistory.length - 1],
+          output
+        };
+      }
+      return newHistory;
+    });
+  };
 
   const displayOutput = (text: string[], isAscii: boolean = false): void => {
     if (isAscii) {
@@ -104,51 +123,28 @@ const Index = () => {
         } else {
           clearInterval(typeInterval);
           setIsTyping(false);
-          // Update history with final text
-          setHistory(prev => {
-            const newHistory = [...prev];
-            if (newHistory.length > 0) {
-              newHistory[newHistory.length - 1] = {
-                ...newHistory[newHistory.length - 1],
-                output: text
-              };
-            }
-            return newHistory;
-          });
+          updateLastCommand(text);
           setTypingText('');
         }
-      }, 20);
+      }, TYPING_SPEED);
     } else {
-      setHistory(prev => {
-        const newHistory = [...prev];
-        if (newHistory.length > 0) {
-          newHistory[newHistory.length - 1] = {
-            ...newHistory[newHistory.length - 1],
-            output: text
-          };
-        }
-        return newHistory;
-      });
+      updateLastCommand(text);
     }
   };
 
-  const executeCommand = async (cmd: string) => {
-    const command = cmd.toLowerCase().trim();
-    
-    // Add command to history immediately
+  const addCommandToHistory = (cmd: string) => {
     const newCommand: Command = {
       input: cmd,
       output: [''],
       timestamp: new Date()
     };
-    
     setHistory(prev => [...prev, newCommand]);
+  };
 
-    let output: string[] = [];
-
+  const getCommandOutput = (command: string): string[] => {
     switch (command) {
       case 'help':
-        output = [
+        return [
           'Available commands:',
           '',
           '  about .............. Overview of Evan Lynch',
@@ -163,10 +159,9 @@ const Index = () => {
           '',
           'Type any command to get started!'
         ];
-        break;
 
       case 'about':
-        output = [
+        return [
           "I'm Evan Lynch, an aspiring quant researcher/trader skilled in Python",
           "data engineering, statistical modelling, and risk analysis. Currently",
           "pursuing a predicted First-class MSc Engineering with Finance at UCL,",
@@ -177,10 +172,9 @@ const Index = () => {
           "Languages: Fluent English, Beginner German & Danish",
           "Interests: Chess (Top 6% Chess.com), Competitive Tennis & Coaching"
         ];
-        break;
 
       case 'experience':
-        output = [
+        return [
           'Professional Experience:',
           '',
           'March 2025 – Present | Data Science Intern | Datactics, Belfast UK',
@@ -200,10 +194,9 @@ const Index = () => {
           '  • Implemented wildlife conservation and sustainable farming initiatives',
           '  • Delivered after-school programs to 60+ children'
         ];
-        break;
 
       case 'projects':
-        output = [
+        return [
           'Quantitative Projects:',
           '',
           '📈 Stock Market Price Prediction with LSTM Neural Network',
@@ -219,10 +212,9 @@ const Index = () => {
           '   Certifications: Stanford ML, Codecademy Data Science,',
           '   Alan Turing Data Viz, Akuna Capital Options 101'
         ];
-        break;
 
       case 'interests':
-        output = [
+        return [
           'Personal Interests & Hobbies:',
           '',
           '♞ Chess',
@@ -240,10 +232,9 @@ const Index = () => {
           '📚 Quantitative Finance',
           '   Exploring systematic trading strategies and risk models'
         ];
-        break;
 
       case 'socials':
-        output = [
+        return [
           'Connect with me:',
           '',
           '[in] LinkedIn → https://www.linkedin.com/in/-evanlynch/',
@@ -252,10 +243,9 @@ const Index = () => {
           '',
           'Feel free to reach out for collaborations or just to chat!'
         ];
-        break;
 
       case 'blog':
-        output = [
+        return [
           'Recent Blog Posts:',
           '',
           ...blogPosts.map((post, index) => 
@@ -264,31 +254,20 @@ const Index = () => {
           '',
           'Click on any post title to read the full article.'
         ];
-        break;
 
       case 'tldr':
-        output = [
+        return [
           'TL;DR: Aspiring quant researcher with Python expertise, MSc Engineering',
           'with Finance (UCL), and experience in data pipelines, ML models, and',
           'financial analysis. Ready to apply systematic strategies in quantitative',
           'investing and risk management. 📊'
         ];
-        break;
 
       case 'clear':
-        // Find the last occurrence of 'help' command
-        const lastHelpIndex = history.map(cmd => cmd.input.toLowerCase().trim()).lastIndexOf('help');
-        if (lastHelpIndex !== -1) {
-          // Keep everything up to and including the 'help' command
-          setHistory(prev => prev.slice(0, lastHelpIndex + 1));
-        } else {
-          output = ['Please type "help" first to see available commands.'];
-        }
-        if (lastHelpIndex !== -1) return;
-        break;
+        return [];
 
       case 'ascii':
-        output = [
+        return [
           '',
           '  ███████╗██╗   ██╗ █████╗ ███╗   ██╗',
           '  ██╔════╝██║   ██║██╔══██╗████╗  ██║',
@@ -305,19 +284,32 @@ const Index = () => {
           '  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝',
           ''
         ];
-        displayOutput(output, true);
-        return;
-        break;
 
       default:
-        output = [
-          `Command not found: ${cmd}`,
+        return [
+          `Command not found: ${command}`,
           `Type 'help' to see available commands.`
         ];
-        break;
+    }
+  };
+
+  const executeCommand = async (cmd: string) => {
+    const command = cmd.toLowerCase().trim();
+    addCommandToHistory(cmd);
+
+    if (command === 'clear') {
+      const lastHelpIndex = history.map(cmd => cmd.input.toLowerCase().trim()).lastIndexOf('help');
+      if (lastHelpIndex !== -1) {
+        setHistory(prev => prev.slice(0, lastHelpIndex + 1));
+        return;
+      } else {
+        displayOutput(['Please type "help" first to see available commands.']);
+        return;
+      }
     }
 
-    displayOutput(output);
+    const output = getCommandOutput(command);
+    displayOutput(output, command === 'ascii');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
