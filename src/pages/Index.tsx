@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
+import PythonText3D from '../components/PythonText3D';
 
 interface BlogPost {
   title: string;
@@ -254,22 +255,20 @@ const Index = () => {
         return;
 
       case 'ascii':
-        output = [
-          '',
-          '  ███████ ██   █ ███████ ██   █',
-          '  ██      ██   █ ██   ██ ███  █',
-          '  █████   ██   █ ███████ ██ █ █',
-          '  ██       ██ ██  ██   ██ ██  ██',
-          '  ███████   ███   ██   ██ ██   █',
-          '',
-          '  ██      ██   █ ██   █  ███████ ██   █',
-          '  ██      ██   █ ███  █  ██      ██   █',
-          '  ██      ██   █ ██ █ █  ██      ███████',
-          '  ██      ██   █ ██  ██  ██      ██   ██',
-          '  ███████  ███ █  ██   █ ███████ ██   ██',
-          ''
-        ];
-        break;
+        // Clear the terminal and show 3D component
+        setHistory(prev => [...prev.slice(0, -1), {
+          ...prev[prev.length - 1],
+          output: ['Loading 3D Python syntax...']
+        }]);
+        
+        // Add the 3D component after a brief delay
+        setTimeout(() => {
+          setHistory(prev => [...prev.slice(0, -1), {
+            ...prev[prev.length - 1],
+            output: ['3D_PYTHON_COMPONENT']
+          }]);
+        }, 500);
+        return;
 
       default:
         output = [
@@ -300,6 +299,15 @@ const Index = () => {
 
   const renderOutput = (output: string[], commandInput: string) => {
     return output.map((line, index) => {
+      // Handle 3D Python component
+      if (line === '3D_PYTHON_COMPONENT') {
+        return (
+          <div key={index} className="my-4">
+            <PythonText3D />
+          </div>
+        );
+      }
+
       // Check if this is a blog post line
       const isBlogPost = commandInput.toLowerCase() === 'blog' && 
                         line.includes('[click to read]') && 
