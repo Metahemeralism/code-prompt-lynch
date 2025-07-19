@@ -21,6 +21,7 @@ const Index = () => {
   const [cursorVisible, setCursorVisible] = useState(true);
   const [typingText, setTypingText] = useState('');
   const [currentlyTypingIndex, setCurrentlyTypingIndex] = useState(-1);
+  const [visitorNumber, setVisitorNumber] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
@@ -43,6 +44,18 @@ const Index = () => {
       content: "My journey transitioning from data science to full-stack engineering taught me valuable lessons about bridging the gap between research and production systems..."
     }
   ];
+
+  // Initialize visitor counter
+  useEffect(() => {
+    const storedCount = localStorage.getItem('evanLynchVisitorCount');
+    if (storedCount) {
+      setVisitorNumber(parseInt(storedCount));
+    } else {
+      const newVisitorNumber = Math.floor(Math.random() * 1000) + 100; // Start from a random number between 100-1099
+      localStorage.setItem('evanLynchVisitorCount', newVisitorNumber.toString());
+      setVisitorNumber(newVisitorNumber);
+    }
+  }, []);
 
   // Cursor blinking effect
   useEffect(() => {
@@ -379,7 +392,11 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 p-4 font-mono overflow-hidden">
+    <div className="min-h-screen bg-black text-gray-300 p-4 font-mono overflow-hidden relative">
+      {/* Visitor Counter */}
+      <div className="absolute top-4 right-4 text-green-400 text-sm font-mono">
+        Visitor #{visitorNumber.toLocaleString()}
+      </div>
       <div 
         ref={terminalRef}
         className="h-screen overflow-y-auto terminal-container"
