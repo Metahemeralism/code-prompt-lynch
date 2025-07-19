@@ -19,6 +19,8 @@ const Index = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [cursorVisible, setCursorVisible] = useState(true);
+  const [typingText, setTypingText] = useState('');
+  const [currentlyTypingIndex, setCurrentlyTypingIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
@@ -82,17 +84,46 @@ const Index = () => {
     }
   }, [history]);
 
-  const displayOutput = (text: string[]): void => {
-    setHistory(prev => {
-      const newHistory = [...prev];
-      if (newHistory.length > 0) {
-        newHistory[newHistory.length - 1] = {
-          ...newHistory[newHistory.length - 1],
-          output: text
-        };
-      }
-      return newHistory;
-    });
+  const displayOutput = (text: string[], isAscii: boolean = false): void => {
+    if (isAscii) {
+      setIsTyping(true);
+      setTypingText('');
+      const fullText = text.join('\n');
+      
+      let currentIndex = 0;
+      const typeInterval = setInterval(() => {
+        if (currentIndex < fullText.length) {
+          setTypingText(fullText.slice(0, currentIndex + 1));
+          currentIndex++;
+        } else {
+          clearInterval(typeInterval);
+          setIsTyping(false);
+          // Update history with final text
+          setHistory(prev => {
+            const newHistory = [...prev];
+            if (newHistory.length > 0) {
+              newHistory[newHistory.length - 1] = {
+                ...newHistory[newHistory.length - 1],
+                output: text
+              };
+            }
+            return newHistory;
+          });
+          setTypingText('');
+        }
+      }, 20);
+    } else {
+      setHistory(prev => {
+        const newHistory = [...prev];
+        if (newHistory.length > 0) {
+          newHistory[newHistory.length - 1] = {
+            ...newHistory[newHistory.length - 1],
+            output: text
+          };
+        }
+        return newHistory;
+      });
+    }
   };
 
   const executeCommand = async (cmd: string) => {
@@ -261,6 +292,8 @@ const Index = () => {
           '  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝',
           ''
         ];
+        displayOutput(output, true);
+        return;
         break;
 
       default:
@@ -386,7 +419,13 @@ const Index = () => {
               <span className="text-green-400 mr-2">λ</span>
               <span className="text-white">{cmd.input}</span>
             </div>
-            {renderOutput(cmd.output, cmd.input)}
+            {cmd.input.toLowerCase().trim() === 'ascii' && isTyping && index === history.length - 1 ? (
+              <div className="text-green-400 whitespace-pre">
+                {typingText}
+              </div>
+            ) : (
+              renderOutput(cmd.output, cmd.input)
+            )}
           </div>
         ))}
 
