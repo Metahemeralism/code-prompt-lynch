@@ -115,14 +115,16 @@ const Index = () => {
       const fullText = text.join('\n');
       
       let currentIndex = 0;
+      const charsPerFrame = 8; // Type multiple characters at once for speed
       const typeInterval = setInterval(() => {
         if (currentIndex < fullText.length) {
-          setTypingText(fullText.slice(0, currentIndex + 1));
-          currentIndex++;
+          // Advance by multiple characters for faster typing
+          currentIndex = Math.min(currentIndex + charsPerFrame, fullText.length);
+          setTypingText(fullText.slice(0, currentIndex));
         } else {
           clearInterval(typeInterval);
           setIsTyping(false);
-          // Update history with final text
+          // Update history with final text to preserve formatting
           setHistory(prev => {
             const newHistory = [...prev];
             if (newHistory.length > 0) {
@@ -135,7 +137,7 @@ const Index = () => {
           });
           setTypingText('');
         }
-      }, 20);
+      }, 3); // Much faster interval
     } else {
       setHistory(prev => {
         const newHistory = [...prev];
