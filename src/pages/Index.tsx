@@ -59,30 +59,20 @@ const Index = () => {
     }
   }, [showModal]);
 
-  // Scroll to show the current command when history updates
+  // Scroll to bottom to keep input visible when history updates
   useEffect(() => {
-    if (terminalRef.current && currentCommandRef.current) {
+    if (terminalRef.current) {
       const terminal = terminalRef.current;
-      const currentCommand = currentCommandRef.current;
       
-      // Get the position of the current command relative to the terminal
-      const commandRect = currentCommand.getBoundingClientRect();
-      const terminalRect = terminal.getBoundingClientRect();
-      
-      // Calculate the scroll position to center the current command
-      const commandTop = currentCommand.offsetTop;
-      const terminalHeight = terminal.clientHeight;
-      const commandHeight = currentCommand.offsetHeight;
-      
-      // Center the command in the viewport
-      const targetScroll = commandTop - (terminalHeight / 2) + (commandHeight / 2);
-      
-      terminal.scrollTo({
-        top: Math.max(0, targetScroll),
-        behavior: 'smooth'
-      });
+      // Scroll to bottom with a slight delay to ensure content is rendered
+      setTimeout(() => {
+        terminal.scrollTo({
+          top: terminal.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 50);
     }
-  }, [history]);
+  }, [history, typingText]);
 
   const displayOutput = (text: string[], isAscii: boolean = false): void => {
     if (isAscii) {
