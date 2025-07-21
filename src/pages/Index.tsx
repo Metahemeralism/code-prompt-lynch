@@ -396,7 +396,7 @@ const Index = () => {
 
       // Color-code different types of content
       let className = 'terminal-line';
-      if (line.startsWith('  •') || line.startsWith('   •')) {
+      if (line.startsWith('  •') || line.startsWith('   •') || line.startsWith('    ')) {
         className += ' text-yellow-400';
       } else if (line.includes('→') || line.startsWith('🌱') || line.startsWith('✍️') || line.startsWith('📊')) {
         className += ' text-green-400';
