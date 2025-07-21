@@ -182,6 +182,11 @@ const Index = () => {
       case 'experience':
         output = [
           'Professional Experience:',
+          '============================================================================='
+          '',
+          'July 2025 – Present | Data Science & ML Intern | TRUSS, London UK',
+          '  • Incoming Intern – working on data science and machine learning projects at',
+          '    innovative ai fashion startup',
           '',
           'March 2025 – Present | Data Science Intern | Datactics, Belfast UK',
           '  • Engineered Python analytics pipeline for 100GB+ client datasets',
@@ -195,6 +200,11 @@ const Index = () => {
           '  • Benchmarked power-electronics R&D from 3+ university labs',
           '  • Led risk assessment of 100+ factors across multiple domains',
           '',
+          'Additional Experience:'
+          '==============================================================================',
+          'Aug 2025 – Present | Head of Science | UCL Data Science Society, London',
+          '  • Incoming head of science – responsible for python & data science bootcamps',
+          ''
           'Oct 2024 – Dec 2024 | Venturer | Raleigh International, South Africa',
           '  • Led 17-person, 19-day trek with navigation and logistics planning',
           '  • Implemented wildlife conservation and sustainable farming initiatives',
@@ -224,9 +234,9 @@ const Index = () => {
       case 'interests':
         output = [
           'Personal Interests & Hobbies:',
-          '====================================================================',
+          '',
           '♞ Chess',
-          '   Currently ranked in top 6% on Chess.com (No longer at my peak :/)',
+          '   Currently ranked in top 6% on Chess.com',
           '',
           '🎾 Competitive Tennis', 
           '   Active player and coach in spare time',
