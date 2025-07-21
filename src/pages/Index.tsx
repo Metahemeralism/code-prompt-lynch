@@ -12,26 +12,16 @@ interface Command {
   timestamp: Date;
 }
 
-interface VisitorComment {
-  message: string;
-  timestamp: Date;
-  id: string;
-}
-
 const Index = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<Command[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
-  const [showVisitorBookModal, setShowVisitorBookModal] = useState(false);
-  const [visitorComment, setVisitorComment] = useState('');
   const [cursorVisible, setCursorVisible] = useState(true);
   const [typingText, setTypingText] = useState('');
   const [currentlyTypingIndex, setCurrentlyTypingIndex] = useState(-1);
   const [visitorNumber, setVisitorNumber] = useState(0);
-  const [visitorComments, setVisitorComments] = useState<VisitorComment[]>([]);
-  const [awaitingVisitorComment, setAwaitingVisitorComment] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
@@ -64,14 +54,6 @@ const Index = () => {
       const newVisitorNumber = Math.floor(Math.random() * 1000) + 100; // Start from a random number between 100-1099
       localStorage.setItem('evanLynchVisitorCount', newVisitorNumber.toString());
       setVisitorNumber(newVisitorNumber);
-    }
-  }, []);
-
-  // Load visitor comments from localStorage
-  useEffect(() => {
-    const storedComments = localStorage.getItem('evanLynchVisitorComments');
-    if (storedComments) {
-      setVisitorComments(JSON.parse(storedComments));
     }
   }, []);
 
@@ -115,16 +97,14 @@ const Index = () => {
       const fullText = text.join('\n');
       
       let currentIndex = 0;
-      const charsPerFrame = 8; // Type multiple characters at once for speed
       const typeInterval = setInterval(() => {
         if (currentIndex < fullText.length) {
-          // Advance by multiple characters for faster typing
-          currentIndex = Math.min(currentIndex + charsPerFrame, fullText.length);
-          setTypingText(fullText.slice(0, currentIndex));
+          setTypingText(fullText.slice(0, currentIndex + 1));
+          currentIndex++;
         } else {
           clearInterval(typeInterval);
           setIsTyping(false);
-          // Update history with final text to preserve formatting
+          // Update history with final text
           setHistory(prev => {
             const newHistory = [...prev];
             if (newHistory.length > 0) {
@@ -137,7 +117,7 @@ const Index = () => {
           });
           setTypingText('');
         }
-      }, 3); // Much faster interval
+      }, 20);
     } else {
       setHistory(prev => {
         const newHistory = [...prev];
@@ -177,7 +157,6 @@ const Index = () => {
           '  interests .......... Hobbies & passions',
           '  socials ............ Social media links',
           '  blog ............... Recent blog posts',
-          '  visitor book ....... Leave a comment (200 chars max)',
           '  tldr ............... Quick summary',
           '  clear .............. Clear terminal',
           '  ascii .............. Display ASCII art',
@@ -194,9 +173,7 @@ const Index = () => {
           "with a background in Chemical Engineering from Bath. I'm seeking to",
           "apply systematic strategies in quantitative investing and data analysis,",
           "combining technical expertise with financial markets knowledge.",
-          "",
-          "Languages: Fluent English, Beginner German & Danish",
-          "Interests: Chess (Top 6% Chess.com), Competitive Tennis & Coaching"
+          ""
         ];
         break;
 
@@ -287,28 +264,6 @@ const Index = () => {
         ];
         break;
 
-      case 'visitor book':
-        output = [
-          '📝 Visitor Book',
-          '',
-          '✨ Recent Comments:',
-          ''
-        ];
-        
-        if (visitorComments.length === 0) {
-          output.push('  No comments yet. Be the first to leave one!');
-        } else {
-          visitorComments.slice(-5).reverse().forEach((comment, index) => {
-            const date = new Date(comment.timestamp).toLocaleDateString();
-            output.push(`  "${comment.message}" - ${date}`);
-            if (index < Math.min(4, visitorComments.length - 1)) output.push('');
-          });
-        }
-        
-        // Show the visitor book modal
-        setShowVisitorBookModal(true);
-        break;
-
       case 'tldr':
         output = [
           'TL;DR: Aspiring quant researcher with Python expertise, MSc Engineering',
@@ -333,27 +288,19 @@ const Index = () => {
       case 'ascii':
         output = [
           '',
-          '                                .=========.                                ',
-          '                            .===| |   |   |===.                            ',
-          "                        .=====+=' | .=' | '===+===.                        ",
-          '                    .===|     |     |   |     |   |===.                    ',
-          "                .=====+=' ====' .====== |===. '=. '=======.                ",
-          '            .===|     |     |   |       |   |   |         |===.            ',
-          '        .===+======== | ==. | ==+== .====== |=. |== | .=======+===.        ',
-          '    .===|   |         |   | |   |   |       | | |   | |       |   |===.    ',
-          ".=====+=' | | .========== | '=. | .=| ==. | | | | .===' | .=. | | '===+===.",
-          '|     |   |   |     |     |   |   | |   | |   | | |     | | | | |     |   |',
-          "| ====' | |===' .== | ======. '===' | .=' |===' | | ====' | | '=' .== '== |",
-          '|       | |     |   |       |         |   |     |     |   | |     |       |',
-          "'=======| | ====| | '=. .===| .=======' | | ========= | ==| '==== |======='",
-          "    '===|       | |   | |   | |         | |       |   |   |       |==='    ",
-          "        '=======| '===' | | '=' .=======+=======. '====== |======='        ",
-          "            '===|       | |     |       |       |         |==='            ",
-          "                '=======| '=====' ===== | ==. ==' .======='                ",
-          "                    '===|           |   |   |     |==='                    ",
-          "                        '========== | ==' .=+====='                        ",
-          "                            '===|   |     |==='                            ",
-          "                                '========='                                ",
+          '  ███████╗██╗   ██╗ █████╗ ███╗   ██╗',
+          '  ██╔════╝██║   ██║██╔══██╗████╗  ██║',
+          '  █████╗  ██║   ██║███████║██╔██╗ ██║',
+          '  ██╔══╝  ╚██╗ ██╔╝██╔══██║██║╚██╗██║',
+          '  ███████╗ ╚████╔╝ ██║  ██║██║ ╚████║',
+          '  ╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝',
+          '',
+          '  ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗',
+          '  ██║     ██║   ██║████╗  ██║██╔════╝██║  ██║',
+          '  ██║     ██║   ██║██╔██╗ ██║██║     ███████║',
+          '  ██║     ██║   ██║██║╚██╗██║██║     ██╔══██║',
+          '  ███████╗╚██████╔╝██║ ╚████║╚██████╗██║  ██║',
+          '  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝',
           ''
         ];
         displayOutput(output, true);
@@ -379,33 +326,6 @@ const Index = () => {
     }
   };
 
-  const handleVisitorCommentSubmit = () => {
-    const comment = visitorComment.trim();
-    if (comment.length > 200) {
-      return; // Let the UI show the error
-    }
-    
-    const newComment: VisitorComment = {
-      id: Date.now().toString(),
-      message: comment,
-      timestamp: new Date()
-    };
-    
-    const updatedComments = [...visitorComments, newComment];
-    setVisitorComments(updatedComments);
-    localStorage.setItem('evanLynchVisitorComments', JSON.stringify(updatedComments));
-    
-    // Add success message to terminal
-    setHistory(prev => [...prev, {
-      input: 'visitor comment',
-      output: ['✅ Thank you for your comment! It has been added to the visitor book.'],
-      timestamp: new Date()
-    }]);
-    
-    setVisitorComment('');
-    setShowVisitorBookModal(false);
-  };
-
   const handleBlogClick = (postTitle: string) => {
     const post = blogPosts.find(p => postTitle.includes(p.title));
     if (post) {
@@ -415,15 +335,6 @@ const Index = () => {
   };
 
   const renderOutput = (output: string[], commandInput: string) => {
-    // Special handling for ASCII art to preserve formatting
-    if (commandInput.toLowerCase().trim() === 'ascii') {
-      return (
-        <div className="text-green-400 whitespace-pre font-mono text-center">
-          {output.join('\n')}
-        </div>
-      );
-    }
-
     return output.map((line, index) => {
       // Check if this is a blog post line
       const isBlogPost = commandInput.toLowerCase() === 'blog' && 
@@ -490,14 +401,14 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 font-mono relative">
+    <div className="min-h-screen bg-black text-gray-300 p-4 font-mono overflow-hidden relative">
       {/* Visitor Counter */}
-      <div className="absolute top-4 right-4 text-green-400 text-sm font-mono z-10">
+      <div className="absolute top-4 right-4 text-green-400 text-sm font-mono">
         Visitor #{visitorNumber.toLocaleString()}
       </div>
       <div 
         ref={terminalRef}
-        className="h-screen overflow-y-auto terminal-container pt-12 px-4 pb-8"
+        className="h-screen overflow-y-auto terminal-container"
         onClick={() => inputRef.current?.focus()}
       >
         {/* ASCII Logo */}
@@ -569,62 +480,6 @@ const Index = () => {
             </div>
             <div className="text-gray-300 leading-relaxed">
               {selectedPost.content}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Visitor Book Modal */}
-      {showVisitorBookModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-md w-full">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-xl font-bold text-white">💬 Leave a Comment</h2>
-              <button
-                onClick={() => {
-                  setShowVisitorBookModal(false);
-                  setVisitorComment('');
-                }}
-                className="text-gray-400 hover:text-white text-xl"
-              >
-                ×
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              <textarea
-                value={visitorComment}
-                onChange={(e) => setVisitorComment(e.target.value)}
-                placeholder="leave something nice"
-                className="w-full h-24 bg-gray-800 border border-gray-600 rounded p-3 text-white placeholder-gray-400 resize-none font-mono text-sm focus:outline-none focus:border-green-400"
-                maxLength={200}
-                autoFocus
-              />
-              
-              <div className="flex justify-between items-center">
-                <span className={`text-sm ${visitorComment.length > 200 ? 'text-red-400' : 'text-gray-400'}`}>
-                  {visitorComment.length}/200 characters
-                </span>
-                
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      setShowVisitorBookModal(false);
-                      setVisitorComment('');
-                    }}
-                    className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleVisitorCommentSubmit}
-                    disabled={!visitorComment.trim() || visitorComment.length > 200}
-                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 disabled:bg-gray-600 disabled:cursor-not-allowed transition-colors"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
