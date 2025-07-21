@@ -173,7 +173,9 @@ const Index = () => {
           "with a background in Chemical Engineering from Bath. I'm seeking to",
           "apply systematic strategies in quantitative investing and data analysis,",
           "combining technical expertise with financial markets knowledge.",
-          ""
+          "",
+          "Languages: Fluent English, Beginner German & Danish",
+          "Interests: Chess (Top 6% Chess.com), Competitive Tennis & Coaching"
         ];
         break;
 
@@ -222,9 +224,9 @@ const Index = () => {
       case 'interests':
         output = [
           'Personal Interests & Hobbies:',
-          '',
+          '====================================================================',
           '♞ Chess',
-          '   Currently ranked in top 6% on Chess.com',
+          '   Currently ranked in top 6% on Chess.com (No longer at my peak :/)',
           '',
           '🎾 Competitive Tennis', 
           '   Active player and coach in spare time',
