@@ -422,16 +422,15 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 p-4 font-mono overflow-hidden relative flex flex-col">
+    <div className="min-h-screen bg-black text-gray-300 p-4 font-mono overflow-hidden relative">
       {/* Visitor Counter */}
       <div className="absolute top-4 right-4 text-green-400 text-sm font-mono">
         Visitor #{visitorNumber.toLocaleString()}
       </div>
       
-      {/* Scrollable Terminal Content */}
       <div 
         ref={terminalRef}
-        className="flex-1 overflow-y-auto terminal-container pr-2"
+        className="h-screen overflow-y-auto terminal-container pb-20"
         onClick={() => inputRef.current?.focus()}
       >
         {/* ASCII Logo */}
@@ -466,11 +465,9 @@ const Index = () => {
             )}
           </div>
         ))}
-      </div>
 
-      {/* Fixed Input at Bottom */}
-      <div className="border-t border-gray-800 pt-2 mt-2">
-        <form onSubmit={handleSubmit} className="flex items-center">
+        {/* Current Input */}
+        <form onSubmit={handleSubmit} className="flex items-center mb-8">
           <span className="text-green-400 mr-2">λ</span>
           <div className="flex-1 relative">
             <input
