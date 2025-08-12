@@ -459,18 +459,24 @@ const Index = () => {
         {/* Current Input */}
         <form onSubmit={handleSubmit} className="flex items-center">
           <span className="text-green-400 mr-2">λ</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="bg-transparent text-white outline-none flex-1 font-mono"
-            disabled={isTyping}
-            autoComplete="off"
-          />
-          <span className={`text-green-400 ml-1 ${cursorVisible ? 'opacity-100' : 'opacity-0'} transition-opacity`}>
-            █
-          </span>
+          <div className="flex-1 relative">
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="bg-transparent text-white outline-none w-full font-mono"
+              disabled={isTyping}
+              autoComplete="off"
+              style={{ caretColor: 'transparent' }}
+            />
+            <span 
+              className={`absolute top-0 text-green-400 pointer-events-none font-mono ${cursorVisible ? 'opacity-100' : 'opacity-0'} transition-opacity`}
+              style={{ left: `${input.length * 0.6}em` }}
+            >
+              █
+            </span>
+          </div>
         </form>
       </div>
 
