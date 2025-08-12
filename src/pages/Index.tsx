@@ -226,7 +226,7 @@ const Index = () => {
 
       case 'projects':
         output = [
-          'Quantitative Projects:',
+          'Projects:',
           '',
           '📈 Stock Market Price Prediction with LSTM Neural Network',
           '   Tech: Python, TensorFlow, Pandas, Scikit-Learn',
@@ -235,17 +235,14 @@ const Index = () => {
           '   • Achieved superior performance vs moving-average baseline',
           '   • Automated preprocessing with MinMaxScaler normalization',
           '',
-          '📚 Titanic Survivor Prediction:',
-          '   Languages: Python (Proficient), Matlab, SQL (Familiar)',
-          '   Frameworks: Pandas, NumPy, Scikit-Learn, Git, Seaborn, Matplotlib',
-          '   Certifications: Stanford ML, Codecademy Data Science,',
-          '   Alan Turing Data Viz, Akuna Capital Options 101'
+          '📚 Titanic Survivor Prediction',
+          '   • Built classification models and evaluated performance',
           '',
           '📚 Technical Skills & Certifications:',
           '   Languages: Python (Proficient), Matlab, SQL (Familiar)',
           '   Frameworks: Pandas, NumPy, Scikit-Learn, Git, Seaborn, Matplotlib',
           '   Certifications: Stanford ML, Codecademy Data Science,',
-          '   Alan Turing Data Viz, Akuna Capital Options 101
+          '   Alan Turing Data Viz, Akuna Capital Options 101'
         ];
         break;
 
