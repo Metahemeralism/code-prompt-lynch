@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+import linkedinLogo from '../assets/brands/linkedin.svg';
+import githubLogo from '../assets/brands/github.svg';
+import gmailLogo from '../assets/brands/gmail.svg';
 
 interface BlogPost {
   title: string;
@@ -377,6 +380,36 @@ const Index = () => {
             >
               {line.replace(' [click to read]', '')}
             </span>
+          </div>
+        );
+      }
+
+      // Social lines with official logos
+      const isSocialLine = line.startsWith('[in]') || line.startsWith('[git]') || line.startsWith('[mail]');
+      if (isSocialLine) {
+        const match = line.match(/(https?:\/\/[^\s]+|mailto:[^\s]+)/);
+        const href = match ? match[0] : undefined;
+        let iconSrc = '';
+        let alt = '';
+        if (line.startsWith('[in]')) { iconSrc = linkedinLogo; alt = 'LinkedIn logo'; }
+        else if (line.startsWith('[git]')) { iconSrc = githubLogo; alt = 'GitHub logo'; }
+        else { iconSrc = gmailLogo; alt = 'Gmail logo'; }
+
+        return (
+          <div key={index} className="terminal-line flex items-center gap-2">
+            <img src={iconSrc} alt={alt} className="h-4 w-4" />
+            {href ? (
+              <a
+                href={href}
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="text-blue-400 hover:text-blue-300 underline"
+              >
+                {line.replace(/^[^A-Za-z]*\s*/, '')}
+              </a>
+            ) : (
+              <span>{line.replace(/^[^A-Za-z]*\s*/, '')}</span>
+            )}
           </div>
         );
       }
