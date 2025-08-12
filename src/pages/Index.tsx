@@ -176,14 +176,15 @@ const Index = () => {
 
       case 'about':
         output = [
-          "I'm Evan Lynch, an aspiring quant researcher/trader skilled in Python",
-          "data engineering, statistical modelling, and risk analysis. Currently",
-          "pursuing a predicted First-class MSc Engineering with Finance at UCL,",
-          "with a background in Chemical Engineering from Bath. I'm seeking to",
-          "apply systematic strategies in quantitative investing and data analysis,",
-          "combining technical expertise with financial markets knowledge.",
+          "I'm Evan Lynch — passionate about technology and entrepreneurship.",
+          "I love building products, shipping fast, and turning ideas into things people use.",
+          "I'm currently completing an MSc Engineering with Finance at UCL (predicted First)",
+          "with a BEng in Chemical Engineering from Bath. I'm pursuing a career at the",
+          "intersection of software, product, and business — ideally in an early-stage,",
+          "high-impact environment where I can learn quickly and create value.",
           "",
-          "Languages: Fluent English, Beginner German & Danish",
+          "Focus areas: AI applications, data-driven products, and developer tooling",
+          "Languages: Fluent English; Beginner German & Danish",
           "Interests: Chess (Top 6% Chess.com), Competitive Tennis & Coaching"
         ];
         break;
