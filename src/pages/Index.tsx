@@ -176,14 +176,14 @@ const Index = () => {
 
       case 'about':
         output = [
-          "I'm Evan Lynch — passionate about technology and entrepreneurship.",
+          "Hi I'm Evan Lynch — passionate about technology and entrepreneurship.",
           "I love building products, shipping fast, and turning ideas into things people use.",
           "I'm currently completing an MSc Engineering with Finance at UCL (predicted First)",
           "with a BEng in Chemical Engineering from Bath. I'm pursuing a career at the",
           "intersection of software, product, and business — ideally in an early-stage,",
           "high-impact environment where I can learn quickly and create value.",
           "",
-          "Focus areas: AI applications, data-driven products, and developer tooling",
+          "Focus areas: Machine Learning, Data Science, Product, Design",
           "Languages: Fluent English; Beginner German & Danish",
           "Interests: Chess (Top 6% Chess.com), Competitive Tennis & Coaching"
         ];
@@ -196,7 +196,7 @@ const Index = () => {
           '',
           'July 2025 – Present | Data Science & ML Intern | TRUSS, London UK',
           '  • Incoming Intern – working on data science and machine learning projects at',
-          '    innovative ai fashion startup',
+          '    innovative AI fashion startup',
           '',
           'March 2025 – Present | Data Science Intern | Datactics, Belfast UK',
           '  • Engineered Python analytics pipeline for 100GB+ client datasets',
@@ -213,7 +213,9 @@ const Index = () => {
           'Additional Experience:',
           '==============================================================================',
           'Aug 2025 – Present | Head of Science | UCL Data Science Society, London',
-          '  • Incoming head of science – responsible for python & data science bootcamps',
+          '  • Member of the 25/26 Executive Team',
+          '  • Responsible designing and delivering data science & python workshops',
+          '  • Managed logistics for multiple hackathons & technical events',
           '',
           'Oct 2024 – Dec 2024 | Venturer | Raleigh International, South Africa',
           '  • Led 17-person, 19-day trek with navigation and logistics planning',
@@ -233,11 +235,17 @@ const Index = () => {
           '   • Achieved superior performance vs moving-average baseline',
           '   • Automated preprocessing with MinMaxScaler normalization',
           '',
-          '📚 Technical Skills & Certifications:',
+          '📚 Titanic Survivor Prediction:',
           '   Languages: Python (Proficient), Matlab, SQL (Familiar)',
           '   Frameworks: Pandas, NumPy, Scikit-Learn, Git, Seaborn, Matplotlib',
           '   Certifications: Stanford ML, Codecademy Data Science,',
           '   Alan Turing Data Viz, Akuna Capital Options 101'
+          '',
+          '📚 Technical Skills & Certifications:',
+          '   Languages: Python (Proficient), Matlab, SQL (Familiar)',
+          '   Frameworks: Pandas, NumPy, Scikit-Learn, Git, Seaborn, Matplotlib',
+          '   Certifications: Stanford ML, Codecademy Data Science,',
+          '   Alan Turing Data Viz, Akuna Capital Options 101
         ];
         break;
 
@@ -312,7 +320,7 @@ const Index = () => {
           '',
           '  ███████╗██╗   ██╗ █████╗ ███╗   ██╗',
           '  ██╔════╝██║   ██║██╔══██╗████╗  ██║',
-          '  █████╗  ██║   ██║███████║██╔██╗ ██║',
+          '  █████╗   ██║   ██║███████║██╔██╗ ██║',
           '  ██╔══╝  ╚██╗ ██╔╝██╔══██║██║╚██╗██║',
           '  ███████╗ ╚████╔╝ ██║  ██║██║ ╚████║',
           '  ╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝',
