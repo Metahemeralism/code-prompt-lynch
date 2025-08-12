@@ -72,23 +72,32 @@ const Index = () => {
     }
   }, [showModal]);
 
-  // Scroll to bottom only if user is already near the bottom
+  // Auto-scroll to keep input visible
   useEffect(() => {
     if (terminalRef.current) {
       const terminal = terminalRef.current;
-      const isNearBottom = terminal.scrollTop + terminal.clientHeight >= terminal.scrollHeight - 100;
-      
-      // Only auto-scroll if user is already near the bottom
-      if (isNearBottom) {
-        setTimeout(() => {
-          terminal.scrollTo({
-            top: terminal.scrollHeight,
-            behavior: 'smooth'
-          });
-        }, 50);
-      }
+      // Always scroll to bottom when new content is added
+      setTimeout(() => {
+        terminal.scrollTo({
+          top: terminal.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 50);
     }
   }, [history, typingText]);
+
+  // Also scroll to bottom when input changes to keep it visible
+  useEffect(() => {
+    if (terminalRef.current && input) {
+      const terminal = terminalRef.current;
+      setTimeout(() => {
+        terminal.scrollTo({
+          top: terminal.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 10);
+    }
+  }, [input]);
 
   const displayOutput = (text: string[], isAscii: boolean = false): void => {
     if (isAscii) {
