@@ -252,19 +252,16 @@ const Index = () => {
           'Personal Interests & Hobbies:',
           '',
           '♞ Chess',
-          '   Currently ranked in top 6% on Chess.com',
+          '   Top 6% on Chess.com — always looking for a game',
           '',
-          '🎾 Competitive Tennis', 
-          '   Active player and coach in spare time',
+          '🎾 Tennis',
+          '   UCL Men\'s 3rd Team; active player and coach',
           '',
-          '💪 Health & Fitness',
-          '   Regular training and wellness focus',
+          '💪 Fitness',
+          '   Regular gym training and wellness focus',
           '',
-          '🌍 Languages',
-          '   Learning German and Danish (Beginner level)',
-          '',
-          '📚 Quantitative Finance',
-          '   Exploring systematic trading strategies and risk models'
+          '🌍 Travelling',
+          '   Exploring new places — most recently South Africa with Raleigh International'
         ];
         break;
 
