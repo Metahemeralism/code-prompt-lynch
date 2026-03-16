@@ -179,16 +179,18 @@ const Index = () => {
 
       case 'about':
         output = [
-          "Hi I'm Evan Lynch — passionate about technology and entrepreneurship.",
-          "I love building products, shipping fast, and turning ideas into things people use.",
-          "I'm currently completing an MSc Engineering with Finance at UCL (predicted First)",
-          "with a BEng in Chemical Engineering from Bath. I'm pursuing a career at the",
-          "intersection of software, product, and business — ideally in an early-stage,",
-          "high-impact environment where I can learn quickly and create value.",
+          "Hi, I'm Evan Lynch — passionate about technology, AI and entrepreneurship.",
           "",
-          "Focus areas: Machine Learning, Data Science, Product, Design",
-          "Languages: Fluent English; Beginner German & Danish",
-          "Interests: Chess (Top 6% Chess.com), Competitive Tennis & Coaching"
+          "I'm completing an MSc in Engineering with Finance at UCL (predicted First),",
+          "having graduated with a BEng in Chemical Engineering from the University of Bath.",
+          "",
+          "I co-founded Encode London, the UK chapter of a global AI governance organisation,",
+          "where I lead undergraduate research fellows in Clinical AI Safety. I also serve as",
+          "Head of Science at the UCL Data Science Society and play on the UCL Men's 3rd Tennis Team.",
+          "",
+          "Career Interests: AI Safety, Quantitative Trading, Data Science",
+          "Languages: Python, SQL, MATLAB | Fluent English; Beginner German & Danish",
+          "Certifications: Stanford ML Specialisation, Codecademy Data Science (Analytics)"
         ];
         break;
 
