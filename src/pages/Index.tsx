@@ -291,10 +291,10 @@ const Index = () => {
 
       case 'tldr':
         output = [
-          'TL;DR: Aspiring quant researcher with Python expertise, MSc Engineering',
-          'with Finance (UCL), and experience in data pipelines, ML models, and',
-          'financial analysis. Ready to apply systematic strategies in quantitative',
-          'investing and risk management. 📊'
+          'TL;DR: MSc Engineering with Finance (UCL) · Co-Founder at Encode London',
+          '(AI Safety) · Data Science internships at TRUSS & Datactics · Shell analyst.',
+          'Interested in AI Safety, Quantitative Trading & Data Science. Loves chess,',
+          'tennis, and building things. 🚀'
         ];
         break;
 
