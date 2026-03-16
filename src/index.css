@@ -94,8 +94,14 @@ All colors MUST be HSL.
   }
 }
 
+@layer base {
+  body {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', 'Courier New', monospace;
+  }
+}
+
 @layer components {
   .font-mono {
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', 'Courier New', monospace;
   }
 }
