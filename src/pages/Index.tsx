@@ -232,21 +232,18 @@ const Index = () => {
         output = [
           'Projects:',
           '',
-          '📈 Stock Market Price Prediction with LSTM Neural Network',
-          '   Tech: Python, TensorFlow, Pandas, Scikit-Learn',
-          '   • Retrieved 20+ years of equity data via Alpha Vantage API',
-          '   • Designed LSTM neural network for time-series forecasting',
-          '   • Achieved superior performance vs moving-average baseline',
-          '   • Automated preprocessing with MinMaxScaler normalization',
+          '🔬 Pendulum Motion Tracking & Analysis',
+          '   Tech: Python, OpenCV, NumPy, SciPy, Scikit-Learn, Matplotlib',
+          '   • Computer vision pipeline for tracking a spring-pendulum system from multi-camera video',
+          '   • Extracted dominant oscillation modes via PCA on 6-component standardised centroid data',
+          '   • FFT-based frequency analysis, PSD filtering, and Gabor time-frequency spectrograms',
+          '   • Estimated physical parameters (spring constant k, pendulum length L) analytically',
+          '   → https://github.com/Metahemeralism/pendulum',
           '',
-          '📚 Titanic Survivor Prediction',
-          '   • Built classification models and evaluated performance',
-          '',
-          '📚 Technical Skills & Certifications:',
-          '   Languages: Python (Proficient), Matlab, SQL (Familiar)',
-          '   Frameworks: Pandas, NumPy, Scikit-Learn, Git, Seaborn, Matplotlib',
-          '   Certifications: Stanford ML, Codecademy Data Science,',
-          '   Alan Turing Data Viz, Akuna Capital Options 101'
+          '🔐 Enigma Machine Simulator',
+          '   Tech: Python, OOP, Algorithms',
+          '   • Architected an object-oriented simulation of the Enigma machine',
+          '   • Demonstrated algorithmic complexity and logic design principles'
         ];
         break;
 
