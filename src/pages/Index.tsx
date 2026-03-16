@@ -179,16 +179,18 @@ const Index = () => {
 
       case 'about':
         output = [
-          "Hi I'm Evan Lynch — passionate about technology and entrepreneurship.",
-          "I love building products, shipping fast, and turning ideas into things people use.",
-          "I'm currently completing an MSc Engineering with Finance at UCL (predicted First)",
-          "with a BEng in Chemical Engineering from Bath. I'm pursuing a career at the",
-          "intersection of software, product, and business — ideally in an early-stage,",
-          "high-impact environment where I can learn quickly and create value.",
+          "Hi, I'm Evan Lynch — passionate about technology, AI and entrepreneurship.",
           "",
-          "Focus areas: Machine Learning, Data Science, Product, Design",
-          "Languages: Fluent English; Beginner German & Danish",
-          "Interests: Chess (Top 6% Chess.com), Competitive Tennis & Coaching"
+          "I'm completing an MSc in Engineering with Finance at UCL (predicted First),",
+          "having graduated with a BEng in Chemical Engineering from the University of Bath.",
+          "",
+          "I co-founded Encode London, the UK chapter of a global AI governance organisation,",
+          "where I lead undergraduate research fellows in Clinical AI Safety. I also serve as",
+          "Head of Science at the UCL Data Science Society and play on the UCL Men's 3rd Tennis Team.",
+          "",
+          "Career Interests: AI Safety, Quantitative Trading, Data Science",
+          "Languages: Python, SQL, MATLAB | Fluent English; Beginner German & Danish",
+          "Certifications: Stanford ML Specialisation, Codecademy Data Science (Analytics)"
         ];
         break;
 
@@ -197,33 +199,32 @@ const Index = () => {
           'Professional Experience:',
           '=============================================================================',
           '',
-          'July 2025 – Present | Data Science & ML Intern | TRUSS, London UK',
-          '  • Incoming Intern – working on data science and machine learning projects at',
-          '    innovative AI fashion startup',
+          'Aug 2025 – Present | Co-Founder & Director | Encode London',
+          '  • Co-founded UK chapter of a global AI governance organisation',
+          '  • Research Lead for undergraduate fellows in Clinical AI Safety',
+          '  • Built partnerships with policy think-tanks, AI Safety Institutes & academic societies',
           '',
-          'March 2025 – Present | Data Science Intern | Datactics, Belfast UK',
-          '  • Engineered Python analytics pipeline for 100GB+ client datasets',
-          '  • Developed NLP rule-matching engine (TF-IDF + cosine similarity)',
-          '  • Cut manual review by 50% for EMIR, MiFID II, FATCA compliance',
-          '  • Conducted comprehensive regulatory analysis for GovTech solutions',
+          'Aug 2025 – Present | Head of Science | UCL Data Science Society',
+          '  • Designed & delivered curriculum on "Mathematics of Data Science" and Python to 200+ members',
+          '  • Managed logistics for hackathons & technical events',
+          '',
+          'Nov 2025 – Present | Postgraduate Representative | UCL Quant Society',
+          '  • Liaison between postgraduate cohort and committee',
+          '  • Organised engagement with industry quant firms and technical workshops',
+          '',
+          'Aug 2025 – Oct 2025 | Data Science Intern | TRUSS, London',
+          '  • Engineered dual-model ML system (pricing & time-to-sell) deployed via Flask API',
+          '  • Achieved MAE of ~0.8 days; conducted feature engineering on fashion market datasets',
+          '',
+          'Mar 2025 – Aug 2025 | Data Science Intern | Datactics, Belfast',
+          '  • Built enterprise address processing engine (Python/FastAPI + OpenAI LLMs + C++ libraries)',
+          '  • Automated validation tool for 100GB+ datasets, reducing manual processing by 60%',
+          '  • Researched EMIR, FATCA, MiFID II — authored 10+ technical reports for GovTech product dev',
           '',
           'Aug 2022 – Aug 2023 | Electric Mobility Technology Analyst | Shell, London',
-          '  • Built TCO models for offshore wind electrification vessels',
-          '  • Presented to Shell executives, informing £1M+ investment decisions',
-          '  • Benchmarked power-electronics R&D from 3+ university labs',
-          '  • Led risk assessment of 100+ factors across multiple domains',
-          '',
-          'Additional Experience:',
-          '==============================================================================',
-          'Aug 2025 – Present | Head of Science | UCL Data Science Society, London',
-          '  • Member of the 25/26 Executive Team',
-          '  • Responsible designing and delivering data science & python workshops',
-          '  • Managed logistics for multiple hackathons & technical events',
-          '',
-          'Oct 2024 – Dec 2024 | Venturer | Raleigh International, South Africa',
-          '  • Led 17-person, 19-day trek with navigation and logistics planning',
-          '  • Implemented wildlife conservation and sustainable farming initiatives',
-          '  • Delivered after-school programs to 60+ children'
+          '  • Engineered TCO models for offshore wind vessels, shaping £1M+ investment strategy',
+          '  • Presented 10+ configuration scenarios to Shell executives',
+          '  • Led risk assessment of 100+ safety and economic parameters'
         ];
         break;
 
@@ -231,21 +232,18 @@ const Index = () => {
         output = [
           'Projects:',
           '',
-          '📈 Stock Market Price Prediction with LSTM Neural Network',
-          '   Tech: Python, TensorFlow, Pandas, Scikit-Learn',
-          '   • Retrieved 20+ years of equity data via Alpha Vantage API',
-          '   • Designed LSTM neural network for time-series forecasting',
-          '   • Achieved superior performance vs moving-average baseline',
-          '   • Automated preprocessing with MinMaxScaler normalization',
+          '🔬 Pendulum Motion Tracking & Analysis',
+          '   Tech: Python, OpenCV, NumPy, SciPy, Scikit-Learn, Matplotlib',
+          '   • Computer vision pipeline for tracking a spring-pendulum system from multi-camera video',
+          '   • Extracted dominant oscillation modes via PCA on 6-component standardised centroid data',
+          '   • FFT-based frequency analysis, PSD filtering, and Gabor time-frequency spectrograms',
+          '   • Estimated physical parameters (spring constant k, pendulum length L) analytically',
+          '   → https://github.com/Metahemeralism/pendulum',
           '',
-          '📚 Titanic Survivor Prediction',
-          '   • Built classification models and evaluated performance',
-          '',
-          '📚 Technical Skills & Certifications:',
-          '   Languages: Python (Proficient), Matlab, SQL (Familiar)',
-          '   Frameworks: Pandas, NumPy, Scikit-Learn, Git, Seaborn, Matplotlib',
-          '   Certifications: Stanford ML, Codecademy Data Science,',
-          '   Alan Turing Data Viz, Akuna Capital Options 101'
+          '🔐 Enigma Machine Simulator',
+          '   Tech: Python, OOP, Algorithms',
+          '   • Architected an object-oriented simulation of the Enigma machine',
+          '   • Demonstrated algorithmic complexity and logic design principles'
         ];
         break;
 
@@ -254,19 +252,16 @@ const Index = () => {
           'Personal Interests & Hobbies:',
           '',
           '♞ Chess',
-          '   Currently ranked in top 6% on Chess.com',
+          '   Top 6% on Chess.com — always looking for a game',
           '',
-          '🎾 Competitive Tennis', 
-          '   Active player and coach in spare time',
+          '🎾 Tennis',
+          '   UCL Men\'s 3rd Team; active player and coach',
           '',
-          '💪 Health & Fitness',
-          '   Regular training and wellness focus',
+          '💪 Fitness',
+          '   Regular gym training and wellness focus',
           '',
-          '🌍 Languages',
-          '   Learning German and Danish (Beginner level)',
-          '',
-          '📚 Quantitative Finance',
-          '   Exploring systematic trading strategies and risk models'
+          '🌍 Travelling',
+          '   Exploring new places — most recently South Africa with Raleigh International'
         ];
         break;
 
@@ -296,10 +291,10 @@ const Index = () => {
 
       case 'tldr':
         output = [
-          'TL;DR: Aspiring quant researcher with Python expertise, MSc Engineering',
-          'with Finance (UCL), and experience in data pipelines, ML models, and',
-          'financial analysis. Ready to apply systematic strategies in quantitative',
-          'investing and risk management. 📊'
+          'TL;DR: MSc Engineering with Finance (UCL) · Co-Founder at Encode London',
+          '(AI Safety) · Data Science internships at TRUSS & Datactics · Shell analyst.',
+          'Interested in AI Safety, Quantitative Trading & Data Science. Loves chess,',
+          'tennis, and building things. 🚀'
         ];
         break;
 
