@@ -29,24 +29,25 @@ const Index = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
 
-  // Sample blog posts
+  // Blog posts — summarised from LinkedIn activity
   const blogPosts: BlogPost[] = [
     {
-      title: "Building AI-Powered Applications in 2024",
-      date: "2024-01-15",
-      content: "In this post, I explore the latest trends in AI application development, covering everything from large language models to computer vision implementations. The landscape has evolved rapidly..."
+      title: "Joining MSCI as a Summer Analyst",
+      date: "2026-06-01",
+      content: "Excited to share I'm joining MSCI's Institutional Client Strategy & Execution team in London this summer. I'll be working on whitespace mapping across EMEA asset owners and helping shape go-to-market thinking for MSCI's factor and multi-factor QIS strategies. Grateful to the team for the opportunity. (Summarised from LinkedIn)"
     },
     {
-      title: "The Future of Full-Stack Development",
-      date: "2024-01-10", 
-      content: "Modern full-stack development has transformed significantly with the rise of serverless architectures, edge computing, and AI-first applications. Here's my take on where we're heading..."
+      title: "Launching Encode London — UK Chapter for AI Safety",
+      date: "2025-08-15",
+      content: "Thrilled to co-found the UK chapter of Encode, a global AI safety organisation. We're building a 15-fellow research, policy, and education programme, and partnering with the UK AI Safety Institute, LISA, and government contacts. If you care about frontier-model safety and want to get involved, reach out. (Summarised from LinkedIn)"
     },
     {
-      title: "From Data Science to Software Engineering",
-      date: "2024-01-05",
-      content: "My journey transitioning from data science to full-stack engineering taught me valuable lessons about bridging the gap between research and production systems..."
+      title: "Pricing Power Forwards with Lucia–Schwartz + Merton Jumps",
+      date: "2026-04-20",
+      content: "Just shipped an electricity forward pricer using the two-factor Lucia–Schwartz model with Merton jumps. Closed-form risk-neutral forward curve F(0,T) via the moment generating function, validated by an exact-discretisation Monte Carlo simulator — convergence within 2–3% at N=20,000 paths. Built in Python with NumPy/SciPy and a Streamlit front end. (Summarised from LinkedIn)"
     }
   ];
+
 
   // Initialize visitor counter
   useEffect(() => {
@@ -164,11 +165,12 @@ const Index = () => {
           'Available commands:',
           '',
           '  about .............. Overview of Evan Lynch',
-          '  experience ......... Professional history', 
+          '  experience ......... Professional history',
+          '  research ........... MSc thesis & research work',
           '  projects ........... Personal projects & code',
           '  interests .......... Hobbies & passions',
           '  socials ............ Social media links',
-          '  blog ............... Recent blog posts',
+          '  blog ............... Recent posts (summarised from LinkedIn)',
           '  tldr ............... Quick summary',
           '  clear .............. Clear terminal',
           '  ascii .............. Display ASCII art',
@@ -177,75 +179,131 @@ const Index = () => {
         ];
         break;
 
+
       case 'about':
         output = [
           "Hi, I'm Evan Lynch — passionate about technology, AI and entrepreneurship.",
           "",
           "I'm completing an MSc in Engineering with Finance at UCL (predicted First),",
-          "having graduated with a BEng in Chemical Engineering from the University of Bath.",
+          "having graduated with a BEng in Chemical Engineering from Bath. This summer",
+          "I'm at MSCI in London as a Summer Analyst on the Institutional Client Strategy",
+          "& Execution team.",
           "",
-          "I co-founded Encode London, the UK chapter of a global AI governance organisation,",
-          "where I lead undergraduate research fellows in Clinical AI Safety. I also serve as",
-          "Head of Science at the UCL Data Science Society and play on the UCL Men's 3rd Tennis Team.",
+          "I co-founded Encode London — the UK chapter of a global AI safety organisation —",
+          "and my MSc thesis applies machine learning to commodity price modelling",
+          "(neural observer for the inverse Gibson–Schwartz problem). Type `research`",
+          "to read more.",
           "",
           "Career Interests: AI Safety, Quantitative Trading, Data Science",
-          "Languages: Python, SQL, MATLAB | Fluent English; Beginner German & Danish",
-          "Certifications: Stanford ML Specialisation, Codecademy Data Science (Analytics)"
+          "Languages: Python, SQL, MATLAB, VBA | Fluent English; Beginner German & Danish",
+          "Certifications: Stanford ML Specialisation (Andrew Ng, Coursera)"
         ];
         break;
+
 
       case 'experience':
         output = [
           'Professional Experience:',
           '=============================================================================',
           '',
+          'Jun 2026 – Present | Summer Analyst, Institutional Client Strategy & Execution | MSCI, London',
+          '  • Sized ~$1tn AUM whitespace among EMEA asset-owner prospects; fused multiple',
+          '    data sources into a screening tool with an LLM pipeline that auto-drafted outreach',
+          '  • Authored go-to-market proposal for MSCI factor & multi-factor QIS strategies',
+          '  • Built benchmarking tool comparing QIS performance vs MSCI World (Sharpe & more)',
+          '',
           'Aug 2025 – Present | Co-Founder & Director | Encode London',
-          '  • Co-founded UK chapter of a global AI governance organisation',
-          '  • Research Lead for undergraduate fellows in Clinical AI Safety',
-          '  • Built partnerships with policy think-tanks, AI Safety Institutes & academic societies',
-          '',
-          'Aug 2025 – Present | Head of Science | UCL Data Science Society',
-          '  • Designed & delivered curriculum on "Mathematics of Data Science" and Python to 200+ members',
-          '  • Managed logistics for hackathons & technical events',
-          '',
-          'Nov 2025 – Present | Postgraduate Representative | UCL Quant Society',
-          '  • Liaison between postgraduate cohort and committee',
-          '  • Organised engagement with industry quant firms and technical workshops',
-          '',
-          'Aug 2025 – Oct 2025 | Data Science Intern | TRUSS, London',
-          '  • Engineered dual-model ML system (pricing & time-to-sell) deployed via Flask API',
-          '  • Achieved MAE of ~0.8 days; conducted feature engineering on fashion market datasets',
+          '  • Co-founded UK chapter of Encode — a global AI safety organisation',
+          '  • Recruited 5-person executive team; coordinate 15 fellows across research, policy, education',
+          '  • Built engagement with UK AISI, LISA, and UK government contacts',
           '',
           'Mar 2025 – Aug 2025 | Data Science Intern | Datactics, Belfast',
-          '  • Built enterprise address processing engine (Python/FastAPI + OpenAI LLMs + C++ libraries)',
-          '  • Automated validation tool for 100GB+ datasets, reducing manual processing by 60%',
-          '  • Researched EMIR, FATCA, MiFID II — authored 10+ technical reports for GovTech product dev',
+          '  • Automated validation pipeline for 100GB+ financial datasets — 60% less manual work',
+          '  • Built LLM-assisted parsing engine (Python/FastAPI + proprietary C++ libraries)',
+          '  • Authored 10+ technical reports translating EMIR, FATCA, MiFID II into rule sets',
           '',
-          'Aug 2022 – Aug 2023 | Electric Mobility Technology Analyst | Shell, London',
-          '  • Engineered TCO models for offshore wind vessels, shaping £1M+ investment strategy',
-          '  • Presented 10+ configuration scenarios to Shell executives',
-          '  • Led risk assessment of 100+ safety and economic parameters'
+          'Aug 2022 – Aug 2023 | Technology Analyst, Strategy & Capital Allocation | Shell, London',
+          '  • Built TCO models for offshore wind vessels across 10+ configurations (£1M+ allocation)',
+          '  • Modelled sensitivity to commodity prices, discount rates, and operational risk',
+          '  • Presented scenarios to Shell executives; authored 100+ parameter risk mitigation report',
+          '',
+          'Leadership:',
+          '  • Postgraduate Representative — UCL Quantitative Finance Society',
+          '  • Head of Science — UCL Data Science Society',
+          '  • UCL Men\'s Tennis 3rd Team'
         ];
         break;
+
+      case 'research':
+        output = [
+          'MSc Research (UCL, 2025 – 2026):',
+          '=============================================================================',
+          '',
+          '🧠 Thesis: Applied Machine Learning for Commodity Price Modelling',
+          '   A neural observer approach to the inverse Gibson–Schwartz problem.',
+          '',
+          '   • Gibson–Schwartz is a two-factor stochastic model for commodity spot',
+          '     price and convenience yield — foundational for pricing oil, gas, and',
+          '     power derivatives, but its latent state (convenience yield) is not',
+          '     directly observable from market data.',
+          '',
+          '   • The "inverse problem": recover the hidden convenience yield and',
+          '     calibrate model parameters from observed forward curves and spot prices.',
+          '',
+          '   • My approach: train a neural observer (a learned state estimator) to',
+          '     jointly infer the latent factor and calibrate parameters end-to-end,',
+          '     benchmarking against classical Kalman-filter calibration.',
+          '',
+          '   • Stack: PyTorch, NumPy, SciPy, Statsmodels; commodity forward-curve data.',
+          '',
+          'Supervisor & module context: Financial Engineering, Numerical Methods,',
+          'Data-Driven Methods for Engineers (UCL MSc Engineering with Finance).'
+        ];
+        break;
+
 
       case 'projects':
         output = [
           'Projects:',
           '',
-          '🔬 Pendulum Motion Tracking & Analysis',
-          '   Tech: Python, OpenCV, NumPy, SciPy, Scikit-Learn, Matplotlib',
-          '   • Computer vision pipeline for tracking a spring-pendulum system from multi-camera video',
-          '   • Extracted dominant oscillation modes via PCA on 6-component standardised centroid data',
-          '   • FFT-based frequency analysis, PSD filtering, and Gabor time-frequency spectrograms',
-          '   • Estimated physical parameters (spring constant k, pendulum length L) analytically',
+          '⚡ Electricity Forward Pricer  (Apr 2026)',
+          '   Tech: Python, NumPy, SciPy, Streamlit, Monte Carlo',
+          '   • Forward-curve pricer for power markets using Lucia–Schwartz two-factor',
+          '     model with Merton jumps',
+          '   • Closed-form risk-neutral F(0,T) via moment generating function',
+          '   • Validated by exact-discretisation Monte Carlo — 2–3% convergence at N=20k paths',
+          '   → https://github.com/Metahemeralism/forward_heatmap',
+          '',
+          '✈️  Plane-Wing Optimisation  (May 2026)',
+          '   Tech: Python, Gaussian Process Regression, MLP, NSGA-II',
+          '   • Surrogate-based multi-objective optimisation of an aircraft wing panel',
+          '   • Minimised mass & max von Mises stress via evolutionary search',
+          '   → https://github.com/Metahemeralism/plane-wing-optimisation',
+          '',
+          '🔬 Pendulum Motion Tracking & Analysis  (Mar 2026)',
+          '   Tech: Python, OpenCV, NumPy, SciPy, Scikit-Learn',
+          '   • Computer-vision pipeline tracking a spring-pendulum from multi-camera video',
+          '   • Extracted dominant oscillation modes via PCA; estimated k and L analytically',
           '   → https://github.com/Metahemeralism/pendulum',
           '',
-          '🔐 Enigma Machine Simulator',
-          '   Tech: Python, OOP, Algorithms',
-          '   • Architected an object-oriented simulation of the Enigma machine',
-          '   • Demonstrated algorithmic complexity and logic design principles'
+          '🔐 Pynigma — Enigma Machine Simulator  (Nov 2024)',
+          '   Tech: Python, OOP',
+          '   • Object-oriented WWII Enigma cipher simulation — rotor stepping & plugboard',
+          '   • Encode/decode paths validated against known historical settings',
+          '   → https://github.com/Metahemeralism/pynigma',
+          '',
+          '🎾 Wimbledon 2025 Winner Prediction',
+          '   Tech: Python, Scikit-Learn, Jupyter',
+          '   • ML model predicting the 2025 Wimbledon Men\'s Singles Final winner',
+          '   → https://github.com/Metahemeralism/wimby-pred',
+          '',
+          '⌚ Garmin Heatmap Widget',
+          '   Tech: JavaScript, Garmin Connect IQ',
+          '   • Watch widget rendering activity heatmap (14 GitHub stars)',
+          '   → https://github.com/Metahemeralism/garmin_heatmap_widget'
         ];
         break;
+
 
       case 'interests':
         output = [
@@ -279,24 +337,26 @@ const Index = () => {
 
       case 'blog':
         output = [
-          'Recent Blog Posts:',
+
+          'Recent Posts (summarised from LinkedIn):',
           '',
-          ...blogPosts.map((post, index) => 
+          ...blogPosts.map((post, index) =>
             `${index + 1}. ${post.title} (${post.date}) [click to read]`
           ),
           '',
-          'Click on any post title to read the full article.'
+          'Click a title to read the summary. Full posts live on LinkedIn.'
         ];
         break;
 
       case 'tldr':
         output = [
-          'TL;DR: MSc Engineering with Finance (UCL) · Co-Founder at Encode London',
-          '(AI Safety) · Data Science internships at TRUSS & Datactics · Shell analyst.',
-          'Interested in AI Safety, Quantitative Trading & Data Science. Loves chess,',
-          'tennis, and building things. 🚀'
+          'TL;DR: MSc Engineering with Finance (UCL, 1st predicted) · Summer Analyst',
+          '@ MSCI · Co-Founder @ Encode London (AI Safety) · Datactics & Shell alum.',
+          'Thesis: neural observer for the inverse Gibson–Schwartz problem.',
+          'Interested in AI Safety, Quantitative Trading & Data Science. 🚀'
         ];
         break;
+
 
       case 'clear':
         // Find the last occurrence of 'help' command
