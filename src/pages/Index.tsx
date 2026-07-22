@@ -185,17 +185,21 @@ const Index = () => {
           "Hi, I'm Evan Lynch — passionate about technology, AI and entrepreneurship.",
           "",
           "I'm completing an MSc in Engineering with Finance at UCL (predicted First),",
-          "having graduated with a BEng in Chemical Engineering from the University of Bath.",
+          "having graduated with a BEng in Chemical Engineering from Bath. This summer",
+          "I'm at MSCI in London as a Summer Analyst on the Institutional Client Strategy",
+          "& Execution team.",
           "",
-          "I co-founded Encode London, the UK chapter of a global AI governance organisation,",
-          "where I lead undergraduate research fellows in Clinical AI Safety. I also serve as",
-          "Head of Science at the UCL Data Science Society and play on the UCL Men's 3rd Tennis Team.",
+          "I co-founded Encode London — the UK chapter of a global AI safety organisation —",
+          "and my MSc thesis applies machine learning to commodity price modelling",
+          "(neural observer for the inverse Gibson–Schwartz problem). Type `research`",
+          "to read more.",
           "",
           "Career Interests: AI Safety, Quantitative Trading, Data Science",
-          "Languages: Python, SQL, MATLAB | Fluent English; Beginner German & Danish",
-          "Certifications: Stanford ML Specialisation, Codecademy Data Science (Analytics)"
+          "Languages: Python, SQL, MATLAB, VBA | Fluent English; Beginner German & Danish",
+          "Certifications: Stanford ML Specialisation (Andrew Ng, Coursera)"
         ];
         break;
+
 
       case 'experience':
         output = [
