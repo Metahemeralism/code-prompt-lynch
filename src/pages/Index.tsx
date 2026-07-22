@@ -609,6 +609,17 @@ const Index = () => {
             <div className="text-gray-300 leading-relaxed">
               {selectedPost.content}
             </div>
+            {selectedPost.url && (
+              <a
+                href={selectedPost.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-block text-blue-400 hover:text-blue-300 underline text-sm"
+              >
+                → Read the full post on LinkedIn
+              </a>
+            )}
+
           </div>
         </div>
       )}
