@@ -7,7 +7,9 @@ interface BlogPost {
   title: string;
   date: string;
   content: string;
+  url?: string;
 }
+
 
 interface Command {
   input: string;
