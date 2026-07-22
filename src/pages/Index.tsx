@@ -196,9 +196,10 @@ const Index = () => {
           "& Execution team.",
           "",
           "I co-founded Encode London — the UK chapter of a global AI safety organisation —",
-          "and my MSc thesis applies machine learning to commodity price modelling",
-          "(neural observer for the inverse Gibson–Schwartz problem). Type `research`",
-          "to read more.",
+          "and my MSc thesis builds a physics-informed neural network that inverts the",
+          "latent convenience yield from WTI crude oil futures term structures.",
+          "Type `research` to read more.",
+
           "",
           "Career Interests: AI Safety, Quantitative Trading, Data Science",
           "Languages: Python, SQL, MATLAB, VBA | Fluent English; Beginner German & Danish",
