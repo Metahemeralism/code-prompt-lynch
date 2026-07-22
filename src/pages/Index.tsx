@@ -337,24 +337,27 @@ const Index = () => {
 
       case 'blog':
         output = [
-          'Recent Blog Posts:',
+      case 'blog':
+        output = [
+          'Recent Posts (summarised from LinkedIn):',
           '',
-          ...blogPosts.map((post, index) => 
+          ...blogPosts.map((post, index) =>
             `${index + 1}. ${post.title} (${post.date}) [click to read]`
           ),
           '',
-          'Click on any post title to read the full article.'
+          'Click a title to read the summary. Full posts live on LinkedIn.'
         ];
         break;
 
       case 'tldr':
         output = [
-          'TL;DR: MSc Engineering with Finance (UCL) · Co-Founder at Encode London',
-          '(AI Safety) · Data Science internships at TRUSS & Datactics · Shell analyst.',
-          'Interested in AI Safety, Quantitative Trading & Data Science. Loves chess,',
-          'tennis, and building things. 🚀'
+          'TL;DR: MSc Engineering with Finance (UCL, 1st predicted) · Summer Analyst',
+          '@ MSCI · Co-Founder @ Encode London (AI Safety) · Datactics & Shell alum.',
+          'Thesis: neural observer for the inverse Gibson–Schwartz problem.',
+          'Interested in AI Safety, Quantitative Trading & Data Science. 🚀'
         ];
         break;
+
 
       case 'clear':
         // Find the last occurrence of 'help' command
