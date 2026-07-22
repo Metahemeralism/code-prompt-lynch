@@ -34,20 +34,24 @@ const Index = () => {
   // Blog posts — summarised from LinkedIn activity
   const blogPosts: BlogPost[] = [
     {
-      title: "Joining MSCI as a Summer Analyst",
-      date: "2026-06-01",
-      content: "Excited to share I'm joining MSCI's Institutional Client Strategy & Execution team in London this summer. I'll be working on whitespace mapping across EMEA asset owners and helping shape go-to-market thinking for MSCI's factor and multi-factor QIS strategies. Grateful to the team for the opportunity. (Summarised from LinkedIn)"
+      title: "A Garmin Heatmap Widget for Your Wrist",
+      date: "2025-10-27",
+      content: "If you use a Garmin, you probably know the frustration of having to open the app just to see your activity heatmap. I built a Connect IQ widget that renders your activity heatmap directly on the watch face — a small side-project that scratched a personal itch and now has 14 GitHub stars from the running community. Code + install instructions on GitHub. (Summarised from LinkedIn — click the link to read the original.)",
+      url: "https://www.linkedin.com/posts/-evanlynch_if-you-use-a-garmin-you-probably-know-the-share-7483170090499297281-7G2U/"
     },
     {
-      title: "Launching Encode London — UK Chapter for AI Safety",
-      date: "2025-08-15",
-      content: "Thrilled to co-found the UK chapter of Encode, a global AI safety organisation. We're building a 15-fellow research, policy, and education programme, and partnering with the UK AI Safety Institute, LISA, and government contacts. If you care about frontier-model safety and want to get involved, reach out. (Summarised from LinkedIn)"
+      title: "Physics-Informed Machine Learning (PIML) — Notes from UCL",
+      date: "2025-10-10",
+      content: "A short write-up on physics-informed machine learning: how embedding governing equations (PDEs, conservation laws) into the loss function of a neural network can dramatically cut data requirements and improve extrapolation. Coming from a chemical-engineering background this framing genuinely clicked for me — it's the bridge between first-principles modelling and modern deep learning that I've been looking for. (Summarised from LinkedIn — click the link to read the original.)",
+      url: "https://www.linkedin.com/posts/-evanlynch_physics-informed-machine-learning-piml-share-7477018710835290112-oiEx/"
     },
     {
-      title: "Pricing Power Forwards with Lucia–Schwartz + Merton Jumps",
-      date: "2026-04-20",
-      content: "Just shipped an electricity forward pricer using the two-factor Lucia–Schwartz model with Merton jumps. Closed-form risk-neutral forward curve F(0,T) via the moment generating function, validated by an exact-discretisation Monte Carlo simulator — convergence within 2–3% at N=20,000 paths. Built in Python with NumPy/SciPy and a Streamlit front end. (Summarised from LinkedIn)"
+      title: "Measure Change — Girsanov, Risk-Neutral Pricing & Intuition",
+      date: "2025-09-23",
+      content: "Notes on why the change of measure (Girsanov's theorem) is the single most important idea in quantitative finance. Under the physical measure P, asset drifts reflect real-world expectations; under the risk-neutral measure Q, they collapse to the risk-free rate — which is exactly what makes discounted expectations a valid pricing rule. Working through the intuition made a lot of other results (martingale representation, forward measures, numeraire changes) click. (Summarised from LinkedIn — click the link to read the original.)",
+      url: "https://www.linkedin.com/posts/-evanlynch_measurechange-activity-7474899189143941120-yM7X"
     }
+
   ];
 
 
