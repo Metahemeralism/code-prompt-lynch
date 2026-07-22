@@ -337,8 +337,7 @@ const Index = () => {
 
       case 'blog':
         output = [
-      case 'blog':
-        output = [
+
           'Recent Posts (summarised from LinkedIn):',
           '',
           ...blogPosts.map((post, index) =>
