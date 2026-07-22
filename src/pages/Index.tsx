@@ -401,7 +401,7 @@ const Index = () => {
           'Connect with me:',
           '',
           '[in] LinkedIn → https://www.linkedin.com/in/-evanlynch/',
-          '[mail] Email → mailto:eplynch398@gmail.com', 
+          '[mail] Email → mailto:eplynch398@gmail.com,evan.lynch.25@ucl.ac.uk', 
           '[git] GitHub → https://github.com/Metahemeralism',
           '',
           'Feel free to reach out for collaborations or just to chat!'
