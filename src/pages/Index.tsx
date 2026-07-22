@@ -425,7 +425,7 @@ const Index = () => {
         output = [
           'TL;DR: MSc Engineering with Finance (UCL, 1st predicted) · Summer Analyst',
           '@ MSCI · Co-Founder @ Encode London (AI Safety) · Datactics & Shell alum.',
-          'Thesis: neural observer for the inverse Gibson–Schwartz problem.',
+          'Thesis: a PINN for inverting the latent convenience yield of WTI crude.',
           'Interested in AI Safety, Quantitative Trading & Data Science. 🚀'
         ];
         break;
