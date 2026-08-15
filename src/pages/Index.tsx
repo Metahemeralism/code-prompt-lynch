@@ -17,6 +17,158 @@ interface Command {
   timestamp: Date;
 }
 
+interface ExperienceEntry {
+  company: string;
+  abbr: string;
+  role: string;
+  location: string;
+  dateRange: string;
+  current: boolean;
+  accent: 'amber' | 'cyan' | 'violet' | 'blue';
+  bullets: string[];
+}
+
+// Chronological, oldest first — the timeline reads top (start) to bottom (now).
+const experienceEntries: ExperienceEntry[] = [
+  {
+    company: 'Shell',
+    abbr: 'SHL',
+    role: 'Technology Analyst, Strategy & Capital Allocation',
+    location: 'London',
+    dateRange: 'Aug 2022 – Aug 2023',
+    current: false,
+    accent: 'amber',
+    bullets: [
+      'Built TCO models for offshore wind vessels across 10+ configurations (£1M+ allocation)',
+      'Modelled sensitivity to commodity prices, discount rates, and operational risk',
+      'Presented scenarios to Shell executives; authored 100+ parameter risk mitigation report',
+    ],
+  },
+  {
+    company: 'Datactics',
+    abbr: 'DTX',
+    role: 'Data Science Intern',
+    location: 'Belfast',
+    dateRange: 'Mar 2025 – Aug 2025',
+    current: false,
+    accent: 'cyan',
+    bullets: [
+      'Automated validation pipeline for 100GB+ financial datasets — 60% less manual work',
+      'Built LLM-assisted parsing engine (Python/FastAPI + proprietary C++ libraries)',
+      'Authored 10+ technical reports translating EMIR, FATCA, MiFID II into rule sets',
+    ],
+  },
+  {
+    company: 'Encode London',
+    abbr: 'ENC',
+    role: 'Co-Founder & Director',
+    location: 'London',
+    dateRange: 'Aug 2025 – Present',
+    current: true,
+    accent: 'violet',
+    bullets: [
+      'Co-founded UK chapter of Encode — a global AI safety organisation',
+      'Recruited 5-person executive team; coordinate 15 fellows across research, policy, education',
+      'Built engagement with UK AISI, LISA, and UK government contacts',
+    ],
+  },
+  {
+    company: 'MSCI',
+    abbr: 'MSCI',
+    role: 'Summer Analyst, Institutional Client Strategy & Execution',
+    location: 'London',
+    dateRange: 'Jun 2026 – Present',
+    current: true,
+    accent: 'blue',
+    bullets: [
+      'Sized ~$1tn AUM whitespace among EMEA asset-owner prospects; fused multiple data sources into a screening tool with an LLM pipeline that auto-drafted outreach',
+      'Authored go-to-market proposal for MSCI factor & multi-factor QIS strategies',
+      'Built benchmarking tool comparing QIS performance vs MSCI World (Sharpe & more)',
+    ],
+  },
+];
+
+const leadershipEntries = [
+  'Postgraduate Representative — UCL Quantitative Finance Society',
+  'Head of Science — UCL Data Science Society',
+  "UCL Men's Tennis 3rd Team",
+];
+
+const accentStyles: Record<ExperienceEntry['accent'], { badge: string; text: string }> = {
+  amber: { badge: 'bg-amber-500/10 text-amber-300 border-amber-500/40', text: 'text-amber-300' },
+  cyan: { badge: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/40', text: 'text-cyan-300' },
+  violet: { badge: 'bg-violet-500/10 text-violet-300 border-violet-500/40', text: 'text-violet-300' },
+  blue: { badge: 'bg-blue-500/10 text-blue-300 border-blue-500/40', text: 'text-blue-300' },
+};
+
+const ExperienceTimeline = () => {
+  return (
+    <div className="my-1 max-w-2xl">
+      <div className="text-white font-semibold mb-4">Professional Experience</div>
+
+      <div className="relative">
+        <div className="absolute left-5 top-2 bottom-2 border-l-2 border-dashed border-gray-700" aria-hidden="true" />
+
+        <div className="flex flex-col gap-6">
+          {experienceEntries.map((entry) => (
+            <div key={entry.company} className="relative flex gap-4">
+              <div
+                className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-md border bg-black font-mono text-[10px] font-bold tracking-tight ${accentStyles[entry.accent].badge}`}
+              >
+                {entry.abbr}
+              </div>
+
+              <div className="flex-1 min-w-0 pb-1">
+                <div className="flex flex-wrap items-baseline gap-x-2">
+                  <span className="text-white font-semibold">{entry.role}</span>
+                  <span className="text-gray-600">·</span>
+                  <span className={accentStyles[entry.accent].text}>{entry.company}</span>
+                </div>
+                <div className="text-gray-500 text-sm mb-2">
+                  {entry.dateRange} · {entry.location}
+                  {entry.current && (
+                    <span className="ml-2 text-green-400">
+                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400 mr-1 align-middle animate-pulse" />
+                      current
+                    </span>
+                  )}
+                </div>
+                <ul className="space-y-1">
+                  {entry.bullets.map((bullet, bulletIndex) => (
+                    <li key={bulletIndex} className="text-gray-300 text-sm flex gap-2">
+                      <span className="text-gray-600 shrink-0">–</span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+
+          <div className="relative flex items-center gap-4">
+            <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center">
+              <span className="h-2.5 w-2.5 rounded-full bg-green-400 animate-pulse" />
+            </div>
+            <span className="text-green-400 text-sm font-semibold">Now</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6">
+        <div className="text-white font-semibold mb-2">Leadership</div>
+        <ul className="space-y-1">
+          {leadershipEntries.map((item) => (
+            <li key={item} className="text-gray-300 text-sm flex gap-2">
+              <span className="text-gray-600 shrink-0">–</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
 const Index = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<Command[]>([]);
@@ -616,8 +768,6 @@ const Index = () => {
         className += ' text-white font-semibold mt-1';
       } else if (isDividerLine) {
         className += ' text-gray-700';
-      } else if (line.startsWith('  •') || line.startsWith('   •') || line.startsWith('    ')) {
-        className += ' text-yellow-400';
       } else if (line.includes('→')) {
         className += ' text-green-400';
       } else if (line.includes('|')) {
@@ -671,6 +821,8 @@ const Index = () => {
               <div className="text-green-400 whitespace-pre">
                 {typingText}
               </div>
+            ) : cmd.input.toLowerCase().trim() === 'experience' ? (
+              <ExperienceTimeline />
             ) : (
               renderOutput(cmd.output, cmd.input)
             )}
