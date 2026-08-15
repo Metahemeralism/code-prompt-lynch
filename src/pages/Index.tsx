@@ -3,7 +3,7 @@ import linkedinLogo from '../assets/brands/linkedin.svg';
 import githubLogo from '../assets/brands/github.svg';
 import gmailLogo from '../assets/brands/gmail.svg';
 
-interface BlogPost {
+interface WritingPost {
   title: string;
   date: string;
   content: string;
@@ -25,10 +25,11 @@ interface ExperienceEntry {
   dateRange: string;
   current: boolean;
   accent: 'amber' | 'cyan' | 'violet' | 'blue';
-  bullets: string[];
+  quote?: string;
 }
 
 // Chronological, oldest first — the timeline reads top (start) to bottom (now).
+// TODO: confirm exact start date for the UCL research role below (placeholder: 2026 - Present).
 const experienceEntries: ExperienceEntry[] = [
   {
     company: 'Shell',
@@ -38,11 +39,6 @@ const experienceEntries: ExperienceEntry[] = [
     dateRange: 'Aug 2022 – Aug 2023',
     current: false,
     accent: 'amber',
-    bullets: [
-      'Built TCO models for offshore wind vessels across 10+ configurations (£1M+ allocation)',
-      'Modelled sensitivity to commodity prices, discount rates, and operational risk',
-      'Presented scenarios to Shell executives; authored 100+ parameter risk mitigation report',
-    ],
   },
   {
     company: 'Datactics',
@@ -52,11 +48,6 @@ const experienceEntries: ExperienceEntry[] = [
     dateRange: 'Mar 2025 – Aug 2025',
     current: false,
     accent: 'cyan',
-    bullets: [
-      'Automated validation pipeline for 100GB+ financial datasets — 60% less manual work',
-      'Built LLM-assisted parsing engine (Python/FastAPI + proprietary C++ libraries)',
-      'Authored 10+ technical reports translating EMIR, FATCA, MiFID II into rule sets',
-    ],
   },
   {
     company: 'Encode London',
@@ -66,32 +57,17 @@ const experienceEntries: ExperienceEntry[] = [
     dateRange: 'Aug 2025 – Present',
     current: true,
     accent: 'violet',
-    bullets: [
-      'Co-founded UK chapter of Encode — a global AI safety organisation',
-      'Recruited 5-person executive team; coordinate 15 fellows across research, policy, education',
-      'Built engagement with UK AISI, LISA, and UK government contacts',
-    ],
   },
   {
-    company: 'MSCI',
-    abbr: 'MSCI',
-    role: 'Summer Analyst, Institutional Client Strategy & Execution',
+    company: 'UCL — Financial Computing & Analytics Group',
+    abbr: 'UCL',
+    role: 'Postgraduate Researcher',
     location: 'London',
-    dateRange: 'Jun 2026 – Present',
+    dateRange: '2026 – Present',
     current: true,
     accent: 'blue',
-    bullets: [
-      'Sized ~$1tn AUM whitespace among EMEA asset-owner prospects; fused multiple data sources into a screening tool with an LLM pipeline that auto-drafted outreach',
-      'Authored go-to-market proposal for MSCI factor & multi-factor QIS strategies',
-      'Built benchmarking tool comparing QIS performance vs MSCI World (Sharpe & more)',
-    ],
+    quote: 'Building a physics-informed neural network that inverts the latent convenience yield from WTI crude oil futures term structures — as part of my MSc thesis.',
   },
-];
-
-const leadershipEntries = [
-  'Postgraduate Representative — UCL Quantitative Finance Society',
-  'Head of Science — UCL Data Science Society',
-  "UCL Men's Tennis 3rd Team",
 ];
 
 const accentStyles: Record<ExperienceEntry['accent'], { badge: string; text: string }> = {
@@ -124,7 +100,7 @@ const ExperienceTimeline = () => {
                   <span className="text-gray-600">·</span>
                   <span className={accentStyles[entry.accent].text}>{entry.company}</span>
                 </div>
-                <div className="text-gray-500 text-sm mb-2">
+                <div className="text-gray-500 text-sm">
                   {entry.dateRange} · {entry.location}
                   {entry.current && (
                     <span className="ml-2 text-green-400">
@@ -133,14 +109,11 @@ const ExperienceTimeline = () => {
                     </span>
                   )}
                 </div>
-                <ul className="space-y-1">
-                  {entry.bullets.map((bullet, bulletIndex) => (
-                    <li key={bulletIndex} className="text-gray-300 text-sm flex gap-2">
-                      <span className="text-gray-600 shrink-0">–</span>
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
+                {entry.quote && (
+                  <div className="mt-2 text-gray-400 text-sm italic border-l-2 border-gray-700 pl-3">
+                    "{entry.quote}"
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -152,18 +125,6 @@ const ExperienceTimeline = () => {
             <span className="text-green-400 text-sm font-semibold">Now</span>
           </div>
         </div>
-      </div>
-
-      <div className="mt-6">
-        <div className="text-white font-semibold mb-2">Leadership</div>
-        <ul className="space-y-1">
-          {leadershipEntries.map((item) => (
-            <li key={item} className="text-gray-300 text-sm flex gap-2">
-              <span className="text-gray-600 shrink-0">–</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
@@ -235,6 +196,76 @@ const LibrarySection = () => {
   );
 };
 
+interface VolunteeringEntry {
+  org: string;
+  role: string;
+  dateRange: string;
+  description?: string;
+}
+
+// Empty for now — add entries here once details are confirmed
+// (Data Science Society, Quant Society, Thinking About Thinking,
+// Zero Gravity, Raleigh International).
+const volunteeringEntries: VolunteeringEntry[] = [];
+
+const VolunteeringSection = () => {
+  return (
+    <div className="my-1 max-w-2xl">
+      <div className="text-white font-semibold mb-4">Volunteering</div>
+      <div className="flex flex-col gap-3">
+        {volunteeringEntries.map((entry) => (
+          <div key={`${entry.org}-${entry.role}`}>
+            <div className="flex flex-wrap items-baseline gap-x-2">
+              <span className="text-white font-semibold">{entry.role}</span>
+              <span className="text-gray-600">·</span>
+              <span className="text-gray-300">{entry.org}</span>
+            </div>
+            <div className="text-gray-500 text-sm">{entry.dateRange}</div>
+            {entry.description && (
+              <div className="text-gray-400 text-sm mt-1">{entry.description}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+interface HelpCommand {
+  cmd: string;
+  desc: string;
+}
+
+const helpCommands: HelpCommand[] = [
+  { cmd: 'about', desc: 'Overview of Evan Lynch' },
+  { cmd: 'experience', desc: 'Professional history' },
+  { cmd: 'volunteering', desc: 'Societies, programmes & expeditions' },
+  { cmd: 'projects', desc: 'Personal projects & code' },
+  { cmd: 'interests', desc: 'Hobbies & passions' },
+  { cmd: 'library', desc: 'Curated links, filed by topic' },
+  { cmd: 'socials', desc: 'Social media links' },
+  { cmd: 'writings', desc: 'Notes & posts' },
+  { cmd: 'tldr', desc: 'Quick summary' },
+  { cmd: 'clear', desc: 'Clear terminal' },
+];
+
+const HelpMenu = () => {
+  return (
+    <div className="my-1 max-w-xl">
+      <div className="text-white font-semibold mb-3">Available commands</div>
+      <div className="flex flex-col gap-1.5">
+        {helpCommands.map(({ cmd, desc }) => (
+          <div key={cmd} className="flex gap-4">
+            <span className="text-green-400 w-32 shrink-0">{cmd}</span>
+            <span className="text-gray-400">{desc}</span>
+          </div>
+        ))}
+      </div>
+      <div className="text-gray-500 text-sm mt-4">Type any command to get started.</div>
+    </div>
+  );
+};
+
 const GNOME_ART = String.raw`   /\
   /vv\
  (o.o)
@@ -243,6 +274,13 @@ const GNOME_ART = String.raw`   /\
  _||______,---o
 |_____________|
   ~  ~  ~  ~  ~`;
+
+const EmptyState = () => (
+  <div className="my-1 text-green-400">
+    <pre className="text-xs leading-tight">{GNOME_ART}</pre>
+    <div className="text-gray-500 mt-1">gone fishing</div>
+  </div>
+);
 
 interface FishParticle {
   id: number;
@@ -298,40 +336,17 @@ const GnomeFisher = () => {
 const Index = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<Command[]>([]);
-  const [isTyping, setIsTyping] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const [selectedPost, setSelectedPost] = useState<WritingPost | null>(null);
   const [cursorVisible, setCursorVisible] = useState(true);
-  const [typingText, setTypingText] = useState('');
-  const [currentlyTypingIndex, setCurrentlyTypingIndex] = useState(-1);
   const [visitorNumber, setVisitorNumber] = useState(0);
   const [hasUsedHelp, setHasUsedHelp] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
 
-  // Blog posts — summarised from LinkedIn activity
-  const blogPosts: BlogPost[] = [
-    {
-      title: "A Garmin Heatmap Widget for Your Desktop",
-      date: "2025-10-27",
-      content: "If you use a Garmin, you probably know the frustration of having to open the app just to see your activity heatmap. I built a macOS desktop widget (via Übersicht) that turns your Garmin Connect data into a GitHub-style contribution heatmap right on your desktop — a small side-project that scratched a personal itch and now has 16 GitHub stars from the running community. Code + install instructions on GitHub. (Summarised from LinkedIn — click the link to read the original.)",
-      url: "https://www.linkedin.com/posts/-evanlynch_if-you-use-a-garmin-you-probably-know-the-share-7483170090499297281-7G2U/"
-    },
-    {
-      title: "Physics-Informed Machine Learning (PIML) — Notes from UCL",
-      date: "2025-10-10",
-      content: "A short write-up on physics-informed machine learning: how embedding governing equations (PDEs, conservation laws) into the loss function of a neural network can dramatically cut data requirements and improve extrapolation. Coming from a chemical-engineering background this framing genuinely clicked for me — it's the bridge between first-principles modelling and modern deep learning that I've been looking for. (Summarised from LinkedIn — click the link to read the original.)",
-      url: "https://www.linkedin.com/posts/-evanlynch_physics-informed-machine-learning-piml-share-7477018710835290112-oiEx/"
-    },
-    {
-      title: "Measure Change — Girsanov, Risk-Neutral Pricing & Intuition",
-      date: "2025-09-23",
-      content: "Notes on why the change of measure (Girsanov's theorem) is the single most important idea in quantitative finance. Under the physical measure P, asset drifts reflect real-world expectations; under the risk-neutral measure Q, they collapse to the risk-free rate — which is exactly what makes discounted expectations a valid pricing rule. Working through the intuition made a lot of other results (martingale representation, forward measures, numeraire changes) click. (Summarised from LinkedIn — click the link to read the original.)",
-      url: "https://www.linkedin.com/posts/-evanlynch_measurechange-activity-7474899189143941120-yM7X"
-    }
-
-  ];
+  // Writings — cleared out; add new posts here as they're written.
+  const writingsPosts: WritingPost[] = [];
 
 
   // Initialize visitor counter
@@ -373,7 +388,7 @@ const Index = () => {
         });
       }, 50);
     }
-  }, [history, typingText]);
+  }, [history]);
 
   // Also scroll to bottom when input changes to keep it visible
   useEffect(() => {
@@ -388,46 +403,17 @@ const Index = () => {
     }
   }, [input]);
 
-  const displayOutput = (text: string[], isAscii: boolean = false): void => {
-    if (isAscii) {
-      setIsTyping(true);
-      setTypingText('');
-      const fullText = text.join('\n');
-      
-      let currentIndex = 0;
-      const typeInterval = setInterval(() => {
-        if (currentIndex < fullText.length) {
-          setTypingText(fullText.slice(0, currentIndex + 1));
-          currentIndex++;
-        } else {
-          clearInterval(typeInterval);
-          setIsTyping(false);
-          // Update history with final text
-          setHistory(prev => {
-            const newHistory = [...prev];
-            if (newHistory.length > 0) {
-              newHistory[newHistory.length - 1] = {
-                ...newHistory[newHistory.length - 1],
-                output: text
-              };
-            }
-            return newHistory;
-          });
-          setTypingText('');
-        }
-      }, 20);
-    } else {
-      setHistory(prev => {
-        const newHistory = [...prev];
-        if (newHistory.length > 0) {
-          newHistory[newHistory.length - 1] = {
-            ...newHistory[newHistory.length - 1],
-            output: text
-          };
-        }
-        return newHistory;
-      });
-    }
+  const displayOutput = (text: string[]): void => {
+    setHistory(prev => {
+      const newHistory = [...prev];
+      if (newHistory.length > 0) {
+        newHistory[newHistory.length - 1] = {
+          ...newHistory[newHistory.length - 1],
+          output: text
+        };
+      }
+      return newHistory;
+    });
   };
 
   const executeCommand = async (cmd: string) => {
@@ -459,17 +445,7 @@ const Index = () => {
         output = [
           'Available commands:',
           '',
-          '  about .............. Overview of Evan Lynch',
-          '  experience ......... Professional history',
-          '  research ........... MSc thesis & research work',
-          '  projects ........... Personal projects & code',
-          '  interests .......... Hobbies & passions',
-          '  library ............ Curated links, filed by topic',
-          '  socials ............ Social media links',
-          '  blog ............... Recent posts (summarised from LinkedIn)',
-          '  tldr ............... Quick summary',
-          '  clear .............. Clear terminal',
-          '  ascii .............. Display ASCII art',
+          ...helpCommands.map(({ cmd: c, desc }) => `  ${c.padEnd(14)}${desc}`),
           '',
           'Type any command to get started!'
         ];
@@ -481,15 +457,14 @@ const Index = () => {
           "Hi, I'm Evan Lynch — passionate about technology, AI and entrepreneurship.",
           "",
           "I'm completing an MSc in Engineering with Finance at UCL (predicted First),",
-          "having graduated with a BEng in Chemical Engineering from Bath. This summer",
-          "I'm at MSCI in London as a Summer Analyst on the Institutional Client Strategy",
-          "& Execution team.",
+          "having graduated with a BEng in Chemical Engineering from Bath. I'm currently",
+          "a Postgraduate Researcher in the Financial Computing & Analytics Group at UCL,",
+          "as part of my MSc thesis.",
           "",
           "I co-founded Encode London — the UK chapter of a global AI safety organisation —",
-          "and my MSc thesis builds a physics-informed neural network that inverts the",
-          "latent convenience yield from WTI crude oil futures term structures.",
-          "Type `research` to read more.",
-
+          "and my thesis builds a physics-informed neural network that inverts the latent",
+          "convenience yield from WTI crude oil futures term structures.",
+          "Type `experience` to read more.",
           "",
           "Career Interests: AI Safety, Quantitative Trading, Data Science",
           "Languages: Python, SQL, MATLAB, VBA | Fluent English; Beginner German & Danish",
@@ -503,127 +478,22 @@ const Index = () => {
           'Professional Experience:',
           '=============================================================================',
           '',
-          'Jun 2026 – Present | Summer Analyst, Institutional Client Strategy & Execution | MSCI, London',
-          '  • Sized ~$1tn AUM whitespace among EMEA asset-owner prospects; fused multiple',
-          '    data sources into a screening tool with an LLM pipeline that auto-drafted outreach',
-          '  • Authored go-to-market proposal for MSCI factor & multi-factor QIS strategies',
-          '  • Built benchmarking tool comparing QIS performance vs MSCI World (Sharpe & more)',
-          '',
-          'Aug 2025 – Present | Co-Founder & Director | Encode London',
-          '  • Co-founded UK chapter of Encode — a global AI safety organisation',
-          '  • Recruited 5-person executive team; coordinate 15 fellows across research, policy, education',
-          '  • Built engagement with UK AISI, LISA, and UK government contacts',
-          '',
-          'Mar 2025 – Aug 2025 | Data Science Intern | Datactics, Belfast',
-          '  • Automated validation pipeline for 100GB+ financial datasets — 60% less manual work',
-          '  • Built LLM-assisted parsing engine (Python/FastAPI + proprietary C++ libraries)',
-          '  • Authored 10+ technical reports translating EMIR, FATCA, MiFID II into rule sets',
-          '',
-          'Aug 2022 – Aug 2023 | Technology Analyst, Strategy & Capital Allocation | Shell, London',
-          '  • Built TCO models for offshore wind vessels across 10+ configurations (£1M+ allocation)',
-          '  • Modelled sensitivity to commodity prices, discount rates, and operational risk',
-          '  • Presented scenarios to Shell executives; authored 100+ parameter risk mitigation report',
-          '',
-          'Leadership:',
-          '  • Postgraduate Representative — UCL Quantitative Finance Society',
-          '  • Head of Science — UCL Data Science Society',
-          '  • UCL Men\'s Tennis 3rd Team'
+          ...experienceEntries
+            .slice()
+            .reverse()
+            .map((e) => `${e.dateRange} | ${e.role} | ${e.company}`)
         ];
         break;
 
-      case 'research':
-        output = [
-          'MSc Thesis (UCL, 2025 – 2026):',
-          '=============================================================================',
-          '',
-          'A Physics-Informed Neural Network for Inverting the Latent',
-          '   Convenience Yield from WTI Crude Oil Futures Term Structures',
-          '',
-          '   Supervisors: Dr. Carolyn Phelan (primary), Dr. Lama Hamadeh',
-          '',
-          '─────────────────────────────────────────────────────────────────────────────',
-          'Motivation',
-          '─────────────────────────────────────────────────────────────────────────────',
-          '   The Gibson–Schwartz (1990) two-factor model is a foundational framework',
-          '   for pricing commodity derivatives. The spot price $S_t$ and the',
-          '   convenience yield $\\delta_t$ co-evolve, but only $S_t$ (and futures',
-          '   prices $F(S_t,\\delta_t,\\tau)$) are directly observable — the yield',
-          '   $\\delta_t$ is a latent state. Classical practice recovers $\\delta_t$',
-          '   with a Kalman filter under Gaussian, linear assumptions. I ask whether',
-          '   a physics-informed neural network (PINN) can do better.',
-          '',
-          '─────────────────────────────────────────────────────────────────────────────',
-          'The model — risk-neutral dynamics',
-          '─────────────────────────────────────────────────────────────────────────────',
-          '   Under the risk-neutral measure Q, after applying Girsanov and pinning',
-          '   down $\\lambda_1$ via the cost-of-carry condition:',
-          '',
-          '     $dS_t = (r - \\delta_t)\\, S_t\\, dt + \\sigma_1 S_t\\, dW_1^{Q}$',
-          '     $d\\delta_t = \\kappa(\\alpha^{Q} - \\delta_t)\\, dt + \\sigma_2\\, dW_2^{Q}$',
-          '     $dW_1^{Q}\\, dW_2^{Q} = \\rho\\, dt,\\quad \\alpha^{Q} = \\alpha^{P} - \\sigma_2 \\lambda_2 / \\kappa$',
-          '',
-          '   Applying Itô + the martingale condition on the futures price yields the',
-          '   Gibson–Schwartz PDE (in time-to-maturity $\\tau = T - t$):',
-          '',
-          '     $\\partial_\\tau \\hat F = (r-\\delta) S\\, \\partial_S \\hat F$',
-          '       $+ \\kappa(\\alpha^{Q}-\\delta)\\, \\partial_\\delta \\hat F$',
-          '       $+ \\tfrac12 \\sigma_1^2 S^2 \\partial_{SS}\\hat F$',
-          '       $+ \\rho\\sigma_1\\sigma_2 S\\, \\partial_{S\\delta}\\hat F$',
-          '       $+ \\tfrac12 \\sigma_2^2 \\partial_{\\delta\\delta}\\hat F$',
-          '     with initial condition $\\hat F(S,\\delta,0) = S$.',
-          '',
-          '   This admits an exponential-affine closed form:',
-          '',
-          '     $\\hat F(\\tau, S, \\delta) = S \\exp\\!\\big[B(\\tau)\\,\\delta + A(\\tau)\\big]$',
-          '     $B(\\tau) = -\\dfrac{1 - e^{-\\kappa\\tau}}{\\kappa}$',
-          '',
-          '   (matches Schwartz 1997 Model 2 term-by-term).',
-          '',
-          '─────────────────────────────────────────────────────────────────────────────',
-          'The inverse problem & PINN formulation',
-          '─────────────────────────────────────────────────────────────────────────────',
-          '   A neural surrogate $\\hat\\delta_\\theta(t, S)$ is trained to invert the',
-          '   observed futures panel. Composite objective:',
-          '',
-          '     $\\hat L = \\lambda_t \\hat L_t + \\lambda_b \\hat L_b + \\lambda_f \\hat L_f$',
-          '       $+ \\sum_\\alpha \\lambda_{h_\\alpha}\\, \\hat L_{h_\\alpha}$',
-          '',
-          '   with weights set adaptively by WamOL loss-balancing. Components:',
-          '',
-          '   • Data-misfit (linearised in $\\delta$ via the closed form):',
-          '     $\\hat L_t = \\tfrac{1}{N} \\sum_i \\big(\\ln S_i + B(\\tau_i)\\hat\\delta_\\theta + A(\\tau_i) - \\ln F_i^{obs}\\big)^2$',
-          '',
-          '   • No-arbitrage penalties (model-free, hinge-quadratic',
-          '     $L_h = \\tfrac{1}{N} \\sum [\\max(0,-g(x))]^2$):',
-          '     – Cash-and-carry upper bound: $F_t \\le S_t\\, e^{(r+u)\\tau}$',
-          '     – Reverse-carry lower bound:  $F_t \\ge S_t\\, e^{(r-\\delta_{\\max})\\tau}$',
-          '     – Economic-plausibility floor: $\\hat\\delta_\\theta \\ge \\delta_{\\min}$',
-          '       (calibrated to $-0.3\\ \\mathrm{yr}^{-1}$, admitting deep contango',
-          '       such as the April 2020 negative-price episode)',
-          '',
-          '─────────────────────────────────────────────────────────────────────────────',
-          'Data & benchmark',
-          '─────────────────────────────────────────────────────────────────────────────',
-          '   • WTI quarterly futures panel (2015 – 2027), Refinitiv Workspace + FRED,',
-          '     contract expiries cross-validated against the CME specification.',
-          '   • Baseline: Kalman filter with exact Ornstein–Uhlenbeck discretisation',
-          '     and maximum-likelihood calibration.',
-          '   • Validation: Monte Carlo synthetic generator with closed-form ground truth.',
-          '',
-          '─────────────────────────────────────────────────────────────────────────────',
-          'Status',
-          '─────────────────────────────────────────────────────────────────────────────',
-          '   ✓ Full theoretical derivation (Girsanov → PDE → closed form) complete',
-          '   ✓ Empirical data pipeline complete & validated',
-          '   ✓ Monte Carlo synthetic generator passing numerical checks',
-          '   ⟳ PINN implementation in JAX/Flax with WamOL adaptive loss',
-          '   ⟳ Kalman baseline & comparative evaluation',
-          '',
-          'Stack: JAX, Flax, NumPy, SciPy, Statsmodels · Submission: 31 Aug 2026'
-        ];
+      case 'volunteering':
+        output = volunteeringEntries.length === 0
+          ? []
+          : [
+              'Volunteering:',
+              '',
+              ...volunteeringEntries.map((v) => `${v.dateRange} | ${v.role} | ${v.org}`)
+            ];
         break;
-
-
 
       case 'projects': {
         const rule = '─'.repeat(52);
@@ -750,23 +620,25 @@ const Index = () => {
         ];
         break;
 
-      case 'blog':
-        output = [
-
-          'Recent Posts (summarised from LinkedIn):',
-          '',
-          ...blogPosts.map((post, index) =>
-            `${index + 1}. ${post.title} (${post.date}) [click to read]`
-          ),
-          '',
-          'Click a title to read the summary. Full posts live on LinkedIn.'
-        ];
+      case 'writings':
+        output = writingsPosts.length === 0
+          ? []
+          : [
+              'Writings:',
+              '',
+              ...writingsPosts.map((post, index) =>
+                `${index + 1}. ${post.title} (${post.date}) [click to read]`
+              ),
+              '',
+              'Click a title to read the summary.'
+            ];
         break;
 
       case 'tldr':
         output = [
-          'TL;DR: MSc Engineering with Finance (UCL, 1st predicted) · Summer Analyst',
-          '@ MSCI · Co-Founder @ Encode London (AI Safety) · Datactics & Shell alum.',
+          'TL;DR: MSc Engineering with Finance (UCL, 1st predicted) · Postgraduate',
+          'Researcher @ UCL Financial Computing & Analytics Group · Co-Founder @',
+          'Encode London (AI Safety) · Datactics & Shell alum.',
           'Thesis: a PINN for inverting the latent convenience yield of WTI crude.',
           'Interested in AI Safety, Quantitative Trading & Data Science.'
         ];
@@ -776,28 +648,6 @@ const Index = () => {
       case 'clear':
         setHistory([]);
         return;
-
-      case 'ascii':
-        output = [
-          '',
-          '  ███████╗██╗   ██╗ █████╗ ███╗   ██╗',
-          '  ██╔════╝██║   ██║██╔══██╗████╗  ██║',
-          '  █████╗   ██║   ██║███████║██╔██╗ ██║',
-          '  ██╔══╝  ╚██╗ ██╔╝██╔══██║██║╚██╗██║',
-          '  ███████╗ ╚████╔╝ ██║  ██║██║ ╚████║',
-          '  ╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═══╝',
-          '',
-          '  ██╗     ██╗   ██╗███╗   ██╗ ██████╗██╗  ██╗',
-          '  ██║     ██║   ██║████╗  ██║██╔════╝██║  ██║',
-          '  ██║     ██║   ██║██╔██╗ ██║██║     ███████║',
-          '  ██║     ██║   ██║██║╚██╗██║██║     ██╔══██║',
-          '  ███████╗╚██████╔╝██║ ╚████║╚██████╗██║  ██║',
-          '  ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝',
-          ''
-        ];
-        displayOutput(output, true);
-        return;
-        break;
 
       default:
         output = [
@@ -812,14 +662,14 @@ const Index = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input.trim() && !isTyping) {
+    if (input.trim()) {
       executeCommand(input.trim());
       setInput('');
     }
   };
 
-  const handleBlogClick = (postTitle: string) => {
-    const post = blogPosts.find(p => postTitle.includes(p.title));
+  const handleWritingClick = (postTitle: string) => {
+    const post = writingsPosts.find(p => postTitle.includes(p.title));
     if (post) {
       setSelectedPost(post);
       setShowModal(true);
@@ -828,17 +678,17 @@ const Index = () => {
 
   const renderOutput = (output: string[], commandInput: string) => {
     return output.map((line, index) => {
-      // Check if this is a blog post line
-      const isBlogPost = commandInput.toLowerCase() === 'blog' && 
-                        line.includes('[click to read]') && 
-                        blogPosts.some(post => line.includes(post.title));
-      
-      if (isBlogPost) {
+      // Check if this is a writings post line
+      const isWritingPost = commandInput.toLowerCase() === 'writings' &&
+                        line.includes('[click to read]') &&
+                        writingsPosts.some(post => line.includes(post.title));
+
+      if (isWritingPost) {
         return (
           <div key={index} className="terminal-line">
-            <span 
+            <span
               className="text-blue-400 hover:text-blue-300 cursor-pointer underline"
-              onClick={() => handleBlogClick(line)}
+              onClick={() => handleWritingClick(line)}
             >
               {line.replace(' [click to read]', '')}
             </span>
@@ -964,17 +814,23 @@ const Index = () => {
               <span className="text-green-400 mr-2">λ</span>
               <span className="text-white">{cmd.input}</span>
             </div>
-            {cmd.input.toLowerCase().trim() === 'ascii' && isTyping && index === history.length - 1 ? (
-              <div className="text-green-400 whitespace-pre">
-                {typingText}
-              </div>
-            ) : cmd.input.toLowerCase().trim() === 'experience' ? (
-              <ExperienceTimeline />
-            ) : cmd.input.toLowerCase().trim() === 'library' ? (
-              <LibrarySection />
-            ) : (
-              renderOutput(cmd.output, cmd.input)
-            )}
+            {(() => {
+              const trimmedInput = cmd.input.toLowerCase().trim();
+              if (trimmedInput === 'help') return <HelpMenu />;
+              if (trimmedInput === 'experience') return <ExperienceTimeline />;
+              if (trimmedInput === 'library') return <LibrarySection />;
+              if (trimmedInput === 'volunteering') {
+                return volunteeringEntries.length === 0
+                  ? <EmptyState />
+                  : <VolunteeringSection />;
+              }
+              if (trimmedInput === 'writings') {
+                return writingsPosts.length === 0
+                  ? <EmptyState />
+                  : renderOutput(cmd.output, cmd.input);
+              }
+              return renderOutput(cmd.output, cmd.input);
+            })()}
           </div>
         ))}
 
@@ -988,7 +844,6 @@ const Index = () => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               className="bg-transparent text-white outline-none w-full font-mono"
-              disabled={isTyping}
               autoComplete="off"
               style={{ caretColor: 'transparent' }}
             />
@@ -1002,7 +857,7 @@ const Index = () => {
         </form>
       </div>
 
-      {/* Blog Post Modal */}
+      {/* Writing Post Modal */}
       {showModal && selectedPost && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50">
           <div className="bg-gray-900 border border-gray-700 rounded-lg p-6 max-w-2xl max-h-96 overflow-y-auto">
