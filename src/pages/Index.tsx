@@ -246,7 +246,7 @@ const Index = () => {
           'MSc Thesis (UCL, 2025 – 2026):',
           '=============================================================================',
           '',
-          '🧠 A Physics-Informed Neural Network for Inverting the Latent',
+          'A Physics-Informed Neural Network for Inverting the Latent',
           '   Convenience Yield from WTI Crude Oil Futures Term Structures',
           '',
           '   Supervisors: Dr. Carolyn Phelan (primary), Dr. Lama Hamadeh',
@@ -339,41 +339,47 @@ const Index = () => {
         output = [
           'Projects:',
           '',
-          '⚡ Electricity Forward Pricer  (Apr 2026)',
+          'Electricity Forward Pricer  (Apr 2026)',
           '   Tech: Python, NumPy, SciPy, Streamlit, Monte Carlo',
           '   • Forward-curve pricer for power markets using Lucia–Schwartz two-factor',
           '     model with Merton jumps',
           '   • Closed-form risk-neutral F(0,T) via moment generating function',
           '   • Validated by exact-discretisation Monte Carlo — 2–3% convergence at N=20k paths',
-          '   → https://github.com/Metahemeralism/forward_heatmap',
+          '   → GitHub: https://github.com/Metahemeralism/forward_heatmap',
           '',
-          '✈️  Plane-Wing Optimisation  (May 2026)',
+          'Plane-Wing Optimisation  (May 2026)',
           '   Tech: Python, Gaussian Process Regression, MLP, NSGA-II',
-          '   • Surrogate-based multi-objective optimisation of an aircraft wing panel',
+          '   • Surrogate-based multi-objective optimisation of an aircraft wing maintenance panel',
           '   • Minimised mass & max von Mises stress via evolutionary search',
-          '   → https://github.com/Metahemeralism/plane-wing-optimisation',
+          '   • Coursework for Data-Driven Methods for Engineers (MECH0107), UCL —',
+          '     supervised by Dr. Lama Hamadeh',
+          '   → GitHub: https://github.com/Metahemeralism/plane-wing-optimisation',
+          '   → Report (PDF): /coursework/mech0107-coursework2-wing-panel-optimisation.pdf',
           '',
-          '🔬 Pendulum Motion Tracking & Analysis  (Mar 2026)',
+          'Pendulum Motion Tracking & Analysis  (Mar 2026)',
           '   Tech: Python, OpenCV, NumPy, SciPy, Scikit-Learn',
           '   • Computer-vision pipeline tracking a spring-pendulum from multi-camera video',
           '   • Extracted dominant oscillation modes via PCA; estimated k and L analytically',
-          '   → https://github.com/Metahemeralism/pendulum',
+          '   • Coursework for Data-Driven Methods for Engineers (MECH0107), UCL —',
+          '     supervised by Dr. Lama Hamadeh',
+          '   → GitHub: https://github.com/Metahemeralism/pendulum',
+          '   → Report (PDF): /coursework/mech0107-coursework1-spring-pendulum.pdf',
           '',
-          '🔐 Pynigma — Enigma Machine Simulator  (Nov 2024)',
+          'Pynigma — Enigma Machine Simulator  (Nov 2024)',
           '   Tech: Python, OOP',
           '   • Object-oriented WWII Enigma cipher simulation — rotor stepping & plugboard',
           '   • Encode/decode paths validated against known historical settings',
-          '   → https://github.com/Metahemeralism/pynigma',
+          '   → GitHub: https://github.com/Metahemeralism/pynigma',
           '',
-          '🎾 Wimbledon 2025 Winner Prediction',
+          'Wimbledon 2025 Winner Prediction',
           '   Tech: Python, Scikit-Learn, Jupyter',
           '   • ML model predicting the 2025 Wimbledon Men\'s Singles Final winner',
-          '   → https://github.com/Metahemeralism/wimby-pred',
+          '   → GitHub: https://github.com/Metahemeralism/wimby-pred',
           '',
-          '🖥️  Garmin Heatmap Widget',
+          'Garmin Heatmap Widget',
           '   Tech: Python, JavaScript, Übersicht',
           '   • macOS desktop widget rendering Garmin activity heatmap (16 GitHub stars)',
-          '   → https://github.com/Metahemeralism/garmin_heatmap_widget'
+          '   → GitHub: https://github.com/Metahemeralism/garmin_heatmap_widget'
         ];
         break;
 
@@ -382,16 +388,16 @@ const Index = () => {
         output = [
           'Personal Interests & Hobbies:',
           '',
-          '♞ Chess',
+          'Chess',
           '   Top 6% on Chess.com — always looking for a game',
           '',
-          '🎾 Tennis',
+          'Tennis',
           '   UCL Men\'s 3rd Team; active player and coach',
           '',
-          '💪 Fitness',
+          'Fitness',
           '   Regular gym training and wellness focus',
           '',
-          '🌍 Travelling',
+          'Travelling',
           '   Exploring new places — most recently South Africa with Raleigh International'
         ];
         break;
@@ -426,7 +432,7 @@ const Index = () => {
           'TL;DR: MSc Engineering with Finance (UCL, 1st predicted) · Summer Analyst',
           '@ MSCI · Co-Founder @ Encode London (AI Safety) · Datactics & Shell alum.',
           'Thesis: a PINN for inverting the latent convenience yield of WTI crude.',
-          'Interested in AI Safety, Quantitative Trading & Data Science. 🚀'
+          'Interested in AI Safety, Quantitative Trading & Data Science.'
         ];
         break;
 
@@ -543,7 +549,7 @@ const Index = () => {
       }
 
       // Check for links
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const urlRegex = /(https?:\/\/[^\s]+|\/coursework\/[^\s]+)/g;
       const emailRegex = /(mailto:[^\s]+)/g;
       
       if (urlRegex.test(line) || emailRegex.test(line)) {
@@ -574,7 +580,7 @@ const Index = () => {
       let className = 'terminal-line';
       if (line.startsWith('  •') || line.startsWith('   •') || line.startsWith('    ')) {
         className += ' text-yellow-400';
-      } else if (line.includes('→') || line.startsWith('🌱') || line.startsWith('✍️') || line.startsWith('📊')) {
+      } else if (line.includes('→')) {
         className += ' text-green-400';
       } else if (line.includes('|')) {
         className += ' text-cyan-400';
