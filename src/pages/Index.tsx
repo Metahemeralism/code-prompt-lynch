@@ -335,53 +335,84 @@ const Index = () => {
 
 
 
-      case 'projects':
+      case 'projects': {
+        const rule = '─'.repeat(52);
         output = [
           'Projects:',
           '',
           'Electricity Forward Pricer  (Apr 2026)',
-          '   Tech: Python, NumPy, SciPy, Streamlit, Monte Carlo',
-          '   • Forward-curve pricer for power markets using Lucia–Schwartz two-factor',
-          '     model with Merton jumps',
+          rule,
+          '   Tech:  Python, NumPy, SciPy, Streamlit, Monte Carlo',
+          '',
+          '   • Forward-curve pricer for power markets using Lucia–Schwartz',
+          '     two-factor model with Merton jumps',
           '   • Closed-form risk-neutral F(0,T) via moment generating function',
-          '   • Validated by exact-discretisation Monte Carlo — 2–3% convergence at N=20k paths',
-          '   → GitHub: https://github.com/Metahemeralism/forward_heatmap',
+          '   • Validated by exact-discretisation Monte Carlo —',
+          '     2–3% convergence at N=20k paths',
+          '',
+          '   → GitHub:  https://github.com/Metahemeralism/forward_heatmap',
+          '',
           '',
           'Plane-Wing Optimisation  (May 2026)',
-          '   Tech: Python, Gaussian Process Regression, MLP, NSGA-II',
-          '   • Surrogate-based multi-objective optimisation of an aircraft wing maintenance panel',
+          rule,
+          '   Tech:  Python, Gaussian Process Regression, MLP, NSGA-II',
+          '',
+          '   • Surrogate-based multi-objective optimisation of an aircraft',
+          '     wing maintenance panel',
           '   • Minimised mass & max von Mises stress via evolutionary search',
-          '   • Coursework for Data-Driven Methods for Engineers (MECH0107), UCL —',
-          '     supervised by Dr. Lama Hamadeh',
-          '   → GitHub: https://github.com/Metahemeralism/plane-wing-optimisation',
+          '   • Coursework for Data-Driven Methods for Engineers (MECH0107), UCL',
+          '     — supervised by Dr. Lama Hamadeh',
+          '',
+          '   → GitHub:      https://github.com/Metahemeralism/plane-wing-optimisation',
           '   → Report (PDF): /coursework/mech0107-coursework2-wing-panel-optimisation.pdf',
           '',
+          '',
           'Pendulum Motion Tracking & Analysis  (Mar 2026)',
-          '   Tech: Python, OpenCV, NumPy, SciPy, Scikit-Learn',
-          '   • Computer-vision pipeline tracking a spring-pendulum from multi-camera video',
-          '   • Extracted dominant oscillation modes via PCA; estimated k and L analytically',
-          '   • Coursework for Data-Driven Methods for Engineers (MECH0107), UCL —',
-          '     supervised by Dr. Lama Hamadeh',
-          '   → GitHub: https://github.com/Metahemeralism/pendulum',
+          rule,
+          '   Tech:  Python, OpenCV, NumPy, SciPy, Scikit-Learn',
+          '',
+          '   • Computer-vision pipeline tracking a spring-pendulum from',
+          '     multi-camera video',
+          '   • Extracted dominant oscillation modes via PCA; estimated k and L',
+          '     analytically',
+          '   • Coursework for Data-Driven Methods for Engineers (MECH0107), UCL',
+          '     — supervised by Dr. Lama Hamadeh',
+          '',
+          '   → GitHub:      https://github.com/Metahemeralism/pendulum',
           '   → Report (PDF): /coursework/mech0107-coursework1-spring-pendulum.pdf',
           '',
+          '',
           'Pynigma — Enigma Machine Simulator  (Nov 2024)',
-          '   Tech: Python, OOP',
-          '   • Object-oriented WWII Enigma cipher simulation — rotor stepping & plugboard',
+          rule,
+          '   Tech:  Python, OOP',
+          '',
+          '   • Object-oriented WWII Enigma cipher simulation — rotor stepping',
+          '     & plugboard',
           '   • Encode/decode paths validated against known historical settings',
-          '   → GitHub: https://github.com/Metahemeralism/pynigma',
           '',
-          'Wimbledon 2025 Winner Prediction',
-          '   Tech: Python, Scikit-Learn, Jupyter',
+          '   → GitHub:  https://github.com/Metahemeralism/pynigma',
+          '',
+          '',
+          'Wimbledon 2025 Winner Prediction  (Jul 2025)',
+          rule,
+          '   Tech:  Python, Scikit-Learn, Jupyter',
+          '',
           '   • ML model predicting the 2025 Wimbledon Men\'s Singles Final winner',
-          '   → GitHub: https://github.com/Metahemeralism/wimby-pred',
           '',
-          'Garmin Heatmap Widget',
-          '   Tech: Python, JavaScript, Übersicht',
-          '   • macOS desktop widget rendering Garmin activity heatmap (16 GitHub stars)',
-          '   → GitHub: https://github.com/Metahemeralism/garmin_heatmap_widget'
+          '   → GitHub:  https://github.com/Metahemeralism/wimby-pred',
+          '',
+          '',
+          'Garmin Heatmap Widget  (Jul 2026)',
+          rule,
+          '   Tech:  Python, JavaScript, Übersicht',
+          '',
+          '   • macOS desktop widget rendering Garmin activity heatmap',
+          '     (16 GitHub stars)',
+          '',
+          '   → GitHub:  https://github.com/Metahemeralism/garmin_heatmap_widget'
         ];
         break;
+      }
 
 
       case 'interests':
@@ -548,16 +579,15 @@ const Index = () => {
         );
       }
 
-      // Check for links
-      const urlRegex = /(https?:\/\/[^\s]+|\/coursework\/[^\s]+)/g;
-      const emailRegex = /(mailto:[^\s]+)/g;
-      
-      if (urlRegex.test(line) || emailRegex.test(line)) {
-        const parts = line.split(/(https?:\/\/[^\s]+|mailto:[^\s]+)/);
+      // Check for links (no 'g' flag here — test() must stay stateless across calls)
+      const linkPattern = /(https?:\/\/[^\s]+|\/coursework\/[^\s]+|mailto:[^\s]+)/;
+
+      if (linkPattern.test(line)) {
+        const parts = line.split(new RegExp(linkPattern.source, 'g'));
         return (
           <div key={index} className="terminal-line">
             {parts.map((part, partIndex) => {
-              if (urlRegex.test(part) || emailRegex.test(part)) {
+              if (linkPattern.test(part)) {
                 return (
                   <a
                     key={partIndex}
@@ -578,7 +608,15 @@ const Index = () => {
 
       // Color-code different types of content
       let className = 'terminal-line';
-      if (line.startsWith('  •') || line.startsWith('   •') || line.startsWith('    ')) {
+      const isProjectsCmd = commandInput.toLowerCase().trim() === 'projects';
+      const isDividerLine = /^─+$/.test(line);
+      const isProjectTitle = isProjectsCmd && line.trim() !== '' && !line.startsWith(' ') && line !== 'Projects:' && !isDividerLine;
+
+      if (isProjectTitle) {
+        className += ' text-white font-semibold mt-1';
+      } else if (isDividerLine) {
+        className += ' text-gray-700';
+      } else if (line.startsWith('  •') || line.startsWith('   •') || line.startsWith('    ')) {
         className += ' text-yellow-400';
       } else if (line.includes('→')) {
         className += ' text-green-400';
@@ -588,7 +626,7 @@ const Index = () => {
 
       return (
         <div key={index} className={className}>
-          {line}
+          {line === '' ? ' ' : line}
         </div>
       );
     });
