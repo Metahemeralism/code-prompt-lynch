@@ -169,6 +169,132 @@ const ExperienceTimeline = () => {
   );
 };
 
+interface LibraryItem {
+  title: string;
+  url: string;
+  description: string;
+}
+
+interface LibraryTopic {
+  topic: string;
+  items: LibraryItem[];
+}
+
+// Obsidian-style index — topics as folders, items filed underneath.
+// Add new topics/items here as they come up.
+const libraryTopics: LibraryTopic[] = [
+  {
+    topic: 'AI Safety',
+    items: [
+      {
+        title: 'Idealists Collective',
+        url: 'https://idealistscollective.org/',
+        // Placeholder — couldn't reach this domain to pull an accurate summary, edit freely.
+        description: "A community I'm part of.",
+      },
+    ],
+  },
+];
+
+const LibrarySection = () => {
+  return (
+    <div className="my-1 max-w-2xl">
+      <div className="text-white font-semibold mb-1">Library</div>
+      <div className="text-gray-500 text-sm mb-4">
+        A running index of things worth knowing about, filed by topic.
+      </div>
+
+      {libraryTopics.map((topic) => (
+        <div key={topic.topic} className="mb-5">
+          <div className="text-white font-semibold mb-1">{topic.topic}</div>
+          {topic.items.map((item, itemIndex) => {
+            const isLast = itemIndex === topic.items.length - 1;
+            return (
+              <div key={item.url}>
+                <div className="flex gap-2">
+                  <span className="text-gray-600 shrink-0">{isLast ? '└──' : '├──'}</span>
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 hover:text-blue-300 underline"
+                  >
+                    {item.title}
+                  </a>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-gray-600 shrink-0">{isLast ? '   ' : '│  '}</span>
+                  <span className="text-gray-400 text-sm">{item.description}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const GNOME_ART = String.raw`   /\
+  /vv\
+ (o.o)
+ ('')
+  ||
+ _||______,---o
+|_____________|
+  ~  ~  ~  ~  ~`;
+
+interface FishParticle {
+  id: number;
+  left: number;
+  delay: number;
+}
+
+const GnomeFisher = () => {
+  const [fish, setFish] = useState<FishParticle[]>([]);
+  const fishIdRef = useRef(0);
+
+  const spawnFish = () => {
+    const batch: FishParticle[] = Array.from({ length: 6 }).map(() => {
+      fishIdRef.current += 1;
+      return {
+        id: fishIdRef.current,
+        left: Math.random() * 60 - 30,
+        delay: Math.random() * 0.5,
+      };
+    });
+    setFish((prev) => [...prev, ...batch]);
+    const ids = batch.map((f) => f.id);
+    setTimeout(() => {
+      setFish((prev) => prev.filter((f) => !ids.includes(f.id)));
+    }, 2600);
+  };
+
+  return (
+    <div
+      className="fixed bottom-2 right-2 z-40 select-none hidden sm:block"
+      onMouseEnter={spawnFish}
+    >
+      <pre className="gnome-fisher text-green-400 text-[10px] leading-[1.15] cursor-default">
+        {GNOME_ART}
+      </pre>
+      {fish.map((f) => (
+        <span
+          key={f.id}
+          className="fish-particle absolute text-cyan-300 text-xs pointer-events-none"
+          style={{
+            left: `calc(50% + ${f.left}px)`,
+            top: '10px',
+            animationDelay: `${f.delay}s`,
+          }}
+        >
+          {'<><'}
+        </span>
+      ))}
+    </div>
+  );
+};
+
 const Index = () => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<Command[]>([]);
@@ -179,6 +305,7 @@ const Index = () => {
   const [typingText, setTypingText] = useState('');
   const [currentlyTypingIndex, setCurrentlyTypingIndex] = useState(-1);
   const [visitorNumber, setVisitorNumber] = useState(0);
+  const [hasUsedHelp, setHasUsedHelp] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const currentCommandRef = useRef<HTMLDivElement>(null);
@@ -317,8 +444,18 @@ const Index = () => {
 
     let output: string[] = [];
 
+    if (!hasUsedHelp && command !== 'help') {
+      output = [
+        `Command not found: ${cmd}`,
+        `Type 'help' to see available commands.`
+      ];
+      displayOutput(output);
+      return;
+    }
+
     switch (command) {
       case 'help':
+        setHasUsedHelp(true);
         output = [
           'Available commands:',
           '',
@@ -327,6 +464,7 @@ const Index = () => {
           '  research ........... MSc thesis & research work',
           '  projects ........... Personal projects & code',
           '  interests .......... Hobbies & passions',
+          '  library ............ Curated links, filed by topic',
           '  socials ............ Social media links',
           '  blog ............... Recent posts (summarised from LinkedIn)',
           '  tldr ............... Quick summary',
@@ -585,6 +723,21 @@ const Index = () => {
         ];
         break;
 
+      case 'library':
+        output = [
+          'Library — a running index of things worth knowing about, filed by topic:',
+          '',
+          ...libraryTopics.flatMap((topic) => [
+            topic.topic,
+            ...topic.items.flatMap((item) => [
+              `  ${item.title} — ${item.url}`,
+              `    ${item.description}`
+            ]),
+            ''
+          ])
+        ];
+        break;
+
       case 'socials':
         output = [
           'Connect with me:',
@@ -621,16 +774,8 @@ const Index = () => {
 
 
       case 'clear':
-        // Find the last occurrence of 'help' command
-        const lastHelpIndex = history.map(cmd => cmd.input.toLowerCase().trim()).lastIndexOf('help');
-        if (lastHelpIndex !== -1) {
-          // Keep everything up to and including the 'help' command
-          setHistory(prev => prev.slice(0, lastHelpIndex + 1));
-        } else {
-          output = ['Please type "help" first to see available commands.'];
-        }
-        if (lastHelpIndex !== -1) return;
-        break;
+        setHistory([]);
+        return;
 
       case 'ascii':
         output = [
@@ -788,8 +933,10 @@ const Index = () => {
       <div className="absolute top-4 right-4 text-green-400 text-sm font-mono">
         Visitor #{visitorNumber.toLocaleString()}
       </div>
-      
-      <div 
+
+      <GnomeFisher />
+
+      <div
         ref={terminalRef}
         className="h-screen overflow-y-auto terminal-container pb-20"
         onClick={() => inputRef.current?.focus()}
@@ -823,6 +970,8 @@ const Index = () => {
               </div>
             ) : cmd.input.toLowerCase().trim() === 'experience' ? (
               <ExperienceTimeline />
+            ) : cmd.input.toLowerCase().trim() === 'library' ? (
+              <LibrarySection />
             ) : (
               renderOutput(cmd.output, cmd.input)
             )}

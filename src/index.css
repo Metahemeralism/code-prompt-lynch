@@ -100,6 +100,42 @@ All colors MUST be HSL.
   }
 }
 
+/* Gnome fisher: rests most of the cycle, shifts occasionally */
+@keyframes gnome-idle-bob {
+  0%, 82%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  88% {
+    transform: translateY(-2px) rotate(-1.5deg);
+  }
+  94% {
+    transform: translateY(1px) rotate(1.5deg);
+  }
+}
+
+.gnome-fisher {
+  transform-origin: bottom center;
+  animation: gnome-idle-bob 7s ease-in-out infinite;
+}
+
+/* Fish that scatter down to the bottom edge when the gnome is hovered.
+   The gnome sits close to the viewport bottom already, so this only
+   needs to cover the gap between the gnome and the true screen edge. */
+@keyframes fish-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110px) rotate(35deg);
+    opacity: 0;
+  }
+}
+
+.fish-particle {
+  animation: fish-fall 2.2s ease-in forwards;
+}
+
 @layer components {
   .font-mono {
     font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', 'Courier New', monospace;
