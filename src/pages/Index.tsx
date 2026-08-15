@@ -34,9 +34,9 @@ const Index = () => {
   // Blog posts — summarised from LinkedIn activity
   const blogPosts: BlogPost[] = [
     {
-      title: "A Garmin Heatmap Widget for Your Wrist",
+      title: "A Garmin Heatmap Widget for Your Desktop",
       date: "2025-10-27",
-      content: "If you use a Garmin, you probably know the frustration of having to open the app just to see your activity heatmap. I built a Connect IQ widget that renders your activity heatmap directly on the watch face — a small side-project that scratched a personal itch and now has 14 GitHub stars from the running community. Code + install instructions on GitHub. (Summarised from LinkedIn — click the link to read the original.)",
+      content: "If you use a Garmin, you probably know the frustration of having to open the app just to see your activity heatmap. I built a macOS desktop widget (via Übersicht) that turns your Garmin Connect data into a GitHub-style contribution heatmap right on your desktop — a small side-project that scratched a personal itch and now has 16 GitHub stars from the running community. Code + install instructions on GitHub. (Summarised from LinkedIn — click the link to read the original.)",
       url: "https://www.linkedin.com/posts/-evanlynch_if-you-use-a-garmin-you-probably-know-the-share-7483170090499297281-7G2U/"
     },
     {
@@ -370,9 +370,9 @@ const Index = () => {
           '   • ML model predicting the 2025 Wimbledon Men\'s Singles Final winner',
           '   → https://github.com/Metahemeralism/wimby-pred',
           '',
-          '⌚ Garmin Heatmap Widget',
-          '   Tech: JavaScript, Garmin Connect IQ',
-          '   • Watch widget rendering activity heatmap (14 GitHub stars)',
+          '🖥️  Garmin Heatmap Widget',
+          '   Tech: Python, JavaScript, Übersicht',
+          '   • macOS desktop widget rendering Garmin activity heatmap (16 GitHub stars)',
           '   → https://github.com/Metahemeralism/garmin_heatmap_widget'
         ];
         break;
