@@ -15,6 +15,8 @@ import { COUNTRY_POINTS, COUNTRY_SHAPES, WORLD_VIEWBOX } from './worldMap';
  * silently dropped, so a typo is obvious.
  */
 export const visitedCountries: string[] = [
+  'United Kingdom',
+  'Ireland',
   'USA',
   'Canada',
   'South Africa',

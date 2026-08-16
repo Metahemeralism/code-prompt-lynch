@@ -455,7 +455,7 @@ export const ProjectsSection = () => (
 
 interface Interest {
   name: string;
-  detail: string;
+  detail?: string;
   link?: { label: string; href: string };
   /** Renders the world map, revealed on click. */
   map?: boolean;
@@ -471,7 +471,6 @@ export const interests: Interest[] = [
   { name: 'Fitness', detail: 'Regular gym training and wellness focus.' },
   {
     name: 'Travelling',
-    detail: 'Exploring new places — most recently South Africa with Raleigh International.',
     map: true,
   },
 ];
@@ -497,7 +496,7 @@ const InterestRow = ({ interest }: { interest: Interest }) => {
         <div className="text-white font-semibold">{interest.name}</div>
       )}
 
-      <p className="text-gray-300 text-sm">{interest.detail}</p>
+      {interest.detail && <p className="text-gray-300 text-sm">{interest.detail}</p>}
 
       {interest.link && (
         <div className="mt-1">
