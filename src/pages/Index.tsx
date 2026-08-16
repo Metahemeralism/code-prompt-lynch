@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import linkedinLogo from '../assets/brands/linkedin.svg';
 import githubLogo from '../assets/brands/github.svg';
 import gmailLogo from '../assets/brands/gmail.svg';
+import wandererArt from '../assets/wanderer.png';
 
 interface WritingPost {
   title: string;
@@ -330,55 +331,10 @@ const HelpMenu = () => {
   );
 };
 
-// Seated wanderer, drawn from behind: wide floppy pointed hat, hunched
-// cloak, pipe. Line art rather than ASCII so the silhouette actually reads.
+// Seated wanderer with a pipe. The original pencil drawing, recoloured to
+// the site green with the paper background knocked out to alpha.
 const Wanderer = ({ className = '' }: { className?: string }) => (
-  <svg
-    viewBox="0 0 200 190"
-    className={className}
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    {/* ground */}
-    <g strokeWidth="1.7" strokeOpacity="0.45">
-      <path d="M26 161c22 2 46 4 66 5" />
-      <path d="M30 174c16-1 32-2 46-3" />
-      <path d="M148 162c12-1 24-3 34-4" />
-      <path d="M150 171c8-1 16-2 22-3" />
-    </g>
-
-    {/* cloak / back */}
-    <path
-      d="M94 92C88 106 87 120 89 132c2 16 5 26 11 33 12 8 40 7 50-1 6-7 7-20 6-33 2-13-4-29-11-39z"
-      fill="#000"
-      strokeWidth="2.3"
-    />
-
-    {/* hatching down the shaded left side of the cloak */}
-    <g strokeWidth="1.5" strokeOpacity="0.85">
-      <path d="M97 102c-4 16-4 38 1 56" />
-      <path d="M101 100c-4 16-4 38 1 56" />
-      <path d="M105 99c-4 17-3 38 2 56" />
-      <path d="M109 100c-3 17-3 37 2 55" />
-      <path d="M113 102c-3 16-3 36 2 53" />
-    </g>
-
-    {/* pipe, sitting in the gap between the brim edge and the cloak */}
-    <g strokeWidth="2.2">
-      <path d="M92 100 78 96" />
-      <path d="M78 96 75 90" strokeWidth="3" />
-    </g>
-
-    {/* hat — concave sides sweeping out into a wide, drooping brim */}
-    <path
-      d="M113 24C110 40 104 56 94 65c-6 5-18 7-26 8 10 13 26 20 48 21 20 1 40-1 52-5-10-8-22-18-30-30-8-12-18-24-25-35z"
-      fill="#000"
-      strokeWidth="2.5"
-    />
-  </svg>
+  <img src={wandererArt} alt="" aria-hidden="true" className={className} />
 );
 
 const SMOKE_PUFFS = ['~', 'o', '°', '~', '∘', 'o'];
@@ -389,10 +345,11 @@ const PipeSmoke = () => (
     {SMOKE_PUFFS.map((char, index) => (
       <span
         key={index}
-        className="smoke-puff absolute text-gray-500 text-[9px] leading-none"
+        className="smoke-puff absolute text-green-500/70 text-[10px] leading-none"
         style={{
-          left: '36%',
-          top: '46%',
+          // pipe bowl sits at roughly a third across, a little under halfway down
+          left: '32%',
+          top: '41%',
           animationDelay: `${index * 0.9}s`,
         }}
       >
@@ -404,8 +361,8 @@ const PipeSmoke = () => (
 
 const EmptyState = () => (
   <div className="my-1">
-    <div className="relative w-28 text-gray-300">
-      <Wanderer className="wanderer w-28" />
+    <div className="relative w-32">
+      <Wanderer className="wanderer w-32" />
       <PipeSmoke />
     </div>
     <div className="text-gray-500 mt-1">gone fishing</div>
@@ -413,9 +370,9 @@ const EmptyState = () => (
 );
 
 const WandererCorner = () => (
-  <div className="fixed bottom-2 right-3 z-40 select-none hidden sm:block">
-    <div className="relative w-32 text-gray-400">
-      <Wanderer className="wanderer w-32" />
+  <div className="fixed bottom-3 right-4 z-40 select-none hidden sm:block">
+    <div className="relative w-36 opacity-90">
+      <Wanderer className="wanderer w-36" />
       <PipeSmoke />
     </div>
   </div>
