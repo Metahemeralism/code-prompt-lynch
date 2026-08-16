@@ -618,6 +618,13 @@ export const libraryTopics: LibraryTopic[] = [
     topic: 'AI Safety',
     items: [
       {
+        title: 'Thinking About Thinking',
+        url: 'https://www.thinkingaboutthinking.org/',
+        description:
+          'An independent nonprofit advancing an interdisciplinary understanding of intelligence — a global fellowship of researchers, engineers and thinkers across AI, neuroscience, cognitive science and mathematics.',
+        tag: 'community fellow',
+      },
+      {
         title: 'Idealists Collective',
         url: 'https://idealistscollective.org/',
         description: "A community I'm part of.",
