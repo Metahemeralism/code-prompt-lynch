@@ -1,7 +1,11 @@
+import { Suspense, lazy, useState } from 'react';
 import linkedinLogo from '../assets/brands/linkedin.svg';
 import githubLogo from '../assets/brands/github.svg';
 import gmailLogo from '../assets/brands/gmail.svg';
 import wandererArt from '../assets/wanderer.png';
+
+// ~120KB of country geometry — only fetched when the map is opened.
+const TravelMap = lazy(() => import('./TravelMap'));
 
 /* ------------------------------------------------------------------ *
  * Shared primitives
@@ -453,6 +457,8 @@ interface Interest {
   name: string;
   detail: string;
   link?: { label: string; href: string };
+  /** Renders the world map, revealed on click. */
+  map?: boolean;
 }
 
 export const interests: Interest[] = [
@@ -466,23 +472,56 @@ export const interests: Interest[] = [
   {
     name: 'Travelling',
     detail: 'Exploring new places — most recently South Africa with Raleigh International.',
+    map: true,
   },
 ];
+
+const InterestRow = ({ interest }: { interest: Interest }) => {
+  const [showMap, setShowMap] = useState(false);
+
+  return (
+    <div>
+      {interest.map ? (
+        <button
+          type="button"
+          onClick={() => setShowMap((open) => !open)}
+          aria-expanded={showMap}
+          className="text-white font-semibold hover:text-green-300 transition-colors flex items-center gap-2 group"
+        >
+          {interest.name}
+          <span className="text-gray-600 text-xs group-hover:text-green-400 transition-colors">
+            {showMap ? '[ hide map ]' : '[ show map ]'}
+          </span>
+        </button>
+      ) : (
+        <div className="text-white font-semibold">{interest.name}</div>
+      )}
+
+      <p className="text-gray-300 text-sm">{interest.detail}</p>
+
+      {interest.link && (
+        <div className="mt-1">
+          <LinkRow label={interest.link.label} href={interest.link.href} />
+        </div>
+      )}
+
+      {interest.map && showMap && (
+        <Suspense
+          fallback={<div className="text-gray-600 text-sm mt-3">loading map…</div>}
+        >
+          <TravelMap />
+        </Suspense>
+      )}
+    </div>
+  );
+};
 
 export const InterestsSection = () => (
   <div className="my-1 max-w-2xl">
     <SectionHeading title="Interests" subtitle="Outside of work." />
     <div className="flex flex-col gap-4">
       {interests.map((interest) => (
-        <div key={interest.name}>
-          <div className="text-white font-semibold">{interest.name}</div>
-          <p className="text-gray-300 text-sm">{interest.detail}</p>
-          {interest.link && (
-            <div className="mt-1">
-              <LinkRow label={interest.link.label} href={interest.link.href} />
-            </div>
-          )}
-        </div>
+        <InterestRow key={interest.name} interest={interest} />
       ))}
     </div>
   </div>
