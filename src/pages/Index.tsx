@@ -24,7 +24,7 @@ interface ExperienceEntry {
   location: string;
   dateRange: string;
   current: boolean;
-  accent: 'amber' | 'cyan' | 'violet' | 'blue';
+  accent: 'amber' | 'cyan' | 'violet' | 'blue' | 'emerald';
   quote?: string;
 }
 
@@ -63,10 +63,19 @@ const experienceEntries: ExperienceEntry[] = [
     abbr: 'UCL',
     role: 'Postgraduate Researcher',
     location: 'London',
-    dateRange: '2026 – Present',
+    dateRange: 'May 2026 – Present',
     current: true,
     accent: 'blue',
     quote: 'Building a physics-informed neural network that inverts the latent convenience yield from WTI crude oil futures term structures — as part of my MSc thesis.',
+  },
+  {
+    company: 'MSCI',
+    abbr: 'MSCI',
+    role: 'Summer Analyst, Institutional Client Strategy & Execution',
+    location: 'London',
+    dateRange: 'Jun 2026 – Jul 2026',
+    current: false,
+    accent: 'emerald',
   },
 ];
 
@@ -75,6 +84,7 @@ const accentStyles: Record<ExperienceEntry['accent'], { badge: string; text: str
   cyan: { badge: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/40', text: 'text-cyan-300' },
   violet: { badge: 'bg-violet-500/10 text-violet-300 border-violet-500/40', text: 'text-violet-300' },
   blue: { badge: 'bg-blue-500/10 text-blue-300 border-blue-500/40', text: 'text-blue-300' },
+  emerald: { badge: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/40', text: 'text-emerald-300' },
 };
 
 const ExperienceTimeline = () => {
@@ -88,10 +98,14 @@ const ExperienceTimeline = () => {
         <div className="flex flex-col gap-6">
           {experienceEntries.map((entry) => (
             <div key={entry.company} className="relative flex gap-4">
-              <div
-                className={`relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-md border bg-black font-mono text-[10px] font-bold tracking-tight ${accentStyles[entry.accent].badge}`}
-              >
-                {entry.abbr}
+              {/* Solid black wrapper: the accent tint is semi-transparent, so
+                  without this the dashed timeline shows through the badge. */}
+              <div className="relative z-10 h-10 w-10 shrink-0 rounded-md bg-black">
+                <div
+                  className={`flex h-full w-full items-center justify-center rounded-md border font-mono text-[10px] font-bold tracking-tight ${accentStyles[entry.accent].badge}`}
+                >
+                  {entry.abbr}
+                </div>
               </div>
 
               <div className="flex-1 min-w-0 pb-1">
@@ -134,6 +148,8 @@ interface LibraryItem {
   title: string;
   url: string;
   description: string;
+  /** Optional tag shown beside the title, e.g. "signatory", "member". */
+  tag?: string;
 }
 
 interface LibraryTopic {
@@ -152,6 +168,19 @@ const libraryTopics: LibraryTopic[] = [
         url: 'https://idealistscollective.org/',
         // Placeholder — couldn't reach this domain to pull an accurate summary, edit freely.
         description: "A community I'm part of.",
+        tag: 'member',
+      },
+    ],
+  },
+  {
+    topic: 'Human-Centred Computing',
+    items: [
+      {
+        title: 'The Resonant Computing Manifesto',
+        url: 'https://resonantcomputing.org/',
+        description:
+          'A manifesto for software that serves human agency and collective flourishing rather than extractive scale — building technology that empowers rather than hijacks attention.',
+        tag: 'signatory',
       },
     ],
   },
@@ -172,7 +201,7 @@ const LibrarySection = () => {
             const isLast = itemIndex === topic.items.length - 1;
             return (
               <div key={item.url}>
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-baseline flex-wrap">
                   <span className="text-gray-600 shrink-0">{isLast ? '└──' : '├──'}</span>
                   <a
                     href={item.url}
@@ -182,6 +211,11 @@ const LibrarySection = () => {
                   >
                     {item.title}
                   </a>
+                  {item.tag && (
+                    <span className="text-[10px] uppercase tracking-wide text-green-400 border border-green-500/40 rounded px-1.5 py-px">
+                      {item.tag}
+                    </span>
+                  )}
                 </div>
                 <div className="flex gap-2">
                   <span className="text-gray-600 shrink-0">{isLast ? '   ' : '│  '}</span>
@@ -200,13 +234,38 @@ interface VolunteeringEntry {
   org: string;
   role: string;
   dateRange: string;
-  description?: string;
+  current?: boolean;
 }
 
-// Empty for now — add entries here once details are confirmed
-// (Data Science Society, Quant Society, Thinking About Thinking,
-// Zero Gravity, Raleigh International).
-const volunteeringEntries: VolunteeringEntry[] = [];
+// Most recent first, by start date.
+const volunteeringEntries: VolunteeringEntry[] = [
+  {
+    org: 'UCL Quant Society',
+    role: 'Postgraduate Representative',
+    dateRange: 'Nov 2025 – Mar 2026',
+  },
+  {
+    org: 'Thinking About Thinking',
+    role: 'Community Fellow',
+    dateRange: 'Oct 2025 – Present',
+    current: true,
+  },
+  {
+    org: 'UCL Data Science Society',
+    role: 'Head of Science',
+    dateRange: 'Sep 2025 – Apr 2026',
+  },
+  {
+    org: 'Raleigh International',
+    role: 'Venturer — South Africa',
+    dateRange: 'Oct 2024 – Dec 2024',
+  },
+  {
+    org: 'Zero Gravity',
+    role: 'University Mentor',
+    dateRange: 'Jan 2024 – Mar 2026',
+  },
+];
 
 const VolunteeringSection = () => {
   return (
@@ -220,10 +279,15 @@ const VolunteeringSection = () => {
               <span className="text-gray-600">·</span>
               <span className="text-gray-300">{entry.org}</span>
             </div>
-            <div className="text-gray-500 text-sm">{entry.dateRange}</div>
-            {entry.description && (
-              <div className="text-gray-400 text-sm mt-1">{entry.description}</div>
-            )}
+            <div className="text-gray-500 text-sm">
+              {entry.dateRange}
+              {entry.current && (
+                <span className="ml-2 text-green-400">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400 mr-1 align-middle animate-pulse" />
+                  current
+                </span>
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -266,72 +330,96 @@ const HelpMenu = () => {
   );
 };
 
-const GNOME_ART = String.raw`   /\
-  /vv\
- (o.o)
- ('')
-  ||
- _||______,---o
-|_____________|
-  ~  ~  ~  ~  ~`;
+// Seated wanderer, drawn from behind: wide floppy pointed hat, hunched
+// cloak, pipe. Line art rather than ASCII so the silhouette actually reads.
+const Wanderer = ({ className = '' }: { className?: string }) => (
+  <svg
+    viewBox="0 0 200 190"
+    className={className}
+    fill="none"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    {/* ground */}
+    <g strokeWidth="1.7" strokeOpacity="0.45">
+      <path d="M26 161c22 2 46 4 66 5" />
+      <path d="M30 174c16-1 32-2 46-3" />
+      <path d="M148 162c12-1 24-3 34-4" />
+      <path d="M150 171c8-1 16-2 22-3" />
+    </g>
+
+    {/* cloak / back */}
+    <path
+      d="M94 92C88 106 87 120 89 132c2 16 5 26 11 33 12 8 40 7 50-1 6-7 7-20 6-33 2-13-4-29-11-39z"
+      fill="#000"
+      strokeWidth="2.3"
+    />
+
+    {/* hatching down the shaded left side of the cloak */}
+    <g strokeWidth="1.5" strokeOpacity="0.85">
+      <path d="M97 102c-4 16-4 38 1 56" />
+      <path d="M101 100c-4 16-4 38 1 56" />
+      <path d="M105 99c-4 17-3 38 2 56" />
+      <path d="M109 100c-3 17-3 37 2 55" />
+      <path d="M113 102c-3 16-3 36 2 53" />
+    </g>
+
+    {/* pipe, sitting in the gap between the brim edge and the cloak */}
+    <g strokeWidth="2.2">
+      <path d="M92 100 78 96" />
+      <path d="M78 96 75 90" strokeWidth="3" />
+    </g>
+
+    {/* hat — concave sides sweeping out into a wide, drooping brim */}
+    <path
+      d="M113 24C110 40 104 56 94 65c-6 5-18 7-26 8 10 13 26 20 48 21 20 1 40-1 52-5-10-8-22-18-30-30-8-12-18-24-25-35z"
+      fill="#000"
+      strokeWidth="2.5"
+    />
+  </svg>
+);
+
+const SMOKE_PUFFS = ['~', 'o', '°', '~', '∘', 'o'];
+
+// Pipe smoke, in ASCII, drifting up and off to the left.
+const PipeSmoke = () => (
+  <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+    {SMOKE_PUFFS.map((char, index) => (
+      <span
+        key={index}
+        className="smoke-puff absolute text-gray-500 text-[9px] leading-none"
+        style={{
+          left: '36%',
+          top: '46%',
+          animationDelay: `${index * 0.9}s`,
+        }}
+      >
+        {char}
+      </span>
+    ))}
+  </div>
+);
 
 const EmptyState = () => (
-  <div className="my-1 text-green-400">
-    <pre className="text-xs leading-tight">{GNOME_ART}</pre>
+  <div className="my-1">
+    <div className="relative w-28 text-gray-300">
+      <Wanderer className="wanderer w-28" />
+      <PipeSmoke />
+    </div>
     <div className="text-gray-500 mt-1">gone fishing</div>
   </div>
 );
 
-interface FishParticle {
-  id: number;
-  left: number;
-  delay: number;
-}
-
-const GnomeFisher = () => {
-  const [fish, setFish] = useState<FishParticle[]>([]);
-  const fishIdRef = useRef(0);
-
-  const spawnFish = () => {
-    const batch: FishParticle[] = Array.from({ length: 6 }).map(() => {
-      fishIdRef.current += 1;
-      return {
-        id: fishIdRef.current,
-        left: Math.random() * 60 - 30,
-        delay: Math.random() * 0.5,
-      };
-    });
-    setFish((prev) => [...prev, ...batch]);
-    const ids = batch.map((f) => f.id);
-    setTimeout(() => {
-      setFish((prev) => prev.filter((f) => !ids.includes(f.id)));
-    }, 2600);
-  };
-
-  return (
-    <div
-      className="fixed bottom-2 right-2 z-40 select-none hidden sm:block"
-      onMouseEnter={spawnFish}
-    >
-      <pre className="gnome-fisher text-green-400 text-[10px] leading-[1.15] cursor-default">
-        {GNOME_ART}
-      </pre>
-      {fish.map((f) => (
-        <span
-          key={f.id}
-          className="fish-particle absolute text-cyan-300 text-xs pointer-events-none"
-          style={{
-            left: `calc(50% + ${f.left}px)`,
-            top: '10px',
-            animationDelay: `${f.delay}s`,
-          }}
-        >
-          {'<><'}
-        </span>
-      ))}
+const WandererCorner = () => (
+  <div className="fixed bottom-2 right-3 z-40 select-none hidden sm:block">
+    <div className="relative w-32 text-gray-400">
+      <Wanderer className="wanderer w-32" />
+      <PipeSmoke />
     </div>
-  );
-};
+  </div>
+);
 
 const Index = () => {
   const [input, setInput] = useState('');
@@ -459,7 +547,8 @@ const Index = () => {
           "I'm completing an MSc in Engineering with Finance at UCL (predicted First),",
           "having graduated with a BEng in Chemical Engineering from Bath. I'm currently",
           "a Postgraduate Researcher in the Financial Computing & Analytics Group at UCL,",
-          "as part of my MSc thesis.",
+          "as part of my MSc thesis, and spent summer 2026 at MSCI in London as a Summer",
+          "Analyst on the Institutional Client Strategy & Execution team.",
           "",
           "I co-founded Encode London — the UK chapter of a global AI safety organisation —",
           "and my thesis builds a physics-informed neural network that inverts the latent",
@@ -638,7 +727,7 @@ const Index = () => {
         output = [
           'TL;DR: MSc Engineering with Finance (UCL, 1st predicted) · Postgraduate',
           'Researcher @ UCL Financial Computing & Analytics Group · Co-Founder @',
-          'Encode London (AI Safety) · Datactics & Shell alum.',
+          'Encode London (AI Safety) · MSCI, Datactics & Shell alum.',
           'Thesis: a PINN for inverting the latent convenience yield of WTI crude.',
           'Interested in AI Safety, Quantitative Trading & Data Science.'
         ];
@@ -784,7 +873,7 @@ const Index = () => {
         Visitor #{visitorNumber.toLocaleString()}
       </div>
 
-      <GnomeFisher />
+      <WandererCorner />
 
       <div
         ref={terminalRef}
