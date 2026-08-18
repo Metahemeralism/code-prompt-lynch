@@ -322,9 +322,24 @@ interface ProjectLink {
   external?: boolean;
 }
 
+type ProjectTopic =
+  | 'Quantitative Finance'
+  | 'Machine Learning & Optimisation'
+  | 'Computer Vision & Signal Processing'
+  | 'Tools & Simulations';
+
+/** Order the topics appear in. */
+const projectTopics: ProjectTopic[] = [
+  'Quantitative Finance',
+  'Machine Learning & Optimisation',
+  'Computer Vision & Signal Processing',
+  'Tools & Simulations',
+];
+
 interface Project {
   title: string;
   date: string;
+  topic: ProjectTopic;
   tech: string[];
   bullets: string[];
   note?: string;
@@ -334,6 +349,7 @@ interface Project {
 export const projects: Project[] = [
   {
     title: 'Electricity Forward Pricer',
+    topic: 'Quantitative Finance',
     date: 'Apr 2026',
     tech: ['Python', 'NumPy', 'SciPy', 'Streamlit', 'Monte Carlo'],
     bullets: [
@@ -345,6 +361,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Plane-Wing Optimisation',
+    topic: 'Machine Learning & Optimisation',
     date: 'May 2026',
     tech: ['Python', 'Gaussian Process Regression', 'MLP', 'NSGA-II'],
     bullets: [
@@ -363,6 +380,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Pendulum Motion Tracking & Analysis',
+    topic: 'Computer Vision & Signal Processing',
     date: 'Mar 2026',
     tech: ['Python', 'OpenCV', 'NumPy', 'SciPy', 'Scikit-Learn'],
     bullets: [
@@ -381,6 +399,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Pynigma — Enigma Machine Simulator',
+    topic: 'Tools & Simulations',
     date: 'Nov 2024',
     tech: ['Python', 'OOP'],
     bullets: [
@@ -391,6 +410,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Wimbledon 2025 Winner Prediction',
+    topic: 'Machine Learning & Optimisation',
     date: 'Jul 2025',
     tech: ['Python', 'Scikit-Learn', 'Jupyter'],
     bullets: ["ML model predicting the 2025 Wimbledon Men's Singles Final winner"],
@@ -398,6 +418,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Garmin Heatmap Widget',
+    topic: 'Tools & Simulations',
     date: 'Jul 2026',
     tech: ['Python', 'JavaScript', 'Übersicht'],
     bullets: ['macOS desktop widget rendering a Garmin activity heatmap — 16 GitHub stars'],
@@ -405,46 +426,66 @@ export const projects: Project[] = [
   },
 ];
 
+const ProjectCard = ({ project }: { project: Project }) => (
+  <div>
+    <div className="flex flex-wrap items-baseline gap-x-3">
+      <h3 className="text-white font-semibold">{project.title}</h3>
+      <span className="text-gray-500 text-sm">{project.date}</span>
+    </div>
+
+    <div className="flex flex-wrap gap-1.5 mt-2 mb-3">
+      {project.tech.map((t) => (
+        <Chip key={t}>{t}</Chip>
+      ))}
+    </div>
+
+    <ul className="flex flex-col gap-1 mb-2">
+      {project.bullets.map((b) => (
+        <Bullet key={b}>{b}</Bullet>
+      ))}
+    </ul>
+
+    {project.note && <p className="text-gray-500 text-sm italic mb-2">{project.note}</p>}
+
+    <div className="flex flex-col gap-1">
+      {project.links.map((link) => (
+        <LinkRow
+          key={link.href}
+          label={link.label}
+          href={link.href}
+          external={link.external !== false}
+        />
+      ))}
+    </div>
+  </div>
+);
+
 export const ProjectsSection = () => (
   <div className="my-1 max-w-2xl">
-    <SectionHeading title="Projects" subtitle="Things I've built, most recent first." />
+    <SectionHeading title="Projects" subtitle="Things I've built, grouped by topic." />
 
-    <div className="flex flex-col gap-7">
-      {projects.map((project) => (
-        <div key={project.title}>
-          <div className="flex flex-wrap items-baseline gap-x-3">
-            <h3 className="text-white font-semibold">{project.title}</h3>
-            <span className="text-gray-500 text-sm">{project.date}</span>
+    <div className="flex flex-col gap-9">
+      {projectTopics.map((topic) => {
+        const inTopic = projects.filter((p) => p.topic === topic);
+        if (inTopic.length === 0) return null;
+
+        return (
+          <div key={topic}>
+            <div className="flex items-baseline gap-3 mb-4 pb-1.5 border-b border-gray-800">
+              <span className="text-gray-500 text-[10px] uppercase tracking-widest">
+                {topic}
+              </span>
+              <span className="text-gray-700 text-[10px]">{inTopic.length}</span>
+            </div>
+
+            <div className="flex flex-col gap-7">
+              {inTopic.map((project) => (
+                <ProjectCard key={project.title} project={project} />
+              ))}
+            </div>
           </div>
-
-          <div className="flex flex-wrap gap-1.5 mt-2 mb-3">
-            {project.tech.map((t) => (
-              <Chip key={t}>{t}</Chip>
-            ))}
-          </div>
-
-          <ul className="flex flex-col gap-1 mb-2">
-            {project.bullets.map((b) => (
-              <Bullet key={b}>{b}</Bullet>
-            ))}
-          </ul>
-
-          {project.note && (
-            <p className="text-gray-500 text-sm italic mb-2">{project.note}</p>
-          )}
-
-          <div className="flex flex-col gap-1">
-            {project.links.map((link) => (
-              <LinkRow
-                key={link.href}
-                label={link.label}
-                href={link.href}
-                external={link.external !== false}
-              />
-            ))}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 );
