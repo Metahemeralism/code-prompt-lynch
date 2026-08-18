@@ -323,6 +323,7 @@ interface ProjectLink {
 }
 
 type ProjectTopic =
+  | 'Mechanistic Interpretability'
   | 'Quantitative Finance'
   | 'Machine Learning & Optimisation'
   | 'Computer Vision & Signal Processing'
@@ -330,6 +331,7 @@ type ProjectTopic =
 
 /** Order the topics appear in. */
 const projectTopics: ProjectTopic[] = [
+  'Mechanistic Interpretability',
   'Quantitative Finance',
   'Machine Learning & Optimisation',
   'Computer Vision & Signal Processing',
@@ -347,6 +349,19 @@ interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    title: 'Belief Networks',
+    date: 'Aug 2026',
+    topic: 'Mechanistic Interpretability',
+    tech: ['Python', 'PyTorch', 'TransformerLens', 'Transformers', 'Qwen2.5'],
+    bullets: [
+      'Mechanistic interpretability study of how a language model’s internal activations shift when it is prompted to believe in itself',
+      'Four-arm prompt design across 50 tasks — encourage, discourage, neutral, and a positive-sentiment control aimed at others — separating self-efficacy effects from generic positivity, with unanswerable tasks included to catch overclaiming rather than genuine improvement',
+      'Escalating three-level analysis: behavioural effect, then a linear direction in activations, then a causal test by activation steering and ablation',
+    ],
+    note: 'Work in progress — experimental design and pipeline complete; results pending.',
+    links: [{ label: 'GitHub', href: 'https://github.com/Metahemeralism/belief_networks' }],
+  },
   {
     title: 'Electricity Forward Pricer',
     topic: 'Quantitative Finance',
