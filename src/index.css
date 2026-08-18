@@ -100,6 +100,12 @@ All colors MUST be HSL.
   }
 }
 
+/* Keep pixel art blocky instead of letting the browser smooth it */
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
 /* The wanderer sits still most of the cycle, then shifts a little */
 @keyframes wanderer-idle {
   0%, 86%, 100% {

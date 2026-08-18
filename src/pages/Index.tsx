@@ -11,6 +11,7 @@ import {
   TldrSection,
   VolunteeringSection,
   WandererCorner,
+  WhoAmI,
   WritingsSection,
   helpCommands,
   writingsPosts,
@@ -29,6 +30,7 @@ type View =
   | 'socials'
   | 'library'
   | 'writings'
+  | 'whoami'
   | 'empty';
 
 interface Command {
@@ -198,7 +200,7 @@ const Index = () => {
           output = [ALL_COMMANDS.filter((c) => c !== 'sudo').join('   ')];
           break;
         case 'whoami':
-          output = ['evan — MSc Engineering with Finance, UCL. Type `about` for more.'];
+          view = 'whoami';
           break;
         case 'sudo':
           output = ['Nice try.'];
@@ -324,6 +326,8 @@ const Index = () => {
             }}
           />
         );
+      case 'whoami':
+        return <WhoAmI />;
       case 'empty':
         return <EmptyState />;
       default:

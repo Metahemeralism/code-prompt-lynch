@@ -3,6 +3,7 @@ import linkedinLogo from '../assets/brands/linkedin.svg';
 import githubLogo from '../assets/brands/github.svg';
 import gmailLogo from '../assets/brands/gmail.svg';
 import wandererArt from '../assets/wanderer.png';
+import avatarArt from '../assets/avatar.jpg';
 
 // ~120KB of country geometry — only fetched when the map is opened.
 const TravelMap = lazy(() => import('./TravelMap'));
@@ -76,9 +77,23 @@ const aboutFacts: { label: string; value: string }[] = [
   { label: 'Certifications', value: 'Stanford ML Specialisation (Andrew Ng, Coursera)' },
 ];
 
+export const Avatar = ({ className = 'w-20' }: { className?: string }) => (
+  <img
+    src={avatarArt}
+    alt="Pixel-art portrait of Evan Lynch"
+    className={`pixelated rounded-md border border-gray-800 shrink-0 ${className}`}
+  />
+);
+
 export const AboutSection = () => (
   <div className="my-1 max-w-2xl">
-    <SectionHeading title="Evan Lynch" subtitle="Technology, AI and entrepreneurship." />
+    <div className="flex items-center gap-4 mb-5">
+      <Avatar className="w-20" />
+      <div>
+        <h2 className="text-white font-semibold">Evan Lynch</h2>
+        <p className="text-gray-500 text-sm mt-0.5">Technology, AI and entrepreneurship.</p>
+      </div>
+    </div>
 
     <div className="flex flex-col gap-2 mb-5">
       {aboutParagraphs.map((p) => (
@@ -856,6 +871,20 @@ const PipeSmoke = () => (
         {char}
       </span>
     ))}
+  </div>
+);
+
+/** `whoami` — the literal answer. */
+export const WhoAmI = () => (
+  <div className="my-1 flex items-center gap-3">
+    <Avatar className="w-12" />
+    <div>
+      <div className="text-white">evan</div>
+      <div className="text-gray-500 text-sm">
+        MSc Engineering with Finance, UCL. Type{' '}
+        <span className="text-green-400">about</span> for more.
+      </div>
+    </div>
   </div>
 );
 
