@@ -30,13 +30,6 @@ const Chip = ({ children }: { children: React.ReactNode }) => (
   </span>
 );
 
-const Bullet = ({ children }: { children: React.ReactNode }) => (
-  <li className="text-gray-300 text-sm flex gap-2">
-    <span className="text-gray-600 shrink-0">–</span>
-    <span>{children}</span>
-  </li>
-);
-
 const LinkRow = ({
   label,
   href,
@@ -343,7 +336,7 @@ interface Project {
   date: string;
   topic: ProjectTopic;
   tech: string[];
-  bullets: string[];
+  description: string;
   note?: string;
   links: ProjectLink[];
 }
@@ -354,11 +347,8 @@ export const projects: Project[] = [
     date: 'Aug 2026',
     topic: 'Mechanistic Interpretability',
     tech: ['Python', 'PyTorch', 'TransformerLens', 'Transformers', 'Qwen2.5'],
-    bullets: [
-      'Mechanistic interpretability study of how a language model’s internal activations shift when it is prompted to believe in itself',
-      'Four-arm prompt design across 50 tasks — encourage, discourage, neutral, and a positive-sentiment control aimed at others — separating self-efficacy effects from generic positivity, with unanswerable tasks included to catch overclaiming rather than genuine improvement',
-      'Escalating three-level analysis: behavioural effect, then a linear direction in activations, then a causal test by activation steering and ablation',
-    ],
+    description:
+      'Mechanistic interpretability study of how a language model’s internal activations shift when prompted to believe in itself — testing whether a linear self-efficacy direction exists and whether steering it causally changes behaviour.',
     note: 'Work in progress — experimental design and pipeline complete; results pending.',
     links: [{ label: 'GitHub', href: 'https://github.com/Metahemeralism/belief_networks' }],
   },
@@ -367,11 +357,8 @@ export const projects: Project[] = [
     topic: 'Quantitative Finance',
     date: 'Apr 2026',
     tech: ['Python', 'NumPy', 'SciPy', 'Streamlit', 'Monte Carlo'],
-    bullets: [
-      'Forward-curve pricer for power markets using the Lucia–Schwartz two-factor model with Merton jumps',
-      'Closed-form risk-neutral F(0,T) via the moment generating function',
-      'Validated by exact-discretisation Monte Carlo — 2–3% convergence at N=20k paths',
-    ],
+    description:
+      'Forward-curve pricer for power markets using the Lucia–Schwartz two-factor model with Merton jumps, validated against exact-discretisation Monte Carlo to 2–3% at N=20k paths.',
     links: [{ label: 'GitHub', href: 'https://github.com/Metahemeralism/forward_heatmap' }],
   },
   {
@@ -379,10 +366,8 @@ export const projects: Project[] = [
     topic: 'Machine Learning & Optimisation',
     date: 'May 2026',
     tech: ['Python', 'Gaussian Process Regression', 'MLP', 'NSGA-II'],
-    bullets: [
-      'Surrogate-based multi-objective optimisation of an aircraft wing maintenance panel',
-      'Minimised mass and max von Mises stress via evolutionary search',
-    ],
+    description:
+      'Surrogate-based multi-objective optimisation of an aircraft wing maintenance panel, minimising mass and peak von Mises stress via evolutionary search.',
     note: 'Coursework for Data-Driven Methods for Engineers (MECH0107), UCL — supervised by Dr. Lama Hamadeh',
     links: [
       { label: 'GitHub', href: 'https://github.com/Metahemeralism/plane-wing-optimisation' },
@@ -398,10 +383,8 @@ export const projects: Project[] = [
     topic: 'Computer Vision & Signal Processing',
     date: 'Mar 2026',
     tech: ['Python', 'OpenCV', 'NumPy', 'SciPy', 'Scikit-Learn'],
-    bullets: [
-      'Computer-vision pipeline tracking a spring-pendulum from multi-camera video',
-      'Extracted dominant oscillation modes via PCA; estimated k and L analytically',
-    ],
+    description:
+      'Computer-vision pipeline tracking a spring-pendulum from multi-camera video, extracting dominant oscillation modes via PCA to estimate the spring constant and pendulum length.',
     note: 'Coursework for Data-Driven Methods for Engineers (MECH0107), UCL — supervised by Dr. Lama Hamadeh',
     links: [
       { label: 'GitHub', href: 'https://github.com/Metahemeralism/pendulum' },
@@ -417,10 +400,8 @@ export const projects: Project[] = [
     topic: 'Tools & Simulations',
     date: 'Nov 2024',
     tech: ['Python', 'OOP'],
-    bullets: [
-      'Object-oriented WWII Enigma cipher simulation — rotor stepping and plugboard',
-      'Encode/decode paths validated against known historical settings',
-    ],
+    description:
+      'Object-oriented WWII Enigma cipher simulation with rotor stepping and plugboard, validated against known historical settings.',
     links: [{ label: 'GitHub', href: 'https://github.com/Metahemeralism/pynigma' }],
   },
   {
@@ -428,7 +409,7 @@ export const projects: Project[] = [
     topic: 'Machine Learning & Optimisation',
     date: 'Jul 2025',
     tech: ['Python', 'Scikit-Learn', 'Jupyter'],
-    bullets: ["ML model predicting the 2025 Wimbledon Men's Singles Final winner"],
+    description: "ML model predicting the 2025 Wimbledon Men's Singles Final winner.",
     links: [{ label: 'GitHub', href: 'https://github.com/Metahemeralism/wimby-pred' }],
   },
   {
@@ -436,7 +417,7 @@ export const projects: Project[] = [
     topic: 'Tools & Simulations',
     date: 'Jul 2026',
     tech: ['Python', 'JavaScript', 'Übersicht'],
-    bullets: ['macOS desktop widget rendering a Garmin activity heatmap — 16 GitHub stars'],
+    description: 'macOS desktop widget rendering a Garmin activity heatmap — 16 GitHub stars.',
     links: [{ label: 'GitHub', href: 'https://github.com/Metahemeralism/garmin_heatmap_widget' }],
   },
 ];
@@ -454,11 +435,7 @@ const ProjectCard = ({ project }: { project: Project }) => (
       ))}
     </div>
 
-    <ul className="flex flex-col gap-1 mb-2">
-      {project.bullets.map((b) => (
-        <Bullet key={b}>{b}</Bullet>
-      ))}
-    </ul>
+    <p className="text-gray-300 text-sm leading-relaxed mb-2">{project.description}</p>
 
     {project.note && <p className="text-gray-500 text-sm italic mb-2">{project.note}</p>}
 
