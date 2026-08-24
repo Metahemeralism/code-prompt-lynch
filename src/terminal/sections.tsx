@@ -679,6 +679,18 @@ export const libraryTopics: LibraryTopic[] = [
       },
     ],
   },
+{
+    topic: 'Mathematics',
+    items: [
+      {
+        title: 'Dexter Chua — Cambridge Lecture Notes',
+        url: 'https://dec41.user.srcf.net/',
+        description:
+          "Dexter Chua's complete Cambridge maths lecture notes — full detailed notes covering the entire undergraduate mathematics syllabus.",
+        tag: 'notes',
+      },
+    ],
+  },
   {
     topic: 'Human-Centred Computing',
     items: [
