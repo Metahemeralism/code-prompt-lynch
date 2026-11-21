@@ -65,15 +65,26 @@ const LiveDot = () => (
  * ------------------------------------------------------------------ */
 
 const aboutParagraphs = [
-  "I'm completing an MSc in Engineering with Finance at UCL (predicted First), having graduated with a BEng in Chemical Engineering from Bath.",
-  "I'm currently a Postgraduate Researcher in the Financial Computing & Analytics Group at UCL as part of my MSc thesis, and spent summer 2026 at MSCI in London as a Summer Analyst on the Institutional Client Strategy & Execution team.",
-  'I co-founded Encode London — the UK chapter of a global AI safety organisation.',
+  "I'm a Renewable Fuels Analyst at BloombergNEF in London, covering biofuels — regional biofuel-credit supply and demand, pricing modelling, and policy research.",
+  'I recently finished an MSc in Engineering with Finance at UCL (Distinction, Dean’s List), having graduated with a BEng in Chemical Engineering from Bath. My thesis built a physics-enforced network for recovering latent convenience yield from commodity futures.',
+  'I co-founded Encode London — the UK chapter of a global AI safety organisation — and spent summer 2026 at MSCI as a Summer Analyst on the Institutional Client Strategy & Execution team.',
 ];
 
 const aboutFacts: { label: string; value: string }[] = [
   { label: 'Focus', value: 'AI Safety · Quantitative Trading · Data Science' },
-  { label: 'Languages', value: 'Python, SQL, MATLAB, VBA' },
-  { label: 'Spoken', value: 'Fluent English; beginner German & Danish' },
+  {
+    label: 'Education',
+    value: 'MSc Engineering with Finance, UCL (Distinction, Dean’s List) · BEng Chemical Engineering, Bath',
+  },
+  {
+    label: 'Technical',
+    value: 'Python (NumPy, SciPy, pandas, PyTorch, JAX/Flax, scikit-learn), SQL, MATLAB',
+  },
+  {
+    label: 'Methods',
+    value: 'Stochastic calculus, two-factor commodity models, Monte Carlo, time-series analysis',
+  },
+  { label: 'Spoken', value: 'English (native)' },
   { label: 'Certifications', value: 'Stanford ML Specialisation (Andrew Ng, Coursera)' },
 ];
 
@@ -127,13 +138,13 @@ export const TldrSection = () => (
   <div className="my-1 max-w-2xl">
     <div className="border-l-2 border-green-500/40 pl-4 flex flex-col gap-2">
       <p className="text-gray-200 text-sm leading-relaxed">
-        MSc Engineering with Finance at UCL (predicted First). Postgraduate Researcher in
-        UCL's Financial Computing &amp; Analytics Group; Co-Founder of Encode London
-        (AI safety). Previously MSCI, Datactics and Shell.
+        Renewable Fuels Analyst at BloombergNEF, covering biofuels. MSc Engineering with
+        Finance from UCL (Distinction, Dean&rsquo;s List). Co-founded Encode London (AI
+        safety). Previously MSCI, Datactics and Shell.
       </p>
       <p className="text-gray-400 text-sm leading-relaxed">
-        Thesis: a physics-informed neural network for inverting the latent convenience
-        yield of WTI crude.
+        Thesis: AP-PEN, a physics-enforced network for inverting the latent convenience
+        yield of commodity futures.
       </p>
       <p className="text-gray-500 text-sm">
         Interested in AI safety, quantitative trading and data science.
@@ -153,7 +164,7 @@ interface ExperienceEntry {
   location: string;
   dateRange: string;
   current: boolean;
-  accent: 'amber' | 'cyan' | 'violet' | 'blue' | 'emerald';
+  accent: 'amber' | 'cyan' | 'violet' | 'blue' | 'emerald' | 'orange';
   quote?: string;
 }
 
@@ -173,17 +184,17 @@ export const experienceEntries: ExperienceEntry[] = [
     abbr: 'DTX',
     role: 'Data Science Intern',
     location: 'Belfast',
-    dateRange: 'Mar 2025 – Aug 2025',
+    dateRange: 'Mar 2025 – Oct 2025',
     current: false,
     accent: 'cyan',
   },
   {
-    company: 'Encode London',
+    company: 'Encode AI',
     abbr: 'ENC',
-    role: 'Co-Founder & Director',
+    role: 'Co-Founder & Director, Encode London',
     location: 'London',
-    dateRange: 'Aug 2025 – Present',
-    current: true,
+    dateRange: 'Aug 2025 – Nov 2026',
+    current: false,
     accent: 'violet',
   },
   {
@@ -191,20 +202,29 @@ export const experienceEntries: ExperienceEntry[] = [
     abbr: 'UCL',
     role: 'Postgraduate Researcher',
     location: 'London',
-    dateRange: 'May 2026 – Present',
-    current: true,
+    dateRange: 'May 2026 – Aug 2026',
+    current: false,
     accent: 'blue',
     quote:
-      'Building a physics-informed neural network that inverts the latent convenience yield from WTI crude oil futures term structures — as part of my MSc thesis.',
+      'Built AP-PEN, a hard-constrained physics-enforced network recovering the latent convenience yield from commodity futures term structures — my MSc thesis, graded 86%.',
   },
   {
     company: 'MSCI',
     abbr: 'MSCI',
     role: 'Summer Analyst, Institutional Client Strategy & Execution',
     location: 'London',
-    dateRange: 'Jun 2026 – Jul 2026',
+    dateRange: 'Jun 2026 – Aug 2026',
     current: false,
     accent: 'emerald',
+  },
+  {
+    company: 'BloombergNEF',
+    abbr: 'BNEF',
+    role: 'Renewable Fuels Analyst',
+    location: 'London',
+    dateRange: 'Sep 2026 – Present',
+    current: true,
+    accent: 'orange',
   },
 ];
 
@@ -216,6 +236,10 @@ const accentStyles: Record<ExperienceEntry['accent'], { badge: string; text: str
   emerald: {
     badge: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/40',
     text: 'text-emerald-300',
+  },
+  orange: {
+    badge: 'bg-orange-500/10 text-orange-300 border-orange-500/40',
+    text: 'text-orange-300',
   },
 };
 
@@ -294,7 +318,11 @@ export const volunteeringEntries: VolunteeringEntry[] = [
     dateRange: 'Oct 2025 – Present',
     current: true,
   },
-  { org: 'UCL Data Science Society', role: 'Head of Science', dateRange: 'Sep 2025 – Apr 2026' },
+  {
+    org: 'UCL Data Science Society',
+    role: 'Executive Head of Science',
+    dateRange: 'Sep 2025 – Apr 2026',
+  },
   { org: 'Raleigh International', role: 'Venturer — South Africa', dateRange: 'Oct 2024 – Dec 2024' },
   { org: 'Zero Gravity', role: 'University Mentor', dateRange: 'Jan 2024 – Mar 2026' },
 ];
@@ -366,6 +394,20 @@ export const projects: Project[] = [
       'Mechanistic interpretability study of how a language model’s internal activations shift when prompted to believe in itself — testing whether a linear self-efficacy direction exists and whether steering it causally changes behaviour.',
     note: 'Work in progress — experimental design and pipeline complete; results pending.',
     links: [{ label: 'GitHub', href: 'https://github.com/Metahemeralism/belief_networks' }],
+  },
+  {
+    title: 'AP-PEN — Convenience-Yield Inversion',
+    topic: 'Quantitative Finance',
+    date: '2026',
+    tech: ['Python', 'JAX', 'Flax', 'Kalman Filter'],
+    description:
+      'MSc thesis (86%): a hard-constrained, physics-enforced network that recovers the latent convenience yield from Gibson–Schwartz commodity futures curves, benchmarked against a Kalman filter.',
+    links: [
+      {
+        label: 'Read the pre-print (SSRN)',
+        href: 'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7677598',
+      },
+    ],
   },
   {
     title: 'Electricity Forward Pricer',
@@ -512,11 +554,12 @@ interface Interest {
 export const interests: Interest[] = [
   {
     name: 'Chess',
-    detail: 'Highest rapid rating: 1325 — always looking for a game.',
+    detail: 'Top 1% on Chess.com — always looking for a game.',
     link: { label: 'Send me a friend request', href: 'https://link.chess.com/friend/N0Q3dC' },
   },
   { name: 'Tennis', detail: "UCL Men's 3rd Team; active player and coach." },
   { name: 'Fitness', detail: 'Regular gym training and wellness focus.' },
+  { name: 'Reading' },
   {
     name: 'Travelling',
     map: true,
@@ -893,7 +936,7 @@ export const WhoAmI = () => (
     <div>
       <div className="text-white">evan</div>
       <div className="text-gray-500 text-sm">
-        MSc Engineering with Finance, UCL. Type{' '}
+        Renewable Fuels Analyst at BloombergNEF. Type{' '}
         <span className="text-green-400">about</span> for more.
       </div>
     </div>
